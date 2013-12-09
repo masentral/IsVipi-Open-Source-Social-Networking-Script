@@ -27,8 +27,14 @@
 <title>Install IsVipi Social Network</title>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/isvipi-install.css" rel="stylesheet">
+    <script type="text/javascript">
+ $(window).load(function(){
+        $('#myModal').modal('show');
+    });
+</script>
 </head>
 <body>
+
     <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -50,43 +56,37 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container -->
     </nav>
-  <div class="row">
-  <div class="alert alert-success">
-    <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-    <p><strong>Success!</strong> The database has been imported successfully</a>.</p>
-  </div>
-  <div class="panel panel-default">
-  <div class="panel-heading"><h4>Create Admin Account</h4></div>
-  <div class="panel-body">
-  
-  <form role="form" action="installdb.php" method="post">
-  <div class="form-group">
-    <label for="dbhost">Admin Username</label>
-    <input type="name" class="form-control" placeholder="Admin Username" name="dbhost">
-  </div>
-  <div class="form-group">
-    <label for="dbusername">Full Name</label>
-    <input type="name" class="form-control" placeholder="Full Name" name="dbusername">
-  </div>
-  <div class="form-group">
-    <label for="dbpassword">Admin E-Mail</label>
-    <input type="email" class="form-control" placeholder="Admin E-Mail" name="dbpassword">
-  </div>
-  <div class="form-group">
-    <label for="dbname">Password</label>
-    <input type="password" class="form-control" placeholder="Password" name="dbname">
-  </div>
-  <div class="form-group">
-    <label for="dbname">Repeat Password</label>
-    <input type="password" class="form-control" placeholder="Repeat Password" name="dbname">
-  </div>
-  <button type="submit" class="btn btn-default">Create</button>
-</form>
-</div>
-  </div>
-</div>
-</div>  
+<!-- Modal -->
+<div class="modal fade shown" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title info" id="myModalLabel">Database Configuration Error!</h4>
+      </div>
+      <div class="modal-body">
+        <p>There is an error with the database configurations you provided. Please try out the following:</p>
+        <ul>
+        <li>Provide database host as "localhost" or "127.0.0.1"</li>
+        <li>For the username and password, check spelling, capitalizations or other special characters</li>
+        </ul>
+        <p>Click "back to install page" to try again</p>
+      </div>
+      <div class="modal-footer">
+        <a href="install.php"><button type="button" class="btn btn-primary">Go back to install page</button></a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/bootstrap.js"></script>
 </body>
+<script type="text/javascript">
+$(document).ready(function($) {  
+  function show_modal(){
+    $('#myModal').modal();
+  }
+  window.setTimeout(show_modal, 0009); // your 5 seconds delay before it calls the modal function
+});
+</script>
 </html>

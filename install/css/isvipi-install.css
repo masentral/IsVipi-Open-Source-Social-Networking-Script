@@ -1,3 +1,9 @@
+/*!
+ * IsVipi 1.0.0 Install styler
+ * Copyright 2013 IsVipi.
+ * Licensed under http://www.apache.org/licenses/LICENSE-2.0
+ */
+
 body {
 	margin-top: 50px; /* 50px is the height of the navbar - change this if the navbarn height changes */
 }
@@ -18,7 +24,7 @@ body {
 	color: #fff;
 	text-shadow: 0 0 10px #000;
 }
-
+.modal {visibility:visible; display:block !important}
 footer {
 	margin: 50px 0;
 }
