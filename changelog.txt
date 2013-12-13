@@ -1,0 +1,43 @@
+USER MANAGEMENT SCRIPT uMScript v.1.0.5
+=======================================
+Created By: Evans Kirimi
+Website: http://www.venturehapa.biz/umscript
+Version: 1.0.5
+Email:support@venturehapa.biz
+FACEBOOK: http://facebook.com/UMScript
+Last Modified: March 13th, 2012. 6:20 PM EAT.
+
+License: This script is provided for free and as is. You are welcome to modify, use and abuse this script in whichever way you choose. However, you must leave the credits for the file under lib/functions/ps_pagination.php intact.
+
+I will not be held liable for any problems that may arise from use of this script.
+
+
+----------------------------------------------------------------
+File Modifications:
+----------------------------------------------------------------
+
+1. lib/functions/functions.php
+   - changed function 'addUser'
+   - added function 'confirm_user_reg'
+   - changed function 'login'
+
+2. Changed 'reg_submit.php'
+
+3. Changed 'login_submit.php'
+
+4. Changed edit_user_submit.php in users folder (changed function 'updateUser to editUser').
+
+5. readme.txt and changelog.txt
+
+
+-----------------------------------------------------------------
+File Additions:
+-----------------------------------------------------------------
+
+1. Added 'confirm_user_reg.php'
+
+-----------------------------------------------------------------
+Deleted Files/Folders:
+-----------------------------------------------------------------
+
+1. None

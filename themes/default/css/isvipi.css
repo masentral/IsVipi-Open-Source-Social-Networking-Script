@@ -1,0 +1,252 @@
+/*!
+ * IsVipi 1.0.0 Default CSS
+ * Copyright 2013 IsVipi.
+ * Licensed under http://www.apache.org/licenses/LICENSE-3.0
+ */
+/** The vertical centered content **/
+
+/** Body **/
+body{
+    background:#FFF);
+	overflow:hidden;
+}
+
+/** Header **/
+.top-menu{background:#343942; height:55px}
+.Site_Title {color:#FFF; font-size:22px; font-weight:700; font-family:"Comic Sans MS", cursive}
+.social_network {color:#FF0; font-size:14px; font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif}
+.admin_logo{background:#15171A; height:100%;position:absolute;left:0;top;0;width:200px;}
+.admin_logo p{margin-top:10px; margin-left:10px}
+.not-bar{margin-left:150px; width:300px; padding-top:10px}
+.user_info{margin-right:10px; min-width:250px; height:50px; position:absolute; top:0; right:0; margin-top:1px; display:inline-block}
+.profile_pic {width:50px; height:50px; cursor:pointer; float:left;background:url(../images/image.gif); background:cover}
+.not-boxes{width:30px;height:30px;background:#282D33;margin-right:10px; display:inline-block;color:#FFF;}
+.dropdown {position:absolute; top:0; right:0; margin-right:100px; margin-top:15px}
+.dropdown a{color:#FFF; font-weight:800}
+.not-boxes:hover{background:#1B1F23;}
+.not-boxes i{color:#999;font-size:18px; cursor:pointer;margin-top:7px; margin-left:5px}
+.not-boxes i:hover{color:#FFF;}
+.badge {
+  padding: 3px 6px 3px;
+  font-size: 11px;
+  font-weight: bold;
+  white-space: nowrap;
+  color: #ffffff;
+  background-color: #999999;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+  position:absolute;
+  margin-top:5px;
+}
+.badge:hover {
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+.badge-error {
+  background-color: #b94a48;
+}
+.badge-error:hover {
+  background-color: #953b39;
+}
+.badge-warning {
+  background-color: #f89406;
+}
+.badge-warning:hover {
+  background-color: #c67605;
+}
+.badge-success {
+  background-color: #468847;
+}
+.badge-success:hover {
+  background-color: #356635;
+}
+.badge-info {
+  background-color: #3a87ad;
+}
+.badge-info:hover {
+  background-color: #2d6987;
+}
+.badge-inverse {
+  background-color: #333333;
+}
+.badge-inverse:hover {
+  background-color: #1a1a1a;
+}
+/** Main container **/
+#content {
+    margin-left: 0px;
+}
+.dashboard_layout{width:1150px; border-right:solid #CCC thin; border-left:solid #CCC thin}
+.col-md-6 .row {float:left; margin-left:-130px}
+.timeline-layout {min-width:600px; min-height:auto;}
+.dash_announce .panel {border:#CCC thin solid; min-height:300px; min-width:250px; position:absolute; right:0; margin-right:-180px;overflow:hidden}
+.dash_announce .panel .panel-body {min-height:200px}
+/** Forms */
+.form-group label.control-label{
+    line-height: normal;
+}
+.form-group label{
+    line-height: 25px;
+}
+
+/** Title of container for lists, some content etc. **/
+.isvipi-title{
+    display: inline;
+}
+
+/** Button which is an action */
+.btn.action:active{
+    box-shadow: none;
+}
+
+/** Content of the panel **/
+.isvipi-panel-content{
+    padding: 15px;
+}
+.isvipi-panel-content-width{width:600px}
+.isvipi-panel-content table{
+    margin-bottom: 0;
+	margin-top: -15px;
+	font-size:13px;
+	line-height:10px;
+}
+.isvipi-panel-content dl{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.isvipi-panel-content .col-xs-6{
+    width:140px;
+	height:160px;
+	border:solid thin #CCC;
+	margin-top:10px;
+	padding-top:5px;
+	margin-right:2px;
+}
+.isvipi-panel-content .col-xs-6 img{
+    width:100%;
+	height:60%;
+	border:none;
+	
+}
+.isvipi-panel-content .col-xs-6 .thumbnail {border:none;}
+.isvipi-panel-content .col-xs-6 .profile_gender{
+position:absolute;
+top:0;
+left:0;
+z-index:99;
+margin-left:10px;
+font-size:20px;
+background:#CCC;
+padding:5px;
+color:#00C}
+.isvipi-panel-content .col-xs-6 li{
+    font-size:10px;
+	list-style:none;
+	margin-top:-25px;
+	line-height:36px;
+}
+.text-right {text-align:right;color:#03F}
+
+/** Panel with no-table content **/
+.tabless-panel,
+.tabless-panel-content{
+    float: left;
+    width: 100%;
+	margin-left:-5px
+	
+}
+
+/** Horizontal navbars */
+.bootstrap-admin-navbar-sm{
+    background-image: none;
+    border: 0;
+    box-shadow: initial;
+    margin-bottom: 0;
+    min-height: initial;
+    z-index: 1030;
+}
+.bootstrap-admin-navbar-sm .navbar-collapse .navbar-nav:first-child{
+    margin-left: -15px;
+}
+.bootstrap-admin-navbar-sm .navbar-collapse .navbar-nav li a{
+    font-size: 13px;
+    padding: 3px 8px;
+}
+
+/** Side Bar **/
+.sidebar-menu {
+    background-color: #fff;
+    max-height: none;
+    max-width: 228px;
+    padding: 0;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+    -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+    box-shadow: 0 1px 4px rgba(0,0,0,.065);
+}
+.sidebar-menu > li > a {
+    display: block;
+    width: 190px\9;
+    margin: 0 0 -1px;
+    padding: 8px 14px;
+    border: 1px solid #e5e5e5;
+}
+.sidebar-menu > li:first-child > a {
+    -webkit-border-radius: 6px 6px 0 0;
+    -moz-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+}
+.sidebar-menu > li:last-child > a {
+    -webkit-border-radius: 0 0 6px 6px;
+    -moz-border-radius: 0 0 6px 6px;
+    border-radius: 0 0 6px 6px;
+}
+.sidebar-menu > .active > a,
+.sidebar-menu .active a:hover{
+    background-color: #08C;
+    color: #fff;
+}
+.sidebar-menu > .active > a {
+    position: relative;
+    z-index: 2;
+    padding: 9px 15px;
+    border: 0;
+    text-shadow: 0 1px 0 rgba(0,0,0,.15);
+    -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+    -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+    box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+}
+
+/** Side Bar - Chevrons **/
+.sidebar-menu .glyphicon-chevron-right {
+    float: right;
+    margin-top: 2px;
+    margin-right: -6px;
+    opacity: .25;
+}
+
+/**Profile Page **/
+.profile_options {background:#E4E4E4; width:30px; height:30px; display:inline-block; position:absolute; margin-left:10px; margin-top:-5px; padding-top:6px; font-size:18px; padding-left:6px}
+.profile_image {border:solid #CCC thin; width:180px;height:180px; float:left; cursor:pointer; background:url(../images/no-image.gif); background:cover;}
+.profile_image:hover {border:solid #999 thin;}
+.profile_info {float:left; width:370px; min-height:200px; border-left:solid thin #CCC; margin-left:10px}
+.profile_info p{line-height:15px}
+.profile_options_bar{width:100%; height:40px;font-size:25px; padding-top:6px; padding-left:10px}
+.profile_options_bar i{padding-right:10px; padding-left:10px;cursor:pointer; }
+.profile_options_bar i:hover{color:#00F}
+.message_options_bar{width:100%; font-size:15px; padding-left:10px}
+.message_options_bar i{padding-right:5px; padding-left:5px;cursor:pointer;}
+.message_options_bar i:hover{color:#00F}
+.user_minor_details {margin-left:70px; display:inline-block}
+.upload_pic {float:left;position:absolute; left:0; margin-left:-80px}
+.uniform_on {margin-top:-35px}
+
+/** Footer **/
+.footer {width:100%;border-top:solid thin #CCC; margin-top:90px;padding-top:20px;clear:both;padding-bottom:10px}
+.footer p{
+    text-align: right;
+}

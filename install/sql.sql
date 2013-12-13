@@ -526,6 +526,7 @@ CREATE TABLE IF NOT EXISTS `site_settings` (
   `id` int(2) NOT NULL AUTO_INCREMENT,
   `site_url` varchar(85) NOT NULL,
   `site_email` varchar(85) NOT NULL,
+  `theme` varchar(85) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
@@ -534,7 +535,7 @@ CREATE TABLE IF NOT EXISTS `site_settings` (
 --
 
 INSERT INTO `site_settings` (`id`, `site_url`, `site_email`) VALUES
-(1, 'localhost/allinone', 'test@localhost');
+(1, 'localhost/allinone', 'default','test@localhost');
 
 -- --------------------------------------------------------
 
@@ -554,6 +555,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `dialing_code` int(5) NOT NULL,
   `phone` int(25) NOT NULL,
   `city` varchar(80) NOT NULL,
+  `gender` varchar(80) NOT NULL,
+  `age` varchar(80) NOT NULL,
+  `dob` varchar(145) NOT NULL,
   `country` varchar(80) NOT NULL,
   `thumb_path` varchar(150) NOT NULL,
   `img_path` varchar(150) NOT NULL,
@@ -593,3 +597,21 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `last_active` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+CREATE TABLE `timeline` (
+  `id` int(10) NOT NULL auto_increment,
+  `username` varchar(140) collate utf8_unicode_ci NOT NULL default '',
+  `tweet` varchar(140) collate utf8_unicode_ci NOT NULL default '',
+  `dt` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `pm` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `id2` int(11) NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `user1` bigint(20) NOT NULL,
+  `user2` bigint(20) NOT NULL,
+  `message` text NOT NULL,
+  `timestamp` int(10) NOT NULL,
+  `user1read` varchar(3) NOT NULL,
+  `user2read` varchar(3) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
