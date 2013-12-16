@@ -20,9 +20,6 @@
 <?php
 require_once('../connections/db.php');
 include('../functions/functions.php');
-
-$returnURL = "users/index.php";
-
 //For login
 
 	// we check if everything is filled in and perform checks
@@ -45,6 +42,10 @@ $returnURL = "users/index.php";
 					die(msg(0,"Sorry! Your account has not been activated. Please check your email's inbox or spam folder for a link to activate your account."));
 				}
 				if ($res == 99){
+					$user = ($_POST['username']);
+					mysqli_query($conn,"UPDATE users SET online=1
+WHERE username='Jones'");
+
 					echo(header("Location: ../../members/"));
 				}
 		}

@@ -62,53 +62,42 @@ if(isset($_GET['id']))
                                     </table>
                                 </div><!--end of isvipi-panel-content-->
                                 <div class="profile_options_bar">
-                                 <div class="upload_pic"></i></a><a href="" title="Report Picture"><i class="fa fa-exclamation-triangle"></i></a></div>
-                                <a href="#" title="Send a Message" data-toggle="modal" data-target="#composeMessage"><i class="fa fa-envelope-o"></i></a><a href="" title="Send Friend Request"><i class="fa fa-user"></i></a><a href="" title="Report this person"><i class="fa fa-exclamation-triangle"></i></a>
+                                 <div class="upload_pic"></i></div>
+                                <a href="#" title="Send a Message" data-toggle="modal" data-target="#MessageUser"><i class="fa fa-envelope-o"></i></a><a href="friend_request.php?id=<?php echo $dnn['id']; ?>" title="Send Friend Request"><i class="fa fa-user"></i></a><a href="" title="Report this person"><i class="fa fa-exclamation-triangle"></i></a>
                                 </div>
-                                <!-- Button trigger modal -->
-          
+                                
+<!-- Message User Modal -->
+<div class="modal fade" id="MessageUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+               <h4 class="modal-title" id="myModalLabel">Send a message to <b>"<?php echo htmlentities($dnn['username']); ?>"</b>               </h4>
+      </div>
+      <div class="modal-body">
+                   <form name="addphoto" method="post" action="new_pm.php">
+            <!--<label for="title">To</label>-->
+            <input type="hidden" class="form-control" value="<?php echo htmlentities($dnn['username']); ?>" name="recip">
+            <label for="title">Subject</label>
+            <input type="text" class="form-control" value="" name="title">
+            <label for="title">Messageg</label>
+            <textarea name="message" class="form-control" id="bootstrap-editor" tabindex="1"rows="2" cols="40"></textarea>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" name="submit"/>Send Message</button>
+            </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+                                
+                                
                              </div><!--end of profile_info-->
               </div><!--End of isvipi-panel-content-->
           </div><!--End of panel-->
-<?php
-//We add a link to send a pm to the user
-if(isset($_SESSION['username']))
-{
-?>
-<!-------------------------
----------------------------
----------------------------
-------SEND PM MODAL--------
----------------------------
--------------------------->
-    
-              <!-- Modal -->
-          <div class="modal fade" id="composeMessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-           <div class="modal-dialog">
-            <div class="modal-content">
-             <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-               <h4 class="modal-title" id="myModalLabel">Send <b><?php echo htmlentities($dnn['username']); ?></b> Message</h4>
-            </div>
-            <div class="modal-body">
-            <div class="form-group">
-            <form name="addphoto" method="post" action="new_pm.php">
-            <label for="title">To</label>
-            <input type="text" class="form-control" value="<?php echo htmlentities($dnn['username']); ?>" name="recip">
-            <label for="title">Subject</label>
-            <input type="text" class="form-control" value="" name="title">
-            <label for="title">Message</label>
-            <textarea name="message" class="form-control" id="inputField" tabindex="1"rows="2" cols="40"></textarea>
-             </div>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" name="submit"/>Send Message</button>
-            </form>
-            </div>
-          </div><!-- /.modal-content -->
-       </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+
 <?php
 }
 	}
@@ -116,11 +105,6 @@ if(isset($_SESSION['username']))
 	{
 		echo 'This user dont exists.';
 	}
-}
-else
-{
-	echo 'The user ID is not defined.';
-}
 ?>
 
               <!--========/MY PROFILE=====---->

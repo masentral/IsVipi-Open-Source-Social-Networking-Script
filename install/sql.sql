@@ -566,6 +566,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `act_key` varchar(80) NOT NULL,
   `reg_date` varchar(45) NOT NULL,
   `last_active` varchar(50) NOT NULL,
+  `online` int(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
@@ -605,7 +606,7 @@ CREATE TABLE `timeline` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `pm` (
-  `id` bigint(20) NOT NULL auto_increment,
+  `id` bigint(20) NOT NULL,
   `id2` int(11) NOT NULL,
   `title` varchar(256) NOT NULL,
   `user1` bigint(20) NOT NULL,
@@ -615,3 +616,18 @@ CREATE TABLE `pm` (
   `user1read` varchar(3) NOT NULL,
   `user2read` varchar(3) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `user_sessions` (
+  `id` int(10) NOT NULL auto_increment,
+  `username` varchar(140) collate utf8_unicode_ci NOT NULL default '',
+  `session` varchar(140) collate utf8_unicode_ci NOT NULL default '',
+  `timestamp` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE IF NOT EXISTS `friend_requests` (
+  `request_id` int(11) NOT NULL AUTO_INCREMENT,
+  `from_id` varchar(255) NOT NULL,
+  `to_id` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `timestamp` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY (`request_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin2 AUTO_INCREMENT=221 ;

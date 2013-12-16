@@ -53,7 +53,7 @@ else
 }
 ?> 
 <?php
-include ISVIPI_THEMES_BASE.$theme.'/page.php';
+include ISVIPI_THEMES_BASE.$theme.'/friends.php';
 ?>
 </body>
 </html>

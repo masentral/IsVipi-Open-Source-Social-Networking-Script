@@ -54,7 +54,7 @@ function login($user,$pass)
 		if(mysql_num_rows($query) == 1)
 		{
 			$row = mysql_fetch_assoc($query);
-			$update = mysql_query('UPDATE users SET last_login = "'.$lastLogin.'" WHERE id = "'.$row['id'].'"');
+			$update = mysql_query('UPDATE users SET last_active = NOW(), online = "1" WHERE id = "'.$row['id'].'"');
 			if ($row['active'] == 1 ) {
 				set_login_sessions ( $row['id'], $row['password'] ? TRUE : FALSE );
 					if ($row['level_access'] == 2) {									
@@ -71,11 +71,13 @@ function logoff()
 {
   //session must be started before anything
 		session_start ();
+		$user_id=($_SESSION['user_id']);
 	
 		//if we have a valid session
 		if ( $_SESSION['logged_in'] == TRUE )
 		{	
 			//unset the sessions (all of them - array given)
+			$update = mysql_query('UPDATE users SET online = "0" WHERE id = "'.$user_id.'"');
 			unset ( $_SESSION ); 
 			//destroy what's left
 			session_destroy (); 
@@ -148,7 +150,7 @@ function checkLogin ( $levels )
 		}
 		
 		if ( $access == FALSE ) {
-			header("Location: login.php");
+			header("Location: index.php");
 		}		
 }
 	
@@ -516,7 +518,7 @@ function adminLogin($user,$pass)
 		if(mysql_num_rows($query) == 1)
 		{
 			$row = mysql_fetch_assoc($query);
-			$update = mysql_query('UPDATE users SET last_login = "'.$lastLogin.'" WHERE id = "'.$row['id'].'"');
+			$update = mysql_query('UPDATE users SET last_login = NOW() WHERE id = "'.$row['id'].'"');
 			if ($row['active'] == 1 ) {
 				set_login_sessions ( $row['id'], $row['password'] ? TRUE : FALSE );
 					if ($row['level_access'] == 1) {									

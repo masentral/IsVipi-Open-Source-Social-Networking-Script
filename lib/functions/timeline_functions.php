@@ -48,11 +48,20 @@ function formatTweet($tweet,$dt)
 	if(is_string($dt)) $dt=strtotime($dt);
 
 	$tweet=htmlspecialchars(stripslashes($tweet));
-	// fetch the username
+// fetch the id
+$user = $_SESSION['user_id'];
+// fetch the username
 $username = '';
 list($username) = mysql_fetch_array(mysql_query("SELECT username FROM timeline WHERE tweet = '$tweet'"));
 
 if(!$username) $username = "error";
+
+
+// fetch the id
+list($user_id) = mysql_fetch_array(mysql_query("SELECT id FROM users WHERE username = '$username'"));
+$user = $user_id;
+
+
 $site = '';
 list($site) = mysql_fetch_array(mysql_query("SELECT site_url FROM site_settings WHERE id = '1'"));
 if(!$site) $site = "http://localhost/isvipi/";
@@ -70,10 +79,10 @@ if(!$thumb_path) $thumb_path = "http://$site/themes/$theme/images/avatar.jpg";
 	<li>
 	<div class="timeline_display">
 	<div class="user_timeline_image">
-	<a href="#"><img class="avatar" src="'.$thumb_path.'" width="48" height="48" alt="profile pic" /></a>
+	<a href="member_profile.php?id='.$user.'"><img class="avatar" src="'.$thumb_path.'" width="48" height="48" alt="profile pic" /></a>
 	</div>
 	<div class="tweetTxt">
-	<strong><a href="#">'.$username.'</a></strong> '. preg_replace('/((?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i','<a href="$1" rel="nofollow" target="blank">$1</a>',$tweet).'
+	<strong><a href="member_profile.php?id='.$user.'">'.$username.'</a></strong> '. preg_replace('/((?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i','<a href="$1" rel="nofollow" target="blank">$1</a>',$tweet).'
 	<div class="date">'.relativeTime($dt).'</div>
 	</div>
 	</div>

@@ -18,10 +18,10 @@
  ******************************************************/ 
  ?>
 <?PHP
-$localhost = 'localhost'; //name of server. Usually localhost
-$database = 'isvipi'; //database name.
-$username = 'root'; //database username.
-$password = 'zorrayah'; //database password.
+$localhost = 'DBHost'; //name of server. Usually localhost
+$database = 'DBName'; //database name.
+$username = 'DBUser'; //database username.
+$password = 'DBPass'; //database password.
 
 // connect to db  
 $conn = mysql_connect($localhost, $username, $password) or die(header("Location: ./install/install.php"));   
@@ -40,4 +40,5 @@ $query = mysql_query($select) or die(mysql_error());
 $result = mysql_result($query, 0);
 $theme = $result;
 $theme = $theme;
+date_default_timezone_set ("Africa/Nairobi");
 ?>

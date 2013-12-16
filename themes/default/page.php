@@ -16,7 +16,7 @@
                       //mysql_query("DELETE FROM timeline WHERE id>1 AND dt<SUBTIME(NOW(),'0 1:0:0')");
 	
                       //fetch the timeline
-                      $q = mysql_query("SELECT * FROM timeline ORDER BY ID DESC");
+                      $q = mysql_query("SELECT * FROM timeline ORDER BY ID DESC LIMIT 10");
                       $timeline='';
                       while($row=mysql_fetch_assoc($q))
                       {

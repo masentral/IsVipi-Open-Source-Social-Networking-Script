@@ -1,3 +1,30 @@
+<?php 
+$num_mes = intval(mysql_num_rows($req1)); 
+if (mysql_num_rows($req1)>0) {
+$num_mess = '<span class="badge badge-success">'.$num_mes.'</span>';
+}
+else
+{$num_mess = '';
+}
+
+?>
+<?php
+//We check if the user is logged
+if(isset($_SESSION['user_id']))
+{
+$me = $_SESSION['user_id'];
+//We list notifications in a table
+$query1 = mysql_query('SELECT * FROM friend_requests WHERE to_id = "'.$me.'" AND status="pending"');
+$friends = mysql_query('SELECT * FROM friend_requests WHERE to_id = "'.$me.'" AND status="pending"');
+$num_rows = mysql_num_rows($friends);
+if (mysql_num_rows($friends)>0) {
+$friend_format = '<span class="badge badge-warning">'.$num_rows.'</span>';
+}
+else
+{$friend_format = '';
+}
+}
+?>
   <!-- Bootstrap -->
   <link href="<?php echo ISVIPI_THEME_URL; ?><?php echo $theme; ?>/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
   <!-- Main Style -->
@@ -23,9 +50,9 @@
                 <div class="row">
                   <a href="../members/" title="IsVipi Logo"><div class="admin_logo"><p class="Site_Title">IsVipi <span class="social_network">Social Network</span></p></div></a>
                       <div class="not-bar">
-                        <a href="" title="Notifications"><div class="not-boxes"><i class="fa fa-bell-o"></i><sup><span class="badge badge-info">3</span></sup></div></a>
-                        <a href="messages.php" title="Messages"><div class="not-boxes"><i class="fa fa-envelope-o"></i><sup><span class="badge badge-success"><?php echo intval(mysql_num_rows($req1)); ?></span></sup></div></a>
-                        <a href="" title="Friends Requests"><div class="not-boxes"><i class="fa fa-user"></i><sup><span class="badge badge-warning">1</span></sup></div></a>
+                        <a href="" title="Announcements"><div class="not-boxes"><i class="fa fa-bell-o"></i><sup><span class="badge badge-info">3</span></sup></div></a>
+                        <a href="messages.php" title="Messages"><div class="not-boxes"><i class="fa fa-envelope-o"></i><sup><?php echo $num_mess; ?></sup></div></a>
+                        <a href="friend_requests.php" title="Friends Requests"><div class="not-boxes"><i class="fa fa-user"></i><sup><?php echo $friend_format; ?></sup></div></a>
                       </div>
                       <div class="user_info pull-right">
                       <div class="profile_pic"><img src="<?=$getuser[0]['thumb_path'];?>" height="100%" width="100%" alt="" />

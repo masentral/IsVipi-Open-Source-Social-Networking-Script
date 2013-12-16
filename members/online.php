@@ -28,7 +28,7 @@ $getuser = getUserRecords($_SESSION['user_id']);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Welcome <?=$getuser[0]['username'];?></title>
+<title>Members Online</title>
 </head>
 
 <body>
@@ -53,7 +53,7 @@ else
 }
 ?> 
 <?php
-include ISVIPI_THEMES_BASE.$theme.'/page.php';
+include ISVIPI_THEMES_BASE.$theme.'/online.php';
 ?>
 </body>
 </html>
