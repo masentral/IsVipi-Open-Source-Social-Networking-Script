@@ -18,7 +18,7 @@
  ******************************************************/ 
  ?>
 <?php
-require_once('../connections/db.php');
+require_once('../db/db.php');
 include('../functions/functions.php');
 //For login
 

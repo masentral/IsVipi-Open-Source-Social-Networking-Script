@@ -8,11 +8,11 @@ $req1 = mysql_query('select m1.id, m1.title, m1.timestamp, count(m2.id) as reps,
 $req2 = mysql_query('select m1.id, m1.title, m1.timestamp, count(m2.id) as reps, users.id as user_id, users.username from pm as m1, pm as m2,users where ((m1.user1="'.$_SESSION['user_id'].'" and m1.user1read="yes" and users.id=m1.user2) or (m1.user2="'.$_SESSION['user_id'].'" and m1.user2read="yes" and users.id=m1.user1)) and m1.id2="1" and m2.id=m1.id group by m1.id order by m1.id desc');
 ?>
                  <!--========HEADER=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/header.php';?>
+                    <?php include ISVIPI_THEMES_BASE.'global/header.php';?>
                   <!--========/HEADER=====---->
         
                   <!--========SIDEBAR MENU=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/sidebar_menu.php';?>
+                    <?php include ISVIPI_THEMES_BASE.'global/sidebar_menu.php';?>
                   <!--========/SIDEBAR MENU=====---->
                   
                   <!--========MESSAGES=====---->
@@ -104,8 +104,8 @@ if(intval(mysql_num_rows($req2))==0)
 
          
                   <!--========ANNOUNCEMENTS=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/announcements.php';?> 
+                    <?php include ISVIPI_THEMES_BASE.'global/announcements.php';?> 
                   <!--========/ANNOUNCEMENTS=====---->
                   <!--========FOOTER=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/footer.php';?> 
+                    <?php include ISVIPI_THEMES_BASE.'global/footer.php';?> 
                   <!--========/FOOTER=====---->

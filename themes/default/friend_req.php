@@ -4,15 +4,15 @@ if(isset($_SESSION['user_id']))
 {
 $me = $_SESSION['user_id'];
 //We list notifications in a table
-$query1 = mysql_query('SELECT * FROM friend_requests WHERE to_id = "'.$me.'" AND status="pending"');
+$query1 = mysql_query('SELECT * FROM friend_requests WHERE to_id = "'.$me.'" AND status="1"');
 ?>
 
                  <!--========HEADER=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/header.php';?>
+                    <?php include ISVIPI_THEMES_BASE.'global/header.php';?>
                   <!--========/HEADER=====---->
         
                   <!--========SIDEBAR MENU=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/sidebar_menu.php';?>
+                    <?php include ISVIPI_THEMES_BASE.'global/sidebar_menu.php';?>
                   <!--========/SIDEBAR MENU=====---->
                   
                   <!--========MESSAGES=====---->
@@ -135,8 +135,8 @@ else
 
          
                   <!--========ANNOUNCEMENTS=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/announcements.php';?> 
+                    <?php include ISVIPI_THEMES_BASE.'global/announcements.php';?> 
                   <!--========/ANNOUNCEMENTS=====---->
                   <!--========FOOTER=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/footer.php';?> 
+                    <?php include ISVIPI_THEMES_BASE.'global/footer.php';?> 
                   <!--========/FOOTER=====---->

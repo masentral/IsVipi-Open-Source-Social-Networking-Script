@@ -53,70 +53,30 @@
   <div class="row">
   <div class="alert alert-success">
     <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-    <p><strong>Success!</strong> Admin user created successfully</a>.</p>
+    <p><strong>Success!</strong> The database has been imported successfully</a>.</p>
   </div>
   <div class="panel panel-default">
-  <div class="panel-heading"><h4>Site Settings</h4></div>
+  <div class="panel-heading"><h4>Create Admin Account</h4></div>
   <div class="panel-body">
   
-  <form role="form" action="../lib/core/admin_settings.php" method="post" onSubmit="return validate()">
+  <form role="form" action="../lib/core/admin_registration.php" method="post" onSubmit="return validate()">
   <div class="form-group">
-    <label for="url">Site URL</label>
-    <input type="text" class="form-control" placeholder="yoursite.com (without http://)" name="site_url">
+    <label for="dbhost">Admin Username</label>
+    <input type="username" class="form-control" placeholder="Admin Username" name="username">
   </div>
   <div class="form-group">
-    <label for="semail">Site E-Mail</label>
-    <input type="email" class="form-control" placeholder="whatever@yoursite.com" name="site_email">
-  </div>
-  
-  <div class="form-group">
-    <label for="time_zone">Default Time Zone</label>
-    <?php
-$regions = array(
-    'Africa' => DateTimeZone::AFRICA,
-    'America' => DateTimeZone::AMERICA,
-    'Antarctica' => DateTimeZone::ANTARCTICA,
-    'Aisa' => DateTimeZone::ASIA,
-    'Atlantic' => DateTimeZone::ATLANTIC,
-    'Europe' => DateTimeZone::EUROPE,
-    'Indian' => DateTimeZone::INDIAN,
-    'Pacific' => DateTimeZone::PACIFIC
-);
- 
-$timezones = array();
-foreach ($regions as $name => $mask)
-{
-    $zones = DateTimeZone::listIdentifiers($mask);
-    foreach($zones as $timezone)
-    {
-		// Lets sample the time there right now
-		$time = new DateTime(NULL, new DateTimeZone($timezone));
- 
-		// Us dumb Americans can't handle millitary time
-		$ampm = $time->format('H') > 12 ? ' ('. $time->format('g:i a'). ')' : '';
- 
-		// Remove region name and add a sample time
-		$timezones[$name][$timezone] = substr($timezone, strlen($name) + 1) . ' - ' . $time->format('H:i') . $ampm;
-	}
-}
-// View
-print '<select id="timezone" class="form-control" name="time_zone">';
-foreach($timezones as $region => $list)
-{
-	print '<optgroup label="' . $region . '">' . "\n";
-	foreach($list as $timezone => $name)
-	{
-		print '<option value="' . $timezone . '">' . $name . '</option>' . "\n";
-	}
-	print '<optgroup>' . "\n";
-}
-print '</select>';
-?>
+    <label for="dbpassword">Admin E-Mail</label>
+    <input type="email" class="form-control" placeholder="Admin E-Mail" name="email">
   </div>
   <div class="form-group">
-    <input type="hidden" class="form-control" value="default" name="theme">
+    <label for="dbname">Password</label>
+    <input type="password" class="form-control" placeholder="Password" name="password">
   </div>
-  <button type="submit" class="btn btn-default">Save Settings</button>
+  <div class="form-group">
+    <label for="dbname">Repeat Password</label>
+    <input type="password" class="form-control" placeholder="Repeat Password" name="rpassword">
+  </div>
+  <button type="submit" class="btn btn-default">Create</button>
 </form>
 </div>
   </div>

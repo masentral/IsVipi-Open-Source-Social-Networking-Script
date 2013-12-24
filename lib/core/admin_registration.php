@@ -18,7 +18,7 @@
  ******************************************************/ 
  ?>
 <?php
-require_once('../connections/db.php');
+require_once('../db/db.php');
 include('../functions/admin_functions.php');
 $sitesettings = getSiteSettings();
 $site_url = $sitesettings[0]['site_url'];
@@ -83,6 +83,7 @@ $site_url = $sitesettings[0]['site_url'];
 				}
 				if ($res == 99){
 					die(header("Location: ../../admin/index.php"));
+
 				}
 		}
 

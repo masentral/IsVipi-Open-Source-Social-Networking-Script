@@ -19,9 +19,8 @@
  ?>
 <?php
 DEFINE('INCLUDE_CHECK',1);
-require_once('../lib/connections/db.php');
-include('../lib/functions/functions.php');
-
+require_once('../lib/core/load.class.php');
+include_core_files();
 checkLogin('2');
 
 		if (empty($_POST['oldpassword']) || empty($_POST['newpassword'])) 

@@ -16,13 +16,10 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
- ?>
-<?PHP
-require_once('../lib/connections/db.php');
-include('../lib/functions/functions.php');
 
+require_once('../lib/core/load.class.php');
+include_core_files();
 checkLogin('2');
-
 $getuser = getUserRecords($_SESSION['user_id']);
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -32,10 +29,6 @@ $getuser = getUserRecords($_SESSION['user_id']);
 </head>
 
 <body>
-<?php
-require_once('../lib/connections/db.php');
-require_once('../init.php');
-?>
 <?php
 //We check if the user is logged
 if(isset($_SESSION['user_id']))
@@ -53,7 +46,7 @@ else
 }
 ?> 
 <?php
-include ISVIPI_THEMES_BASE.$theme.'/females.php';
+include ISVIPI_THEMES_BASE.'females.php';
 ?>
 </body>
 </html>

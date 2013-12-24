@@ -1,5 +1,5 @@
                  <!--========HEADER=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/header.php';?>
+                    <?php include ISVIPI_THEMES_BASE.'global/header.php';?>
                   <!--========/HEADER=====---->
         <?php
 //We check if the user is logged
@@ -63,7 +63,7 @@ else
 //We display the messages
 ?>
                   <!--========SIDEBAR MENU=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/sidebar_menu.php';?>
+                    <?php include ISVIPI_THEMES_BASE.'global/sidebar_menu.php';?>
                   <!--========/SIDEBAR MENU=====---->
                   <!--========MESSAGES=====---->
                   <div class="col-md-6">
@@ -136,8 +136,8 @@ else
 
          
                   <!--========ANNOUNCEMENTS=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/announcements.php';?> 
+                    <?php include ISVIPI_THEMES_BASE.'global/announcements.php';?> 
                   <!--========/ANNOUNCEMENTS=====---->
                   <!--========FOOTER=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/footer.php';?> 
+                    <?php include ISVIPI_THEMES_BASE.'global/footer.php';?> 
                   <!--========/FOOTER=====---->

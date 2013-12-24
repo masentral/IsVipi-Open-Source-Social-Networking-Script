@@ -16,10 +16,9 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
- ?>
-<?php
-require_once('lib/connections/db.php');
-require_once('init.php');
-//include 'themes/default/index.php';
-include ISVIPI_THEMES_BASE.$theme.'/index.php';
+require_once('lib/core/load.class.php');
+//check if the site is installed else redirect to install page
+check_install();
+require_home_files();
+include ISVIPI_THEMES_BASE.'/index.php';
 ?>

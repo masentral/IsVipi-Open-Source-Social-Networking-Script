@@ -17,22 +17,17 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
  ?>
-<?PHP
-require_once('../lib/core/load.class.php');
-include_core_files();
-checkLogin('2');
-
-$getuser = getUserRecords($_SESSION['user_id']);
-?>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Messages</title>
-</head>
-
-<body>
 <?php
-include ISVIPI_THEMES_BASE.'messages.php';
+$localhost = "localhost";
+$database = "isvipi";
+$username = "root";
+$password = "zorrayah";
+
+//connect to database
+$conn = mysql_connect($localhost, $username, $password) or die("Error: Could not connect to database");
+//select database
+$db = mysql_select_db($database,$conn) or die("Error: Could not select a database");
+
+
+date_default_timezone_set ("Africa/Nairobi");
 ?>
-</body>
-</html>

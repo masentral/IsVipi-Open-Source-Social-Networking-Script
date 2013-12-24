@@ -19,7 +19,7 @@
  ?>
 <?PHP
 DEFINE('INCLUDE_CHECK',1);
-require_once('lib/connections/db.php');
+require_once('lib/db/db.php');
 include('lib/functions/functions.php');
 
 $id = '';

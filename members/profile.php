@@ -18,9 +18,8 @@
  ******************************************************/ 
  ?>
 <?PHP
-require_once('../lib/connections/db.php');
-include('../lib/functions/functions.php');
-
+require_once('../lib/core/load.class.php');
+include_core_files();
 checkLogin('2');
 
 $getuser = getUserRecords($_SESSION['user_id']);
@@ -33,10 +32,6 @@ $getuser = getUserRecords($_SESSION['user_id']);
 </head>
 
 <body>
-<?php
-require_once('../lib/connections/db.php');
-require_once('../init.php');
-?>
 <?php
 //We check if the user is logged
 if(isset($_SESSION['user_id']))
@@ -54,7 +49,7 @@ else
 }
 ?> 
 <?php
-include ISVIPI_THEMES_BASE.$theme.'/profile.php';
+include ISVIPI_THEMES_BASE.'profile.php';
 ?>
 </body>
 </html>

@@ -18,9 +18,8 @@
  ******************************************************/ 
  ?>
  <?PHP
-require_once('../lib/connections/db.php');
-include('../lib/functions/functions.php');
-
+require_once('../lib/core/load.class.php');
+include_core_files();
 checkLogin('2');
 
 $getuser = getUserRecords($_SESSION['user_id']);
@@ -33,24 +32,16 @@ $getuser = getUserRecords($_SESSION['user_id']);
 
 <body>
 <?php
-require_once('../lib/connections/db.php');
-require_once('../init.php');
-//We delete the discussion
-if(! $conn )
-{
-  die('Could not connect: ' . mysql_error());
-}
 //We check if the ID of the discussion is defined
 if(isset($_GET['id']))
 {
 $reqid = intval($_GET['id']);
-$update = mysql_query('UPDATE friend_requests SET status = "rejected" WHERE request_id = "'.$reqid.'"');
+$update = mysql_query('UPDATE friend_requests SET status = "2" WHERE request_id = "'.$reqid.'"');
 }
 if(! $update )
 {
   die('Update not successfull' . mysql_error());
 }
 echo "Updated successfully\n";
-mysql_close($conn);
 
 ?>

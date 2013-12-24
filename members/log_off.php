@@ -18,8 +18,8 @@
  ******************************************************/ 
  ?>
 <?PHP
-require_once('../lib/connections/db.php');
-include('../lib/functions/functions.php');
+require_once('../lib/core/load.class.php');
+include_core_files();
 
 $action='';
 	if (isset($_GET['action'])){
@@ -54,6 +54,6 @@ $action='';
 
 </head>
 <body>
-	<div class="message" align="center">You have been logged out. <a href="../login.php">Click here</a> to log in.</div>
+	<?php header("location:../");?>
 </body>
 </html>

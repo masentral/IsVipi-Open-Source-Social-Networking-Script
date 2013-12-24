@@ -18,7 +18,7 @@
  ******************************************************/ 
  ?>
 <?php
-require_once('../connections/db.php');
+require_once('../db/db.php');
 include('../functions/functions.php');
 $sitesettings = getSiteSettings();
 $site_url = $sitesettings[0]['site_url'];

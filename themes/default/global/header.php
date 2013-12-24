@@ -14,8 +14,7 @@ if(isset($_SESSION['user_id']))
 {
 $me = $_SESSION['user_id'];
 //We list notifications in a table
-$query1 = mysql_query('SELECT * FROM friend_requests WHERE to_id = "'.$me.'" AND status="pending"');
-$friends = mysql_query('SELECT * FROM friend_requests WHERE to_id = "'.$me.'" AND status="pending"');
+$friends = mysql_query('SELECT * FROM friend_requests WHERE to_id = "'.$me.'" AND status="1"');
 $num_rows = mysql_num_rows($friends);
 if (mysql_num_rows($friends)>0) {
 $friend_format = '<span class="badge badge-warning">'.$num_rows.'</span>';
@@ -26,20 +25,16 @@ else
 }
 ?>
   <!-- Bootstrap -->
-  <link href="<?php echo ISVIPI_THEME_URL; ?><?php echo $theme; ?>/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="<?php echo ISVIPI_THEME_URL; ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
   <!-- Main Style -->
-  <link href="<?php echo ISVIPI_THEME_URL; ?><?php echo $theme; ?>/css/isvipi.css" rel="stylesheet" media="screen">
+  <link href="<?php echo ISVIPI_THEME_URL; ?>css/isvipi.css" rel="stylesheet" media="screen">
   <!-- FontAwesome -->
-  <link rel="stylesheet" href="<?php echo ISVIPI_THEME_URL; ?><?php echo $theme; ?>/fontawesome/css/font-awesome.min.css">
-        
-  <!-- Vendors -->
-  <link href="<?php echo ISVIPI_THEME_URL; ?><?php echo $theme; ?>/vendors/easypiechart/jquery.easy-pie-chart.css" rel="stylesheet" media="screen">
-  <link href="<?php echo ISVIPI_THEME_URL; ?><?php echo $theme; ?>/vendors/easypiechart/jquery.easy-pie-chart_custom.css" rel="stylesheet" media="screen">
+  <link rel="stylesheet" href="<?php echo ISVIPI_THEME_URL; ?>fontawesome/css/font-awesome.min.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
-           <script type="text/javascript" src="js/html5shiv.js"></script>
-           <script type="text/javascript" src="js/respond.min.js"></script>
+           <script type="text/javascript" src="<?php echo ISVIPI_THEME_URL; ?>js/html5shiv.js"></script>
+           <script type="text/javascript" src="<?php echo ISVIPI_THEME_URL; ?>js/respond.min.js"></script>
         <![endif]-->
     </head>
       <body>
@@ -50,7 +45,7 @@ else
                 <div class="row">
                   <a href="../members/" title="IsVipi Logo"><div class="admin_logo"><p class="Site_Title">IsVipi <span class="social_network">Social Network</span></p></div></a>
                       <div class="not-bar">
-                        <a href="" title="Announcements"><div class="not-boxes"><i class="fa fa-bell-o"></i><sup><span class="badge badge-info">3</span></sup></div></a>
+                        <a href="" title="Announcements"><div class="not-boxes"><i class="fa fa-bell-o"></i><!--<sup><span class="badge badge-info">3</span></sup>--></div></a>
                         <a href="messages.php" title="Messages"><div class="not-boxes"><i class="fa fa-envelope-o"></i><sup><?php echo $num_mess; ?></sup></div></a>
                         <a href="friend_requests.php" title="Friends Requests"><div class="not-boxes"><i class="fa fa-user"></i><sup><?php echo $friend_format; ?></sup></div></a>
                       </div>

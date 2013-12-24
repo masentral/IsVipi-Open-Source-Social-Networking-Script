@@ -7,6 +7,6 @@
                <li><a href="friends.php" title="My Friends"><i class="fa fa-users"></i> My Friends</a></li>
                <li><a href="messages.php" title="My Friends"><i class="fa fa-envelope-o"></i></i> My Messages</a></li>
                <li><a href="members.php" title="Members Online"><i class="fa fa-users"></i> Browse Members</a></li>
-               <li class="disabled"><a href="groups.php" title="Groups"><i class="glyphicon glyphicon-chevron-right"></i> Groups</a></li>
+               <li class="disabled"><a href="#" title="Groups"><i class="glyphicon glyphicon-chevron-right"></i> Groups</a></li>
           </ul>
      </div> <!--End col-md-4-->

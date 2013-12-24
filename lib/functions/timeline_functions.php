@@ -49,7 +49,7 @@ function formatTweet($tweet,$dt)
 
 	$tweet=htmlspecialchars(stripslashes($tweet));
 // fetch the id
-$user = $_SESSION['user_id'];
+//$user = $_SESSION['user_id'];
 // fetch the username
 $username = '';
 list($username) = mysql_fetch_array(mysql_query("SELECT username FROM timeline WHERE tweet = '$tweet'"));
@@ -63,11 +63,11 @@ $user = $user_id;
 
 
 $site = '';
-list($site) = mysql_fetch_array(mysql_query("SELECT site_url FROM site_settings WHERE id = '1'"));
+list($site) = mysql_fetch_array(mysql_query("SELECT site_url FROM site_settings"));
 if(!$site) $site = "http://localhost/isvipi/";
 
 $theme = '';
-list($theme) = mysql_fetch_array(mysql_query("SELECT theme FROM site_settings WHERE id = '1'"));
+list($theme) = mysql_fetch_array(mysql_query("SELECT theme FROM site_settings"));
 if(!$theme) $theme = "default";
 
 $thumb_path = '';

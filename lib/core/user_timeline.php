@@ -1,7 +1,7 @@
 <?php
 define('INCLUDE_CHECK',1);
 include('../functions/timeline_functions.php');
-require_once('../connections/db.php');
+require_once('../db/db.php');
 
 if(ini_get('magic_quotes_gpc'))
 $_POST['inputField']=stripslashes($_POST['inputField']);

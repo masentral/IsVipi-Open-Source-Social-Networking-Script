@@ -18,9 +18,8 @@
  ******************************************************/ 
  ?>
  <?PHP
-require_once('../lib/connections/db.php');
-include('../lib/functions/functions.php');
-
+require_once('../lib/core/load.class.php');
+include_core_files();
 checkLogin('2');
 
 $getuser = getUserRecords($_SESSION['user_id']);
@@ -33,24 +32,43 @@ $getuser = getUserRecords($_SESSION['user_id']);
 
 <body>
 <?php
-require_once('../lib/connections/db.php');
-require_once('../init.php');
-//We delete the discussion
-if(! $conn )
-{
-  die('Could not connect: ' . mysql_error());
-}
 //We check if the ID of the discussion is defined
 if(isset($_GET['id']))
 {
 $reqid = intval($_GET['id']);
-$update = mysql_query('UPDATE friend_requests SET status = "accepted" WHERE request_id = "'.$reqid.'"');
+//Retrieve IDs of the sender and receiver based on the request ID
+$getids = mysql_query('SELECT from_id,to_id from friend_requests WHERE request_id = "'.$reqid.'"');
+while($row = mysql_fetch_array($getids))
+{
+  $from_id = $row['from_id'];
+  $to_id = $row['to_id'];
 }
+//We check if they are already friends
+$sqlcheck = mysql_query("SELECT * FROM my_friends WHERE (user1='".$from_id."' AND user2='".$to_id."') OR (user2='".$from_id."' AND user1='".$to_id."')");
+if(mysql_num_rows($sqlcheck)>0)
+	{
+		die ('Error: Cannot accept friend request again.');
+		//create a redirect below
+	}
+else
+	{
+//Add retrieved IDs to my friendlist table
+$sql = 'INSERT INTO my_friends '.
+       '(id,user1, user2, timestamp) '.
+       'VALUES ( "", "'.$from_id.'", "'.$to_id.'", NOW() ),
+	   ( "", "'.$to_id.'", "'.$from_id.'", NOW() )';
+if(! $sql )
+{
+  die('Could not enter data: ' . mysql_error());
+}
+//Delete friend request from friend requests table
+$update = mysql_query('UPDATE friend_requests SET status = "0" WHERE request_id = "'.$reqid.'"');
 if(! $update )
 {
   die('Update not successfull' . mysql_error());
 }
 echo "Updated successfully\n";
-mysql_close($conn);
-
+mysql_query($sql);
+}
+}
 ?>

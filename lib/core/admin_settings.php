@@ -17,22 +17,37 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
  ?>
-<?PHP
-require_once('../lib/core/load.class.php');
-include_core_files();
-checkLogin('2');
-
-$getuser = getUserRecords($_SESSION['user_id']);
-?>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Messages</title>
-</head>
-
-<body>
 <?php
-include ISVIPI_THEMES_BASE.'messages.php';
+require_once('../db/db.php');
+include('../functions/admin_functions.php');
+
+//For registration
+
+	// we check if everything is filled in and perform checks
+
+	if(!$_POST['site_url'])
+	{
+		die("<p>Please provide the site URL. </p>");
+	}
+	elseif(!$_POST['site_email'])
+	{
+		die("<p>Please provide your site's official email address.</p>");
+	}
+
+	else
+		{
+$site_url = $_POST['site_url'];
+$site_email = $_POST['site_email'];
+$theme = $_POST['theme'];
+$time_zone = $_POST['time_zone'];
+$sql = "INSERT INTO site_settings (site_url,site_email,theme,time_zone) VALUES ('".$site_url."','".$site_email."','".$theme."','".$time_zone."')";
+$retval = mysql_query( $sql, $conn );
+if(! $retval )
+{
+  die('Could not add friend request: ' . mysql_error());
+  //create a redirect below
+}
+die(header("Location: ../../install/install_step_3.php"));
+mysql_close($conn);
+		}
 ?>
-</body>
-</html>

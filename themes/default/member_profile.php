@@ -1,5 +1,5 @@
                   <!--========HEADER=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/header.php';?>
+                    <?php include ISVIPI_THEMES_BASE.'global/header.php';?>
                   <!--========/HEADER=====---->
                   <?php
 //We check if the users ID is defined
@@ -15,7 +15,7 @@ if(isset($_GET['id']))
 ?>
         
                   <!--========SIDEBAR MENU=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/sidebar_menu.php';?>
+                    <?php include ISVIPI_THEMES_BASE.'global/sidebar_menu.php';?>
                   <!--========/SIDEBAR MENU=====---->
                   
                   <!--========MY PROFILE=====---->
@@ -28,7 +28,7 @@ if(isset($_GET['id']))
                       </div>
                     </div>
                     <div class="isvipi-panel-content tabless-panel-content collapse in">
-                  <div class="profile_image"><img src="<?=$getuser[0]['thumb_path'];?>" height="100%" width="100%" alt="" /></div>
+                  <div class="profile_image"><img src="<?php echo htmlentities($dnn['thumb_path']); ?>" height="100%" width="100%" alt="" /></div>
                   <div class="profile_info">
                   <div class="isvipi-panel-content">
                                     <table class="table table-striped">
@@ -63,7 +63,7 @@ if(isset($_GET['id']))
                                 </div><!--end of isvipi-panel-content-->
                                 <div class="profile_options_bar">
                                  <div class="upload_pic"></i></div>
-                                <a href="#" title="Send a Message" data-toggle="modal" data-target="#MessageUser"><i class="fa fa-envelope-o"></i></a><a href="friend_request.php?id=<?php echo $dnn['id']; ?>" title="Send Friend Request"><i class="fa fa-user"></i></a><a href="" title="Report this person"><i class="fa fa-exclamation-triangle"></i></a>
+                                <a href="#" title="Send a Message" data-toggle="modal" data-target="#MessageUser"><i class="fa fa-envelope-o"></i></a><a href="f_request.php?id=<?php echo $dnn['id']; ?>" title="Send Friend Request"><i class="fa fa-user"></i></a><a href="" title="Report this person"><i class="fa fa-exclamation-triangle"></i></a>
                                 </div>
                                 
 <!-- Message User Modal -->
@@ -110,8 +110,8 @@ if(isset($_GET['id']))
               <!--========/MY PROFILE=====---->
                         
                   <!--========ANNOUNCEMENTS=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/announcements.php';?> 
+                    <?php include ISVIPI_THEMES_BASE.'global/announcements.php';?> 
                   <!--========/ANNOUNCEMENTS=====---->
                   <!--========FOOTER=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/footer.php';?> 
+                    <?php include ISVIPI_THEMES_BASE.'global/footer.php';?> 
                   <!--========/FOOTER=====---->

@@ -18,9 +18,8 @@
  ******************************************************/ 
  ?>
 <?PHP
-require_once('../lib/connections/db.php');
-include('../lib/functions/functions.php');
-
+require_once('../lib/core/load.class.php');
+include_core_files();
 checkLogin('2');
 
 $getuser = getUserRecords($_SESSION['user_id']);
@@ -33,9 +32,7 @@ $getuser = getUserRecords($_SESSION['user_id']);
 
 <body>
 <?php
-require_once('../lib/connections/db.php');
-require_once('../init.php');
-include ISVIPI_THEMES_BASE.$theme.'/page.php';
+include ISVIPI_THEMES_BASE.'page.php';
 ?>
 </body>
 </html>

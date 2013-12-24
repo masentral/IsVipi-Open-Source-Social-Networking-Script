@@ -1,10 +1,10 @@
                   
                   <!--========HEADER=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/header.php';?>
+                    <?php include ISVIPI_THEMES_BASE.'global/header.php';?>
                   <!--========/HEADER=====---->
         
                   <!--========SIDEBAR MENU=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/sidebar_menu.php';?>
+                    <?php include ISVIPI_THEMES_BASE.'global/sidebar_menu.php';?>
                   <!--========/SIDEBAR MENU=====---->
                   
                   <!--========MEMBERS=====---->
@@ -48,13 +48,12 @@ if ($online=="1")
   }
 ?>
   <div class="col-xs-6 col-md-3">
-    <a href="member_profile.php?id=<?php echo $dnn['id']; ?>" class="thumbnail">
+    <a href="member_profile.php?id=<?php echo $dnn['id']; ?>" class="thumbnail" title="<?php echo htmlentities($dnn['username'], ENT_QUOTES, 'UTF-8'); ?>">
       <img src="<?php echo ISVIPI_MEMBER_URL; ?><?php echo $thumb; ?>" alt="...">
     </a>
     <div class="profile_gender"><?php echo $genderd; ?></div><div class="member_online"><?php echo $onlined; ?></div>
-    <li><b>Username:</b> <span class="text-right"><?php echo htmlentities($dnn['username'], ENT_QUOTES, 'UTF-8'); ?></span></li>
-    <li><b>Age:</b> <span class="text-right"><?php echo htmlentities($dnn['age'], ENT_QUOTES, 'UTF-8'); ?></span></li>
-    <li><span class="text-right"><?php echo htmlentities($dnn['city'], ENT_QUOTES, 'UTF-8'); ?>, <?php echo htmlentities($dnn['country'], ENT_QUOTES, 'UTF-8'); ?></span></li>
+    <div class="members_details"><span class="text-right"><a href="member_profile.php?id=<?php echo $dnn['id']; ?>" title="<?php echo htmlentities($dnn['username'], ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlentities($dnn['username'], ENT_QUOTES, 'UTF-8'); ?></a></span>, <?php echo htmlentities($dnn['age'], ENT_QUOTES, 'UTF-8'); ?><br />
+    <?php echo htmlentities($dnn['city'], ENT_QUOTES, 'UTF-8'); ?>, <?php echo htmlentities($dnn['country'], ENT_QUOTES, 'UTF-8'); ?></span></div>
   </div>
   <?php
 }
@@ -74,5 +73,5 @@ if ($online=="1")
 
                   <!--========/IMPORTANT TAGS=====---->
                   <!--========FOOTER=====---->
-                    <?php include ISVIPI_THEMES_BASE.$theme.'/global/footer.php';?> 
+                    <?php include ISVIPI_THEMES_BASE.'global/footer.php';?> 
                   <!--========/FOOTER=====---->

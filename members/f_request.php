@@ -17,9 +17,10 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
  ?>
-<?PHP
+ <?PHP
 require_once('../lib/core/load.class.php');
 include_core_files();
+
 checkLogin('2');
 
 $getuser = getUserRecords($_SESSION['user_id']);
@@ -27,28 +28,35 @@ $getuser = getUserRecords($_SESSION['user_id']);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Notifications</title>
+<title>Friend Requests</title>
 </head>
 
 <body>
 <?php
-//We check if the user is logged
-if(isset($_SESSION['user_id']))
+//We check if the ID is defined
+if(isset($_GET['id']))
 {
-//We list his messages in a table
-//Two queries are executes, one for the unread messages and another for read messages
-$req1 = mysql_query('select m1.id, m1.title, m1.timestamp, count(m2.id) as reps, users.id as user_id, users.username from pm as m1, pm as m2,users where ((m1.user1="'.$_SESSION['user_id'].'" and m1.user1read="no" and users.id=m1.user2) or (m1.user2="'.$_SESSION['user_id'].'" and m1.user2read="no" and users.id=m1.user1)) and m1.id2="1" and m2.id=m1.id group by m1.id order by m1.id desc');
-$req2 = mysql_query('select m1.id, m1.title, m1.timestamp, count(m2.id) as reps, users.id as user_id, users.username from pm as m1, pm as m2,users where ((m1.user1="'.$_SESSION['user_id'].'" and m1.user1read="yes" and users.id=m1.user2) or (m1.user2="'.$_SESSION['user_id'].'" and m1.user2read="yes" and users.id=m1.user1)) and m1.id2="1" and m2.id=m1.id group by m1.id order by m1.id desc');
-?>    
-<?php
+$to_id = intval($_GET['id']);
+$from_id = $getuser[0]['id'];
+//We check if a previous unapproved friend request was sent
+$sqlcheck = mysql_query("SELECT * FROM friend_requests WHERE (from_id='".$from_id."' AND to_id='".$to_id."') OR (to_id='".$from_id."' AND from_id='".$to_id."')");
+if(mysql_num_rows($sqlcheck)>0||($from_id==$to_id))
+	{
+		die ('Error: Cannot execute friend request command.');
+		//create a redirect below
+	}
+	else
+	{
+
+//If no unapproved request, we submit one
+$sql = "INSERT INTO friend_requests (from_id,to_id,status,timestamp) VALUES ('".$from_id."','".$to_id."','1',NOW())";
 }
-else
+$retval = mysql_query( $sql);
+if(! $retval )
 {
-	echo 'You must be logged to access this page.';
+  die('Could not add friend request: ' . mysql_error());
+  //create a redirect below
 }
-?> 
-<?php
-include ISVIPI_THEMES_BASE.'friend_req.php';
+echo "Friend request added successfully\n";
+}
 ?>
-</body>
-</html>
