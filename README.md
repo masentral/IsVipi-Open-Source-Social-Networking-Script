@@ -49,8 +49,7 @@ Members have to validate their email addresses before they can be allowed to bro
 
 SYSTEM REQUIREMENTS
 
-PHP 4+
-MySQL 4.1+
+PHP 4+, MySQL 4.1+
 
 DEMO
 
