@@ -27,18 +27,22 @@ member area include:
 Among others...
 
 MEMBER VALIDATION
+
 Members have to validate their email addresses before they can be allowed to browse through the site
 
 SYSTEM REQUIREMENTS
 
 
 DEMO
+
 You can check out the demo at http://demo.isvipi.com
 
 SUPPORT
+
 Issues can be reported here (at Github) or by visiting out forum at http://forum.isvipi.com
 
 CONTRIBUTION
+
 If you wish to contribute in any way, be it theme developement, core functionality or develop mods, please contact us. Alternatively, fork the project, make the modifications or enhancements you want then submit a pull request.
 
 You can also contibute by making a donation. This script is released free of charge and you are not obligated to make any payment. The donations are aimed at motivating the developers as well as meeting some of their financial demands. It is worthwhile noting that the developers put in a lot of time and effort in providing you with this script and therefore a little appreciation would go a long way :). For details on how you can make your donation, please visit http://isvipi.com.
