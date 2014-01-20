@@ -8,22 +8,39 @@ This is our first alpha release of the software which contains only the members 
 member area include:
 
 -Secure log in
+
 -Member dashboard
+
 -Member profile
+
 -Member edit profile
+
 -Profile pictures
+
 -User timeline/feeds
+
 -Browse members
+
 -Filter members by status "online"
+
 -Filter members by recently signed up
+
 -Friend request system where a member can accept or reject a friend request
+
 -My friends module
+
 -Unfriend module
+
 -Personal Messaging
+
 -New Message Notification
+
 -New Friend request notification
+
 -site alerts notifications (e.g. friend request accepted or rejected)
+
 -Admin announcements (which will be fully operational when we release the admin section)
+
 Among others...
 
 MEMBER VALIDATION
