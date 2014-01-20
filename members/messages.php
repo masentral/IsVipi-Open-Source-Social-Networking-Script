@@ -1,6 +1,6 @@
 <?php
 /*******************************************************
- *   Copyright (C) 2013  http://isvipi.com
+ *   Copyright (C) 2014  http://isvipi.com
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,23 +16,32 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
+ require_once '../init.php';
+ include_once ISVIPI_USER_INC_BASE. 'users.func.php';
+ session_start();
+ checkLogin();
+ $user = $_SESSION['user_id'];
+ getUserDetails($user);
  ?>
-<?PHP
-require_once('../lib/core/load.class.php');
-include_core_files();
-checkLogin('2');
-
-$getuser = getUserRecords($_SESSION['user_id']);
-?>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Messages</title>
-</head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversations</title>
 
-<body>
-<?php
-include ISVIPI_THEMES_BASE.'messages.php';
-?>
+<!--========HEADER=====---->
+<?php include ISVIPI_THEMES_BASE.'/global/header.php';?>
+<!--========/HEADER=====---->
+
+<!--========BODY=====---->
+<?php include_once ISVIPI_THEMES_BASE.'messages.php';?>
+<!--========/BODY=====---->
+
+<!--========FOOTER=====---->
+<?php include_once ISVIPI_THEMES_BASE.'/global/footer.php';?>
+<!--========/FOOTER=====---->
+<?php globalAlerts();?>
 </body>
 </html>

@@ -1,7 +1,7 @@
 /*!
  * IsVipi 1.0.0 Default CSS
- * Copyright 2013 IsVipi.
- * Licensed under http://www.apache.org/licenses/LICENSE-3.0
+ * Copyright 2014 IsVipi.
+ * Licensed under GPL V3
  */
 /** The vertical centered content **/
 
@@ -10,35 +10,64 @@ body{
     background:#FFF;
 	overflow-y: scroll;
     overflow-x: hidden;
-	
-}
- 
-/* Track */
-.overflow {max-height:600px; overflow-y: scroll;
-overflow-x: hidden;}
-::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
-	border-radius: 10px;
 }
 
-::-webkit-scrollbar
-{
-	width: 5px;
-	background-color: #F5F5F5;
+/**Index page**/
+.index_login {float:right;margin-top:10px}
+.index_login .alert{margin-top:-10px}
+.home_content{height:533px;width:100%;margin-top:-25px;background:url(../images/bg.jpg);-moz-background-size:100% 100%;background-size:100% 100%; background-repeat:no-repeat;}
+.home_log_content{height:533px;width:100%;margin-top:-25px; background:#CCC}
+.home_register {float:right; margin-right:100px; margin-top:10px}
+.home_welcome {float:left; width:500px; height:400px; margin-left:100px}
+.home_login_welcome {float:left; width:500px; height:400px; margin-left:200px; margin-top:100px}
+.home_welcome h1{color:#FF0; font-size:30px; text-align:center; line-height:50px; font-weight:800}
+
+/** Login form **/
+.login-form{
+    min-width: 400px;
+    padding: 30px;
+    background-color: #FFF;
+	opacity:0.9;
+    filter:alpha(opacity=90); /* For IE8 and earlier */
+    border: 1px solid #E5E5E5;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.login-form h3{
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+.login-form .form-group{
+    margin-bottom: 5px;
+}
+.login-form label{
+    font-size: 15px;
+}
+.login-form input[type="text"],
+.login-form input[type="password"]{
+    font-size: 14px;
+    height: auto;
+    padding: 7px 9px;
+	width:350px
+}
+.login-form input[type="checkbox"]{
+    margin-right: 5px;
 }
 
-::-webkit-scrollbar-thumb
-{
-	border-radius: 10px;
-	background-image: -webkit-gradient(linear,
-									   left bottom,
-									   left top,
-									   color-stop(0.44, rgb(122,153,217)),
-									   color-stop(0.72, rgb(73,125,189)),
-									   color-stop(0.86, rgb(28,58,148)));
-}/** Header **/
+.login-form select{
+	cursor:pointer;
+    margin-right: 5px;
+}
+.login-form input[type="email"]{
+    width:350px;
+}
+.shortened {width:220px !important;border:solid #CCC thin; -moz-border-radius:4px; border-radius:4px}
+
+/** Header **/
 .top-menu{background:#343942; height:55px}
 .Site_Title {color:#FFF; font-size:22px; font-weight:700; font-family:"Comic Sans MS", cursive}
 .social_network {color:#FF0; font-size:14px; font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif}
@@ -49,10 +78,11 @@ overflow-x: hidden;}
 .profile_pic {width:50px; height:50px; cursor:pointer; float:left;background:url(../images/image.gif); background:cover}
 .not-boxes{width:30px;height:30px;background:#282D33;margin-right:10px; display:inline-block;color:#FFF;}
 .dropdown {position:absolute; top:0; right:0; margin-right:100px; margin-top:15px}
-.dropdown a{color:#FFF; font-weight:800}
-.not-boxes:hover{background:#1B1F23;}
-.not-boxes i{color:#999;font-size:18px; cursor:pointer;margin-top:7px; margin-left:6px}
-.not-boxes i:hover{color:#FFF;}
+.dropdown a{color:#FFF; font-weight:800; text-decoration:none}
+.dropdown a:hover{text-decoration:none;color:#CCC}
+.not-boxes:hover{background:#1B1F23;text-decoration:none}
+.not-boxes i{color:#999;font-size:18px; cursor:pointer;margin-top:7px; margin-left:6px;text-decoration:none}
+.not-boxes i:hover{color:#FFF; text-decoration:none}
 .badge {
   padding: 3px 6px 3px;
   font-size: 11px;
@@ -106,10 +136,181 @@ overflow-x: hidden;}
     margin-left: 0px;
 }
 .dashboard_layout{width:1150px; border-right:solid #CCC thin; border-left:solid #CCC thin}
-.col-md-6 .row {float:left; margin-left:-130px}
-.timeline-layout {min-width:600px; min-height:auto;}
-.dash_announce .panel {border:#CCC thin solid; min-height:300px; min-width:250px; position:absolute; right:0; margin-right:-180px;overflow:hidden}
+.col-md-6 .row {float:left; margin-left:-130px} 
+.scrollable {max-height:400px; 
+overflow-y: scroll;
+overflow-x: hidden;
+}
+.scrollable2 {max-height:500px; 
+overflow-y: scroll;
+overflow-x: hidden;
+width:530px;
+}
+.scrollable3 {max-height:320px; 
+overflow-y: scroll;
+overflow-x: hidden;
+width:530px;
+}
+.reply_msg {padding:5px}
+.reply_msg textarea{border:solid #CCC thin; -moz-border-radius:4px; border-radius:4px; width:100%; height:80px}
+.chat_img{float:left}
+.r_msg {font-size:12px; width:490px; text-align:justify}
+.chat_time {
+	color: #FF9;
+	font-size: 11px;
+	display:block;
+	float:right
+}
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, rgb(122,153,217)),
+									   color-stop(0.72, rgb(73,125,189)),
+									   color-stop(0.86, rgb(28,58,148)));
+}
+/* Announcements */
+.dash_announce .panel {border:#CCC thin solid; float: right; min-height:300px; min-width:250px; overflow:hidden; margin-right:15px}
 .dash_announce .panel .panel-body {min-height:200px}
+
+/** central content **/
+.dash_content .panel {border:#CCC thin solid; min-height:300px; /**max-width:575px;**/ min-width:575; position:relative;overflow:hidden; float:left;margin-left:-113px}
+.dash_content .panel .panel-body {min-height:200px; width:580px}
+.dash_content .panel .panel-body .my_pic{width:150px;height:150px; border:solid thin #CCC; float:left}
+.dash_content .panel .panel-body .my_details{width:380px;float:left; margin-left:10px;}
+.dash_content .panel .panel-body .my_details table{font-size:13px}
+.dash_content .panel .panel-body .profile_options{width:150px;height:50px; float:left; margin-top:-30px;padding-left:5px}
+.dash_content .panel .panel-body .profile_edit{margin-top:-10px;}
+.dash_content .panel .panel-body .c_prof{width:550px; margin-top:10px; margin-left:20px;}
+.dash_content .panel .panel-body .c_pass{min-width:550px; margin-top:10px; margin-left:-15px;}
+.edit_profile_i .form-group .edit_prof_hints{margin-top:-30px; margin-left:240px}
+.edit_profile_i .form-group .edit_prof_hints p{width:100px;color:#0F0}
+.edit_profile_i .form-group .radio{margin-left:-100px;}
+.edit_profile_i .form-group .radio label{margin-left:-100px;}
+.dash_content .panel .members_options{height:40px; width:200px;}
+.dash_content .panel .panel-body .m_list{width:700px; margin-top:10px; margin-left:20px;}
+.dash_content .panel .panel-body .m_list .friend_req_button{float:right; margin-top:-80px;margin-right:20px}
+.dash_content .panel .panel-body .m_list .msg_friend_button{float:right; margin-top:-90px;margin-right:20px}
+.dash_content .panel .panel-body .m_list .msg_friend_button hr{margin-top:5px !important; margin-bottom:5px !important}
+.dash_content .panel .panel-body li{list-style:none;border-bottom:dotted thin #CCC; width:500px; padding:5px}
+.dash_content .panel .panel-body .member_pic {width:100px;height:100px;margin-bottom:5px;float:left; padding:5px}
+.dash_content .panel .panel-body .member_pic img{border:0px;-moz-border-radius:8px; border-radius:8px;}
+.dash_content .panel .panel-body .member_info {width:300px;height:100px;margin-bottom:5px; margin-left:130px;padding:5px}
+.dash_content .panel .panel-body .member_info table{width:250px;}
+.dash_content .panel .panel-body .member_info table tr{height:10px}
+.dash_content .panel .panel-body .member_info a {font-size:13px; font-weight:800;}
+.dash_content .panel .panel-body .member_info a:hover{text-decoration:none}
+.members_list_info{font-size:11px;}
+.msglist {font-size:12px}
+.green {color:#060}
+.blue {color:#03F}
+.message_options_bar{font-size:15px;}
+.message_options_bar i{padding-right:5px; padding-left:5px;cursor:pointer;}
+.message_options_bar i:hover{color:#00F}
+.chat_user_ico i{float:left; margin-top:20px; font-size:16px}
+.chat_user_ico2 i{float:right; margin-top:20px; font-size:16px}
+.chat_user_ico .tooltip-arrow {
+  display:none
+}
+.chat_user_ico .tooltip-inner {
+	position:absolute;left:0;margin-right:-50px;margin-top:-10px
+}
+.chat_user_ico2 .tooltip-arrow {
+  display:none
+}
+.chat_user_ico2 .tooltip-inner {
+	position:absolute;right:0;margin-right:-490px;margin-top:-5px
+}
+.chat_with {font-weight:800;color:#FF0}
+/**Chat box**/
+/* THE SPEECH BUBBLE
+------------------------------------------------------------------------------------------------------------------------------- */
+
+.triangle-right {
+  position:relative;
+  width:380px;
+  padding:10px;
+  margin:1em auto;
+  color:#fff;
+  background:#075698; /* default background for browsers without gradient support */
+  /* css3 */
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#2e88c4), to(#075698));
+  background:-moz-linear-gradient(#2e88c4, #075698);
+  background:-o-linear-gradient(#2e88c4, #075698);
+  background:linear-gradient(#2e88c4, #075698);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+
+/* Variant : for left positioned triangle
+------------------------------------------ */
+
+.triangle-right.left {
+  margin-left:50px;
+  background:#075698;
+}
+
+/* Variant : for right positioned triangle
+------------------------------------------ */
+
+.triangle-right.right {
+  margin-right:50px;
+  background:#5cb85c;
+}
+
+/* THE TRIANGLE
+------------------------------------------------------------------------------------------------------------------------------- */
+
+.triangle-right:after {
+  content:"";
+  position:absolute;
+  bottom:-20px; /* value = - border-top-width - border-bottom-width */
+  left:60px; /* controls horizontal position */
+  border-width:10px 40px 0 0; /* vary these values to change the angle of the vertex */
+  border-style:solid;
+  border-color:#075698 transparent;
+  /* reduce the damage in FF3.0 */
+  display:block;
+  width:0;
+}
+
+/* Variant : left
+------------------------------------------ */
+
+.triangle-right.left:after {
+  top:16px;
+  left:-40px; /* value = - border-left-width - border-right-width */
+  bottom:auto;
+  border-width:10px 40px 0 0; /* vary these values to change the angle of the vertex */
+  border-color:transparent #075698;
+}
+
+/* Variant : right
+------------------------------------------ */
+
+.triangle-right.right:after {
+  top:16px;
+  right:-40px; /* value = - border-left-width - border-right-width */
+  bottom:auto;
+  left:auto;
+  border-width:10px 0 0 40px; /* vary these values to change the angle of the vertex */
+  border-color:transparent #5cb85c ;
+}
+
 /** Forms */
 .form-group label.control-label{
     line-height: normal;
@@ -117,120 +318,25 @@ overflow-x: hidden;}
 .form-group label{
     line-height: 25px;
 }
-
-/** Title of container for lists, some content etc. **/
-.isvipi-title{
-    display: inline;
+.form-group input{
+    width: 220px; margin-right:10px
+}
+.form-group select{
+    width: 220px; margin-right:10px
 }
 
-/** Button which is an action */
-.btn.action:active{
-    box-shadow: none;
-}
 
-/** Content of the panel **/
-.isvipi-panel-content{
-    padding: 15px;
+.modal-body .form-group label.control-label{
+    line-height: normal;
 }
-.isvipi-panel-content-width{width:600px}
-.isvipi-panel-content-width2{width:500px}
-.isvipi-panel-content table{
-    margin-bottom: 0;
-	margin-top: -15px;
-	font-size:13px;
-	line-height:10px;
+.modal-body .form-group label{
+    line-height: 25px;
 }
-.date {margin-bottom:5px}
-.isvipi-panel-content dl{
-    margin-bottom: 0;
-    margin-top: 0;
+.modal-body .form-group input{
+    width: 400px; margin-right:10px
 }
-.isvipi-panel-content .col-xs-6{
-    width:140px;
-	height:160px;
-	border:solid thin #CCC;
-	margin-top:10px;
-	padding-top:5px;
-	margin-right:20px;
-}
-.friend_list .col-xs-6{
-    width:170px;
-	height:150px;
-	border:solid thin #CCC;
-	margin-top:10px;
-	padding-top:5px;
-	margin-right:10px;
-}
-.isvipi-panel-content .col-xs-6 img{
-    width:100%;
-	height:60%;
-	border:none;
-	
-}
-.isvipi-panel-content .col-xs-6 .thumbnail {border:none;}
-.isvipi-panel-content .col-md-3 .members_details{border:none; font-size:10px; margin-top:-15px}
-.isvipi-panel-content .col-xs-6 .profile_gender{
-position:absolute;
-top:0;
-left:0;
-z-index:99;
-margin-left:10px;
-font-size:20px;
-background:#CCC;
-padding:5px;
-color:#00C}
-.isvipi-panel-content .col-xs-6 .member_online{
-position:absolute;
-top:0;
-left:0;
-z-index:99;
-margin-left:10px;
-font-size:16px;
-padding:5px;
-color:#00C;
-margin-top:-13px;
-margin-left:20px}
-.isvipi-title .member_pills {margin-left:30px}
-.message_read {width:470px; min-height:50px; float:right;padding-top:5px; margin-right:30px}
-.friend_list .thumbnail {padding:0; width:135px; border:none}\
-.isvipi-panel-content .col-xs-6 li{
-    font-size:10px;
-	list-style:none;
-	margin-top:-25px;
-	line-height:36px;
-}
-.isvipi-panel-content .friend_list .col-xs-6 li{
-    font-size:12px;
-	list-style:none;
-	text-align:center;
-	padding:0;
-}
-.text-right {text-align:right;color:#03F}
-
-/** Panel with no-table content **/
-.tabless-panel,
-.tabless-panel-content{
-    float: left;
-    width: 100%;
-	margin-left:-5px
-	
-}
-
-/** Horizontal navbars */
-.bootstrap-admin-navbar-sm{
-    background-image: none;
-    border: 0;
-    box-shadow: initial;
-    margin-bottom: 0;
-    min-height: initial;
-    z-index: 1030;
-}
-.bootstrap-admin-navbar-sm .navbar-collapse .navbar-nav:first-child{
-    margin-left: -15px;
-}
-.bootstrap-admin-navbar-sm .navbar-collapse .navbar-nav li a{
-    font-size: 13px;
-    padding: 3px 8px;
+.modal-body .form-group textarea{
+    width: 550px; margin-right:10px;border:#CCC thin solid; -moz-border-radius:4px; border-radius:4px;height:200px
 }
 
 /** Side Bar **/
@@ -279,31 +385,18 @@ margin-left:20px}
     box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
 }
 
-/** Side Bar - Chevrons **/
-.sidebar-menu .glyphicon-chevron-right {
-    float: right;
-    margin-top: 2px;
-    margin-right: -6px;
-    opacity: .25;
-}
-
-/**Profile Page **/
-.profile_options {background:#E4E4E4; width:30px; height:30px; display:inline-block; position:absolute; margin-left:10px; margin-top:-5px; padding-top:6px; font-size:18px; padding-left:6px}
-.profile_image {border:solid #CCC thin; width:180px;height:180px; float:left; cursor:pointer; background:url(../images/no-image.gif); background:cover;}
-.profile_image:hover {border:solid #999 thin;}
-.profile_info {float:left; width:370px; min-height:200px; border-left:solid thin #CCC; margin-left:10px}
-.profile_info p{line-height:15px}
-.profile_options_bar{width:100%; height:40px;font-size:25px; padding-top:6px; padding-left:10px}
-.profile_options_bar i{padding-right:10px; padding-left:10px;cursor:pointer; }
-.profile_options_bar i:hover{color:#00F}
-.message_options_bar{width:100%; font-size:15px; padding-left:10px}
-.message_options_bar i{padding-right:5px; padding-left:5px;cursor:pointer;}
-.message_options_bar i:hover{color:#00F}
-.user_minor_details {margin-left:70px; display:inline-block}
-.upload_pic {float:left;position:absolute; left:0; margin-left:-80px}
-.uniform_on {margin-top:-35px}
 
 /** Footer **/
+.index-footer {width:100%;border-top:solid thin #CCC; padding-top:20px;padding-bottom:10px;position:absolute; bottom:0; right:0;background:#343942;}
+.index-footer p{
+    text-align: right; margin-right:120px; color:#FFF
+}
+.index-footer a{
+    color:#CCC
+}
+.index-footer a:hover{
+    color:#FFF
+}
 .footer {width:100%;border-top:solid thin #CCC; margin-top:90px;padding-top:20px;clear:both;padding-bottom:10px}
 .footer p{
     text-align: right; margin-right:120px;

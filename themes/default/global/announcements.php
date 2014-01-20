@@ -3,7 +3,7 @@
                         <div class="panel panel-primary">
                           <div class="panel-heading">Announcements</div>
                                <div class="panel-body">
-                                Announcements go here
+                                There are no new announcements
                                </div>
                           </div><!--end of panel-->
                         </div><!--end of dash_announce-->

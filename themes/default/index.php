@@ -1,60 +1,52 @@
-<!DOCTYPE html>
-<html class="bootstrap-admin-vertical-centered">
-    <head>
-        <title>IsVipi - Open Source Social Networking Script</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Bootstrap -->
-  <link href="<?php echo ISVIPI_THEME_URL; ?>/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-
-  <!-- Main Style -->
-  <link href="<?php echo ISVIPI_THEME_URL; ?>/css/homepage.css" rel="stylesheet" media="screen">
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-           <script type="text/javascript" src="js/html5shiv.js"></script>
-           <script type="text/javascript" src="js/respond.min.js"></script>
-        <![endif]-->
-    </head>
-    <body>
-    <!-- Full Page Image Header Area -->
-    <div id="top" class="header">
-                  <div class="row">
-                  <div class="home_register">
-                  <form method="post" action="<?php echo ISVIPI_CORE_URL; ?>user_login.php" class="login-form">
-                    <h1>Login</h1>
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="username" value="<?php if(isset($_POST['username'])){echo $_POST['username'];}?>" placeholder="Username" onclick="this.value='';">
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="password" name="password" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" name="remember_me">
-                            Remember me
-                        </label>
-                    </div>
-                    <button class="btn btn-lg btn-primary" type="submit">Submit</button>
-                </form>
-            </div>
-          </div>
+<div class="home_content">
+    <div class="home_welcome">
+    
+    <h1>Meet New People, Chat and Have Fun!</h1>
+    <?php if (isset($_SESSION['succ_reg'])){?>
+    <div class="alert alert-info">
+    <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+    <h3>
+    Registration successful! An email with a validation link has been sent to the email you provided. Please follow the instructions provided to validate your account. If you fail to find the email in your inbox, please check your <strong>spam folder</strong>.
+    </h3>
     </div>
-        <div class="container">
-        </div>
-
-        <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-        <script type="text/javascript">
-            $(function() {
-                // Setting focus
-                $('input[name="email"]').focus();
-
-                // Setting width of the alert box
-                var formWidth = $('.bootstrap-admin-login-form').innerWidth();
-                var alertPadding = parseInt($('.alert').css('padding'));
-                $('.alert').width(formWidth - 2 * alertPadding);
-            });
-        </script>
-    </body>
-</html>
+    <?php unset ($_SESSION['succ_reg']);}?>
+    </div>
+    <div class="home_register">
+      <form method="post" action="<?php echo ISVIPI_USER_INC_URL. 'users.process.php'?>" class="login-form">
+        <input type="hidden" name="op" value="new">
+      <h3>Create New Account</h3>
+      <div class="form-group">
+        <input class="form-control" type="text" name="user" value="<?php if(isset($_POST['user'])){echo $_POST['user'];}?>" placeholder="Username" onclick="this.value='';" required="required">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="d_name" value="<?php if(isset($_POST['d_name'])){echo $_POST['d_name'];}?>" placeholder="Display Name" onclick="this.value='';" required="required">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="email" name="email" value="<?php if(isset($_POST['email'])){echo $_POST['email'];}?>" placeholder="Email" onclick="this.value='';" required="required">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="password" name="pass" value="" placeholder="Password" required="required">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="password" name="pass2" value="" placeholder="Repeat Password" required="required">
+      </div>
+      <div class="form-group">
+        <select name="user_gender" class="form-control" required="required">
+           <option>Male</option>
+           <option selected>Female</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input class="tcal shortened" type="text" name="user_dob" placeholder="Date of Birth" required="required">
+        <span class="label label-info">Date of Birth</span>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="user_city" value="<?php if(isset($_POST['user_city'])){echo $_POST['user_city'];}?>" placeholder="City" onclick="this.value='';" required="required">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="user_country" value="<?php if(isset($_POST['user_country'])){echo $_POST['user_country'];}?>" placeholder="Country" onclick="this.value='';" required="required">
+      </div>
+        <button class="btn btn-lg btn-primary" type="submit">Register</button>
+     </form>
+     </div>
+</div>

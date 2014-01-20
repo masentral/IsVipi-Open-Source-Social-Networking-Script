@@ -1,111 +1,61 @@
-                  <?php
-//We check if the user is logged
-if(isset($_SESSION['user_id']))
-{
-
-//Two queries are executes, one for the unread messages and another for read messages
-$req1 = mysql_query('select m1.id, m1.title, m1.timestamp, count(m2.id) as reps, users.id as user_id, users.username from pm as m1, pm as m2,users where ((m1.user1="'.$_SESSION['user_id'].'" and m1.user1read="no" and users.id=m1.user2) or (m1.user2="'.$_SESSION['user_id'].'" and m1.user2read="no" and users.id=m1.user1)) and m1.id2="1" and m2.id=m1.id group by m1.id order by m1.id desc');
-$req2 = mysql_query('select m1.id, m1.title, m1.timestamp, count(m2.id) as reps, users.id as user_id, users.username from pm as m1, pm as m2,users where ((m1.user1="'.$_SESSION['user_id'].'" and m1.user1read="yes" and users.id=m1.user2) or (m1.user2="'.$_SESSION['user_id'].'" and m1.user2read="yes" and users.id=m1.user1)) and m1.id2="1" and m2.id=m1.id group by m1.id order by m1.id desc');
-?>
-                 <!--========HEADER=====---->
-                    <?php include ISVIPI_THEMES_BASE.'global/header.php';?>
-                  <!--========/HEADER=====---->
-        
                   <!--========SIDEBAR MENU=====---->
-                    <?php include ISVIPI_THEMES_BASE.'global/sidebar_menu.php';?>
+                    <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>
                   <!--========/SIDEBAR MENU=====---->
-                  
-                  <!--========MESSAGES=====---->
-                  <div class="col-md-6">
-                  <div class="row">
-                   <div class="panel panel-default tabless-panel timeline-layout overflow">
-                     <div class="panel-heading">
-                      <div class="text-muted isvipi-title">Messages
-                      </div><!--/text-muted-->
-                    </div><!--/panel-heading-->
-                  <div class="isvipi-panel-content isvipi-panel-content-width2">
-                  
-                       <table class="table">
-                                    <thead>
-                                        <tr>
+                  <!--========EDIT PROFILE=====---->
+                        
+                       <div class="dash_content">
+                        <div class="panel panel-primary">
+                          <div class="panel-heading">My Conversations
+                           </div>
+                               <div class="panel-body members_full">
+                                     <div class="m_list">
+                                        <div class="scrollable2">
+                                     <table class="table msglist" style="width:500px">
+                                        <thead>
+                                            <tr>
                                             <th width="150">Date</th>
-                                            <th>From</th>
-                                            <th>Subject</th>
+                                            <th>Chat with</th>
                                             <th width="120">Action</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-<?php
-//We display the list of unread messages
-while($dn1 = mysql_fetch_array($req1))
-{
-?>
-                                    
-                                        <tr class="success">
-                                            <td><?php echo date('Y/m/d H:i:s' ,$dn1['timestamp']); ?></td>
-                                            <td><a href="member_profile.php?id=<?php echo $dn1['user_id']; ?>" title="View Profile"><?php echo htmlentities($dn1['username'], ENT_QUOTES, 'UTF-8'); ?></a></td>
-                                            <td><a href="read_message.php?id=<?php echo $dn1['id']; ?>"><?php echo htmlentities($dn1['title'], ENT_QUOTES, 'UTF-8'); ?></a></td>
+                                            </tr>
+                                        </thead>
+                                        <?php 
+											//Retrieve all messages whether read or not
+											getAllmsgs($user);
+											while ($geAllmsgs->fetch())
+											{
+										?>
+                                        <tbody>
+                                          <tr>
+                                          <?php 
+										  $user = $msg_from;
+										  getUserDetails($user);
+										  $user1 = $_SESSION['user_id'];
+										  ?>
+                                         <td><?php echo date('d M Y \a\t g:ia', strtotime($timestamp));?></td>
+                                         <?php newSingMsg($user1,$unique_id); ?>
+										 <?php if ($newmsgs >0){?>
+           <td><a href="<?php echo ISVIPI_MEMBER_URL.'profile.php?id='.$msg_from.'&msg='.$msg_id.''?>" title="View Profile"><?php echo htmlspecialchars($d_name, ENT_QUOTES, 'utf-8');?></a> <span class="label label-success">new</span></td>
+                                            <?php } else{?>
+                                            <td><a href="<?php echo ISVIPI_MEMBER_URL.'profile.php?id='.$msg_from.''?>" title="View Profile"><?php $me = $_SESSION['user_id']; if($me == $msg_from){$user_id = $msg_to; getUserN($user_id);echo $name ;}else if ($me == $msg_to){$user_id = $msg_from; getUserN($user_id);echo $name ;}?></a></td>
+                                            <?php }?>
                                             <td><div class="message_options_bar">
-                                <a href="delete_msg.php?id=<?php echo $dn1['id']; ?>" title="Delete"><i class="fa fa-times"></i></a>
-                                </div></td>
+                                            <?php $code = implode('-', array($msg_from, $unique_id, $msg_to,$msg_id));?>
+                                <a href="read_pm.php?id=<?php echo $code?>" title="Read">Read <i class="fa fa-external-link"></i></a>
+                                    </div>
+                                    </td>
                                         </tr>
-                                        <?php
-}
-//If there is no unread message we notice it
-if(intval(mysql_num_rows($req1))==0)
-{
-?><tr>
-    	<td colspan="4" class="center">You have no unread message.</td>
-    </tr>
-<?php
-}
-?>
-<?php
-}
-else
-{
-	echo 'You must be logged to access this page.';
-}
-?>   
-<?php
-//We display the list of read messages
-while($dn2 = mysql_fetch_array($req2))
-{
-?>
-                                        <tr class="active">
-                                            <td><?php echo date('Y/m/d H:i:s' ,$dn2['timestamp']); ?></td>
-                                            <td><a href="member_profile.php?id=<?php echo $dn2['user_id']; ?>" title="View Profile"><?php echo htmlentities($dn2['username'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                            <td><a href="read_message.php?id=<?php echo $dn2['id']; ?>"><?php echo htmlentities($dn2['title'], ENT_QUOTES, 'UTF-8'); ?></a></td>
-                                            <td><div class="message_options_bar">
-                                <a href="delete_msg.php?id=<?php echo $dn2['id']; ?>" title="Delete"><i class="fa fa-times"></i></a>
-                                </div></td>
-                                        </tr>
-                                    </tbody>
-                                    <?php
-}
-//If there is no read message we notice it
-if(intval(mysql_num_rows($req2))==0)
-{
-?>
-	<tr>
-    	<td colspan="4" class="center">You have no read message.</td>
-    </tr>
-<?php
-}
-?>
-                                </table> 
-                              </div><!--end of isvipi-panel-content-->
-                                <!-- Button trigger modal -->
-              </div><!--End of isvipi-panel-content-->
-          </div><!--End of panel-->
-
-                  <!--========/MESSAGES=====---->
-
-         
-                  <!--========ANNOUNCEMENTS=====---->
-                    <?php include ISVIPI_THEMES_BASE.'global/announcements.php';?> 
+                                        </tbody>
+                                        <?php } ?>
+                                        <?php if (getAllmsgs($user) ==""){;?>
+                                        <td>You have no messages</td>
+                                        <?php }?>
+                                     </table>
+                                     </div>
+                                  </div>
+							  </div>
+                          </div><!--end of panel-->
+                        </div><!--end of dash_content-->
+                        
+                 <!--========ANNOUNCEMENTS=====---->
+                    <?php include ISVIPI_THEMES_BASE.'/global/announcements.php';?> 
                   <!--========/ANNOUNCEMENTS=====---->
-                  <!--========FOOTER=====---->
-                    <?php include ISVIPI_THEMES_BASE.'global/footer.php';?> 
-                  <!--========/FOOTER=====---->

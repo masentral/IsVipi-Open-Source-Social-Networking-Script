@@ -1,6 +1,6 @@
 <?php
 /*******************************************************
- *   Copyright (C) 2013  http://isvipi.com
+ *   Copyright (C) 2014  http://isvipi.com
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,74 +16,34 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
+ require_once '../init.php';
+ include_once ISVIPI_USER_INC_BASE. 'users.func.php';
+ session_start();
+ checkLogin();
+ $user = $_SESSION['user_id'];
+ getUserDetails($user);
  ?>
-<?PHP
-require_once('../lib/core/load.class.php');
-include_core_files();
-checkLogin('2');
-
-$getuser = getUserRecords($_SESSION['user_id']);
-?>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>Edit <?=$getuser[0]['username'];?>'s Profile.</title>
-	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
-	<meta name="description" content="" />
-	<meta name="keywords" content="" />
-	<meta name="robots" content="index, follow" />
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" type="text/css" href="../css/style.css" media="screen" />
-	
-	<script type="text/javascript" src="../js/jquery-1.6.2.js"></script>
-	<script type="text/javascript" src="../js/script.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-	
-			$('#editprofileForm').submit(function(e) {
-				editprofile();
-				e.preventDefault();	
-			});	
-		});
-	</script>
-</head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit My Profile</title>
 
-<body>
-	<div align="right"><a href="index.php">Home</a> | <? if (!empty($getuser[0]['thumb_path'])){echo "<a href='manage_photo.php'>Manage My Photo</a> | ";} else {echo "<a href='upload_photo.php'>Upload Photo</a> | ";} ?><a href="change_pass.php">change password</a> | <a href="edit_profile.php">Edit Profile</a> | <a href="log_off.php?action=logoff">sign out</a></div></td>
-	<p><?php if(empty($getuser[0]['first_name']) || empty($getuser[0]['last_name'])){echo $getuser[0]['username'];} else {echo $getuser[0]['first_name']." ".$getuser[0]['last_name'];} ?>, edit your profile.</p>
-	<p align="center" class="done">Profile updated successfully.</p><!--close done-->
-	<div class="form">
-	  <form id="editprofileForm" action="edit_profile_submit.php" method="post">
-	  <table width="80%" border="0" cellpadding="0" cellspacing="0">
-		<tr>
-			<td><label for="first_name">First Name:</label></td><td><input type="text" name="first_name" value="<? if(isset($getuser[0]['first_name'])){echo $getuser[0]['first_name'];}?>"/></td>
-		</tr>
-		<tr>
-			<td><label for="last_name"><label>Last Name:</label></td><td><input type="text" name="last_name" value="<? if(isset($getuser[0]['last_name'])){echo $getuser[0]['last_name'];}?>" /></td>
-		</tr>
-		<tr>
-			<td><label for="email"><label>Email:</label></td><td><input type="text" name="email" value="" /> <span class="label">Current: <?= $getuser[0]['email'];?></span></td>
-		</tr>
-		<tr>
-			<td><label for="dialing_code"><label>Dialing Code:</label></td><td><?= get_dialing_code($_SESSION['user_id']);?></td>
-		</tr>
-		<tr>
-			<td><label for="phone"><label>Phone:</label></td><td><input type="text" name="phone" value="<? if(isset($getuser[0]['phone'])){echo $getuser[0]['phone'];}?>" /></td>
-		</tr>
-		<tr>
-			<td><label for="city"><label>City/Town:</label></td><td><input type="text" name="city" value="<? if(isset($getuser[0]['city'])){echo $getuser[0]['city'];}?>" /></td>
-		</tr>
-		<tr>
-			<td><label for="country"><label>Country:</label></td><td><?= get_select_countries($_SESSION['user_id']);?></td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td><td><input type="submit" name="editprofile" value="Update" /><img id="loading" src="../images/loading.gif" alt="Updating.." /></td>
-		</tr>
-		<tr>
-			<td colspan="2"><div id="error">&nbsp;</div></td>
-		</tr>
-	  </table>
-	  </form>
-	</div><!--close form-->
+<!--========HEADER=====---->
+<?php include ISVIPI_THEMES_BASE.'/global/header.php';?>
+<link href="<?php echo ISVIPI_THEME_URL; ?>css/tcal.css" rel="stylesheet" type="text/css" />
+<!--========/HEADER=====---->
+
+<!--========BODY=====---->
+<?php include_once ISVIPI_THEMES_BASE.'edit_profile.php';?>
+<!--========/BODY=====---->
+
+<!--========FOOTER=====---->
+<script type="text/javascript" src="<?php echo ISVIPI_THEME_URL; ?>js/tcal.js"></script>
+<?php include_once ISVIPI_THEMES_BASE.'/global/footer.php';?>
+<!--========/FOOTER=====---->
+<?php globalAlerts();?>
 </body>
 </html>

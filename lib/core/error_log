@@ -1,2 +1,0 @@
-[20-Dec-2013 09:44:06 America/Chicago] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 3 in /home/isvipico/public_html/demo/lib/connections/db.php on line 34
-[20-Dec-2013 18:44:06 Africa/Nairobi] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/isvipico/public_html/demo/lib/connections/db.php:34) in /home/isvipico/public_html/demo/lib/core/admin_settings.php on line 50

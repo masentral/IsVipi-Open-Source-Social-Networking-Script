@@ -25,7 +25,7 @@
 }
 
 #isvipi-timeline textarea{
-    width:550px;
+    width:540px;
     height:60px;
     padding: 4px 2px;
     font-family:'Lucida Grande',sans-serif;
@@ -38,57 +38,10 @@
     clear:both;
 }
 
-#isvipi-timeline .submitButton{
-    color:#666666;
-    font-size:14px;
-    height:32px;
-    width:130px;
+#isvipi-timeline .btn-primary{
 	margin-top:10px;
-    -moz-border-radius:6px;
-    -khtml-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    border-radius:6px;
-    border:1px solid #cccccc;
+	margin-right:10px;
     float:right;
-	cursor:pointer;
-}
-
-#isvipi-timeline .submitButton:hover{
-    background-position:bottom;
-    border-color:#dddddd;
-    color:#333333;
-	cursor:pointer;
-}
-
-#isvipi-timeline .inact,.inact:hover{
-    background:#f5f5f5;
-    border:1px solid #eeeeee;
-    color:#aaaaaa;
-    cursor:auto;
-}
-
-#isvipi-timeline .latest{
-    color: #666666;
-}
-
-#isvipi-timeline ul.statuses{
-    margin:10px 0;
-}
-
-#isvipi-timeline ul.statuses li {
-    position:relative;
-    border-bottom:1px dashed #D2DADA;
-    padding:15px 15px 15px 10px;
-    list-style:none;
-    font-size:14px;
-}
-
-#isvipi-timeline ul.statuses li:first-child{
-    border-top:1px dashed #D2DADA;
-}
-
-#isvipi-timeline ul.statuses li:hover {
-    background-color:#F7F7F7;
 }
 
 #isvipi-timeline h3.timeline{
@@ -97,33 +50,8 @@
     font-size:20px;
     font-weight:normal;
 }
-
-#isvipi-timeline div.tweetTxt{
-    float:right;
-    width:400px;
-    overflow:hidden;
-}
-
-#isvipi-timeline ul.statuses a img.avatar{
-    float:left;
-    margin-right:10px;
-    border:1px solid #446600;
-}
-#isvipi-timeline div.date{
-    line-height:18px;
-    font-size:12px;
-    color:#999999;
-}
-
-#isvipi-timeline li a, li a:visited {
-    color:#007bc4;
-    text-decoration:none;
-    outline:none;
-}
-
-#isvipi-timeline li a:hover{
-    text-decoration:underline;
-}
-
-.timeline_display {}
-.user_timeline_image {float:left}
+.dash_content .panel-body .scrollable{font-size:13px; padding-left:20px;line-height:20px;}
+.dash_content .panel-body .scrollable li{border-bottom:dotted thin #CCC; list-style:none;}
+.dash_content .panel-body .scrollable .time_stamp{font-size:10px;color:#999}
+.dash_content .panel-body .scrollable .timeline_pic {width:60px; float:left; margin-right:5px;}
+.dash_content .panel-body .scrollable .timeline_posts {width:430px;text-align:justify;margin-left:60px; padding-left:10px}

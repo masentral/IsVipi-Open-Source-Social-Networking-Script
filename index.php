@@ -1,6 +1,6 @@
 <?php
 /*******************************************************
- *   Copyright (C) 2013  http://isvipi.com
+ *   Copyright (C) 2014  http://isvipi.com
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,9 +16,31 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
-require_once('lib/core/load.class.php');
-//check if the site is installed else redirect to install page
-check_install();
-require_home_files();
-include ISVIPI_THEMES_BASE.'/index.php';
-?>
+ require_once 'init.php';
+ include_once ISVIPI_USER_INC_BASE. 'users.func.php';
+ session_start();
+ ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IsVipi: Open Source Social Networking Script</title>
+
+<!--========HEADER=====---->
+<?php include ISVIPI_THEMES_BASE.'/global/index_header.php';?>
+<link href="<?php echo ISVIPI_THEME_URL; ?>css/tcal.css" rel="stylesheet" type="text/css" />
+<!--========/HEADER=====---->
+
+<!--========BODY=====---->
+<?php include_once ISVIPI_THEMES_BASE.'index.php'; ?>
+<!--========/BODY=====---->
+
+<!--========FOOTER=====---->
+<script type="text/javascript" src="<?php echo ISVIPI_THEME_URL; ?>js/tcal.js"></script>
+<?php include_once ISVIPI_THEMES_BASE.'/global/index_footer.php';?>
+<!--========/FOOTER=====---->
+<?php globalAlerts();?>
+</body>
+</html>

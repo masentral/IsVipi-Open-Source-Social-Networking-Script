@@ -1,6 +1,6 @@
 <?php
 /*******************************************************
- *   Copyright (C) 2013  http://isvipi.com
+ *   Copyright (C) 2014  http://isvipi.com
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,31 +16,33 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
-
 ////////////////////////////////////////////////////////
 /////////////BASIC SITE CONFIGURATIONS//////////////////
 ////////////////////////////////////////////////////////
-
+require 'lib/db/db.php';
 //get important config settings from the database
-$select = "SELECT site_url FROM site_settings";
-$query = mysql_query($select) or die(mysql_error());
-$result = mysql_result($query, 0);
-$site_url = $result;
-$site_url = 'http://'.$site_url;
-
-// theme config
-$select = "SELECT theme FROM site_settings";
-$query = mysql_query($select) or die(mysql_error());
-$result = mysql_result($query, 0);
-$theme = $result;
+$getconf = $db->prepare("SELECT site_url,site_title,site_email,theme,time_zone FROM site_settings");
+$getconf->execute();
+$getconf->store_result();
+$getconf->bind_result($site_url,$site_title,$site_email,$theme,$time_zone);
+$getconf->fetch();
+$getconf->close( );
 
 // directory paths
 define('ISVIPI_ROOT', dirname(__FILE__));
 define('ISVIPI_THEMES_BASE', ISVIPI_ROOT . '/themes/'.$theme.'' . DIRECTORY_SEPARATOR);
+define('ISVIPI_MEMBER_BASE', ISVIPI_ROOT . '/members' . DIRECTORY_SEPARATOR);
+define('ISVIPI_DB_BASE', ISVIPI_ROOT . '/lib/db' . DIRECTORY_SEPARATOR);
+define('ISVIPI_USER_INC_BASE', ISVIPI_ROOT . '/lib/users.inc' . DIRECTORY_SEPARATOR);
 define ('ISVIPI_URL', $site_url);
 define ('ISVIPI_MEMBER_URL', ISVIPI_URL . '/members' .DIRECTORY_SEPARATOR);
 define ('ISVIPI_THEME_URL', ISVIPI_URL. '/themes/'.$theme.''.DIRECTORY_SEPARATOR);
-define ('ISVIPI_CORE_URL', ISVIPI_URL . '/lib/core' .DIRECTORY_SEPARATOR);
+define ('ISVIPI_DB_URL', ISVIPI_URL . '/lib/db' .DIRECTORY_SEPARATOR);
+define('ISVIPI_USER_INC_URL', ISVIPI_URL . '/lib/users.inc' . DIRECTORY_SEPARATOR);
 
+date_default_timezone_set ($time_zone);
+
+//Check if site is installed correctly
+//check if the site is installed else redirect to install page
 ?>
 
