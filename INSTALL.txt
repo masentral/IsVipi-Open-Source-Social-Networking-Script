@@ -1,0 +1,91 @@
+/////////////////////////////////////////////
+//////////SYSTEM REQUIREMENTS////////////////
+////////////////////////////////////////////
+PHP 4+, MySQL 4.1+
+
+////////////////////////////////////////////
+INSTALL INSTRUCTIONS
+
+There are two ways to install the script; one using the installer (which is recommended) and the other is installing it manually
+
+/////////////////////////////////////////////
+//////////USING THE INSTALLER///////////////
+////////////////////////////////////////////
+
+1. To use the installer, simply point your domain to http://yoursite.com/_install/
+   Remember to replace "yoursite.com" with your site.
+
+   If it is a subdirectory, point it to http://yoursite.com/subdirectory/_install/
+
+2. Provide your database login details, that is, server (which is often localhost), database username,
+   Database password and database name.
+
+3. Once the script verifies that the credentials are valid, it will import an sql file (sql.sql) and create
+   a database connection file (db.php) in lib/db/
+
+   If you happen to make a mistake and the db file is written in the path provided above, simply delete it 
+   and start  the reinstallation process. 
+
+4. Lastly, in step two of the installation, provide site settings. These settings are important as the site 
+   will not function without them. Provide the site url, that is, http://yoursite.com without the trailing front slash.
+   Do provide a site title, default email address and select your timezone. Delete or rename the _install folder.
+
+   That is it!!!
+
+
+   It is worthwhile reminding you that the script does not have an admin section as of now but it will be released soon. 
+   You can test the functionalities of the member area and make your suggestions or recommendations. 
+
+//////////////////////////////////////////////
+///////////MANUAL INSTALLATION////////////////
+/////////////////////////////////////////////
+To manually install this script, do the following
+
+1. In _install folder, you will find a file named db_sample.php. Move it to "lib/db/" and rename it db.php 
+   (that is, delete the _sample)
+2. Fill in your database credentials by replacing localhost, my_database_name, my_database_username and my_database_password
+   with your database details
+3. Once that is done, go back to _install folder and using phpmyadmin, import the sql file (sql.sql). Alternatively, you can 
+   open the sql file, copy all its content and in your phpmyadmin, choose SQL, paste it and execute.
+4. Lastly, you will need to enter your site settings. These details should be entered in "site_settings" table in your database.
+   From phpmyadmin, click on the table "site_settings", then click insert. Leave the id empty but fill in the site_url, site_title,
+   site_email, theme and time_zone. For the site url, enter http://yoursite.com or http://yoursite.com/folder without a trailing front slash.
+   For the theme, enter "default" without the quotes and in lowercase. Lastly, for the time_zone, use the format Africa/Nairobi.
+  
+   That is it!
+
+//////////////////////////////////////////////
+/////////COMMON ISSUES///////////////////////
+////////////////////////////////////////////
+
+When trying to acces your site you may come across ERROR 500 - INTERNAL SERVER ERROR
+This error is related to our php error reporting found in the htacess file and therefore 
+to solve the problem, either find and delete the code below in the htaccess file or comment it out
+
+		# enable PHP error logging
+		php_flag  log_errors on
+		php_value error_log  c:xampp/htdocs/isvipi/error_log.log
+
+
+You comment it out by adding "#" before it
+
+//////////////////////////////////////////////
+//////////////SUPPORT////////////////////////
+/////////////////////////////////////////////
+
+You can get support by visiting our forum at http://forum.isvipi.com
+Alternatively, you can report an issue on our git at 
+https://github.com/joneswiz/IsVipi-Open-Source-Social-Networking-Script
+
+////////////////////////////////////////////
+//////////CONTRIBUTION/////////////////////
+///////////////////////////////////////////
+This is an open source script and therefore we encourage you to test it, modify it and enhance it as you please.
+We are currently looking for individuals to help in theme development and enhancing its core functions and therefore
+we would appreciate it if you could help in whatever way possible. 
+
+Our forum also needs moderators and therefore if you feel like you are up to the task, you can contact us either through
+our website, on github or on sourceforge. 
+
+If you also feel like this script is what you have been looking for, you can make a donation and help in the development 
+of the script. You can get details on how you can contribute at http://isvipi.com

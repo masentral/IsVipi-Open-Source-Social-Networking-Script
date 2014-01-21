@@ -219,7 +219,7 @@ if(checkEmail($email))
                    </tr>
                    <tr>
                      <td><p>Your account at '.$site_title.' has been created. You will however need to validate your email before you can log in. To validate your email, please click the link below.</p>
-                      <p> Link: '.$site_url.'auth/activate.php?code='.$randomstring.'. </p>
+                      <p> Link: '.$site_url.'/auth/activate.php?code='.$randomstring.'. </p>
                       <p> If for some reason you cannot click on the link above, copy and paste it in your browser.</p></td>
                   </tr>
                   <tr>
