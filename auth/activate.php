@@ -1,4 +1,5 @@
 <?php
+session_start();
 /*******************************************************
  *   Copyright (C) 2014  http://isvipi.com
 
@@ -19,7 +20,6 @@
  require_once '../init.php';
  include_once ISVIPI_DB_BASE.'db.php';
  include_once ISVIPI_USER_INC_BASE. 'users.func.php';
- session_start();
 
 if (isset($_GET['code'])) {
 $activation_code = $_GET['code'];

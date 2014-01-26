@@ -1,4 +1,5 @@
 <?php
+session_start();
 /*******************************************************
  *   Copyright (C) 2014  http://isvipi.com
 
@@ -19,8 +20,6 @@
 include_once '../../init.php'; 
 include_once ISVIPI_DB_BASE.'db.php';
 include_once ISVIPI_USER_INC_BASE. 'users.func.php';
-
-session_start(); //Very important as we would not like anyone who is not logged in to access this page
 checkLogin();    //We will integrate better security in next releases
 $user = $_SESSION['user_id'];
 getUserDetails($user);
@@ -210,3 +209,4 @@ if(!checkFriendship($id,$user)){
     header ('location:'.$from_url.'');
 	exit();	
 }
+?>

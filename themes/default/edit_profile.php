@@ -40,8 +40,8 @@
                                              <p class="edit_prof_hints"><span class="label label-info">Select your date of birth</span></p>
                                              </div>
                                              <div class="form-group">
-                                             <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($phone, ENT_QUOTES, 'utf-8');?>" />
-                                             <p class="edit_prof_hints"><span class="label label-info">Provide your phone number</span></p>
+                                             <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($phone, ENT_QUOTES, 'utf-8');?>" placeholder="Phone number"/>
+                                             <p class="edit_prof_hints"><span class="label label-info">Phone No. - NUMBERS ONLY</span></p>
                                              </div>
                                              <div class="form-group">
                                              <input type="text" class="form-control" name="city" placeholder="City" value="<?php echo htmlspecialchars($city, ENT_QUOTES, 'utf-8');?>">

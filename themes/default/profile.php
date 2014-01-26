@@ -5,7 +5,7 @@
                   <!--========PROFILE=====---->
                        <div class="dash_content">
                         <div class="panel panel-primary">
-                          <div class="panel-heading">My Profile</div>
+                          <div class="panel-heading"><?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?>'s Profile</div>
                                <div class="panel-body">
                                  <div class="my_pic">
                                  <?php if(htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8') == ""){$m_thumbnail="no-image.gif";}?>

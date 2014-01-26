@@ -1,4 +1,5 @@
 <?php
+session_start();
 /*******************************************************
  *   Copyright (C) 2014  http://isvipi.com
 
@@ -20,7 +21,6 @@ include_once '../../init.php';
 include_once ISVIPI_DB_BASE.'db.php';
 include_once ISVIPI_USER_INC_BASE. 'PasswordHash.php';
 include_once ISVIPI_USER_INC_BASE. 'users.func.php';
-session_start();
 $from_url = $_SERVER['HTTP_REFERER'];
 
 // Base-2 logarithm of the iteration count used for password stretching
@@ -248,7 +248,6 @@ $db->close();
 
 if ($op === 'login') {
 	ob_start();
-    session_start();
 $pass = get_post_var('pass');	
 if (empty($pass)) {
     {
@@ -418,12 +417,8 @@ if (!is_numeric($user_id_n)){
 	exit();
 }
 /* Display Name */
-$display_n = get_post_var('display_name');
-if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $display_n)){
-	$_SESSION['err'] ="Invalid characters in the Display name";
-    header ('location:'.$from_url.'');
-	exit();
-}
+$display_nn = get_post_var('display_name');
+$display_n = preg_replace('/[^a-zA-Z0-9 ]/','',$display_nn);
 /* Gender */
 $gender_n = get_post_var('user_gender');
 if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $gender_n)){
@@ -440,26 +435,17 @@ if (!preg_match('/^[A-Za-z0-9:_.\/\\\\ ]+$/', $dob_n))
 	exit();
 }
 /* Phone number */
-$phone_n = get_post_var('phone');
-if (!is_numeric($phone_n)){
-	$_SESSION['err'] ="Only numbers are allowed for phone number";
-    header ('location:'.$from_url.'');
-	exit();
-}
+$phone_nn = get_post_var('phone');
+$phone_n = preg_replace('/[^0-9]/','',$phone_nn);
+
 /* City */
-$city_n = get_post_var('city');
-if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $city_n)){
-	$_SESSION['err'] ="Invalid characters for the city field";
-    header ('location:'.$from_url.'');
-	exit();
-}
+$city_nn = get_post_var('city');
+$city_n = preg_replace('/[^a-zA-Z0-9 ]/','',$city_nn);
+
+
 /* Country */
-$coutry_n = get_post_var('country');
-if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $coutry_n)){
-	$_SESSION['err'] ="Invalid characters for the country field";
-    header ('location:'.$from_url.'');
-	exit();
-}
+$coutry_nn = get_post_var('country');
+$coutry_n = preg_replace('/[^a-zA-Z0-9 ]/','',$coutry_nn);
 	 /* Update profile*/
 	 updateProfile($user,$display_n,$user_id_n,$gender_n,$dob_n,$phone_n,$city_n,$coutry_n);
 	 $_SESSION['succ'] ="Profile update successful";

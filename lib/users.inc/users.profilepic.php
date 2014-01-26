@@ -1,4 +1,5 @@
 <?php
+session_start();
 /*******************************************************
  *   Copyright (C) 2014  http://isvipi.com
 
@@ -19,7 +20,6 @@
 include_once '../../init.php'; 
 include_once ISVIPI_DB_BASE.'db.php';
 include_once ISVIPI_USER_INC_BASE. 'users.func.php';
-session_start();
 checkLogin();
 $user = $_SESSION['user_id'];
 $from_url = $_SERVER['HTTP_REFERER'];

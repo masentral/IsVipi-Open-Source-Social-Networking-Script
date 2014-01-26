@@ -230,7 +230,6 @@ function logout($user){
 	$upoff->bind_param('is', $online, $user);
 	$upoff->execute();
 	$upoff->close();
-		session_start();
 		session_destroy();
 		session_start();
 		$_SESSION['succ'] ="You have logged out successfully";
@@ -655,3 +654,4 @@ function updMsgRead($msg_from,$user,$unique_id){
 	 $updMsgRead->execute();
 	 $updMsgRead->close();
 }
+?>

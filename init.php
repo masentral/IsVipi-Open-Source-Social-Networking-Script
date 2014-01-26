@@ -34,6 +34,7 @@ define('ISVIPI_THEMES_BASE', ISVIPI_ROOT . '/themes/'.$theme.'' . DIRECTORY_SEPA
 define('ISVIPI_MEMBER_BASE', ISVIPI_ROOT . '/members' . DIRECTORY_SEPARATOR);
 define('ISVIPI_DB_BASE', ISVIPI_ROOT . '/lib/db' . DIRECTORY_SEPARATOR);
 define('ISVIPI_USER_INC_BASE', ISVIPI_ROOT . '/lib/users.inc' . DIRECTORY_SEPARATOR);
+// url paths
 define ('ISVIPI_URL', $site_url);
 define ('ISVIPI_MEMBER_URL', ISVIPI_URL . '/members' .DIRECTORY_SEPARATOR);
 define ('ISVIPI_THEME_URL', ISVIPI_URL. '/themes/'.$theme.''.DIRECTORY_SEPARATOR);
@@ -41,8 +42,4 @@ define ('ISVIPI_DB_URL', ISVIPI_URL . '/lib/db' .DIRECTORY_SEPARATOR);
 define('ISVIPI_USER_INC_URL', ISVIPI_URL . '/lib/users.inc' . DIRECTORY_SEPARATOR);
 
 date_default_timezone_set ($time_zone);
-
-//Check if site is installed correctly
-//check if the site is installed else redirect to install page
 ?>
-
