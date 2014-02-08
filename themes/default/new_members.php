@@ -1,8 +1,10 @@
+<?php include ISVIPI_THEMES_BASE.'/global/header.php';?>
                   <!--========SIDEBAR MENU=====---->
                     <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>
                     
                   <!--========/SIDEBAR MENU=====---->
                   <!--========EDIT PROFILE=====---->
+                  <?php getNewMembers();?>
                        <div class="dash_content">
                         <div class="panel panel-primary">
                           <div class="panel-heading"><div class="members_options">
@@ -13,18 +15,19 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                   </button>
                                   <ul class="dropdown-menu" role="menu">
-                                  <li><a href="members.php"> All</a></li>
-                                    <li><a href="online.php"> Online Now</a></li>
+                                  <li><a href="<?php echo ISVIPI_URL.'memberlist/' ?>"> All</a></li>
+                                    <li><a href="<?php echo ISVIPI_URL.'online/' ?>"> Online Now</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="new_members.php">New Members</a></li>
+                                    <li><a href="<?php echo ISVIPI_URL.'new_members/' ?>">New Members</a></li>
                                   </ul>
                                 </div>
+                                <span class="label" style="font-size:15px; float:right; position:absolute; margin-left:50px;padding:10px">(<?php echo $n_count?>) New Members</span>
                             </div>
                            </div>
                                <div class="panel-body members_full">
                                      <div class="m_list">
                                        <div class="scrollable2">
-                                     <?php getNewMembers();?>
+                                     
                                      	
                                         <?php while ($getmembers->fetch())
 											{
@@ -34,14 +37,14 @@
                                             <li>
                                             <div class="member_pic">
                                   <?php if(htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8') == ""){$m_thumbnail="no-image.gif";}?>
-                                 <a href="<?php echo ISVIPI_MEMBER_URL.'profile.php?id='.$id.''?>" title="<?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?>"><img src="<?php echo ISVIPI_MEMBER_URL.'pics/'.htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" /></a>
+                                 <a href="<?php echo ISVIPI_URL.'profile/'; getUserDetails($id); echo $username;?>" title="<?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?>"><img src="<?php echo ISVIPI_PROFILE_PIC_URL.htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" /></a>
                                             </div>
                                             <div class="member_info">
                                             <span class="members_list_info">                                  
                                             <table class="table table-striped" style="width:200px">
                                                 <tbody>
                                                   <tr>
-                                                    <td><a href="<?php echo ISVIPI_MEMBER_URL.'profile.php?id='.$id.''?>"><?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?></a></td>
+                                                    <td><a href="<?php echo ISVIPI_URL.'profile/'; getUserDetails($id); echo $username;?>"><?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?></a></td>
                                                   </tr>
                                                   <tr>
                                                     <td><?php echo htmlspecialchars($m_gender, ENT_QUOTES, 'utf-8');?> (<?php echo htmlspecialchars($m_age, ENT_QUOTES, 'utf-8');?>)</td>
@@ -69,19 +72,18 @@
 													echo '<span class="label label-danger">';
 													echo 'Request Rejected';
 													echo '</span>';
-												
 											}
 											//Check if they are already friends
 											else if(checkFriendship($id,$user)){
 													echo '<span class="label label-default">';
 													echo 'Already Friends';
 													echo '</span>';
-												
 											}
 												else
 											{?>
-                                            <a href="<?php echo ISVIPI_USER_INC_URL. 'users.frequests.php'?>?action=3&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>"><button type="submit" class="btn btn-success">Add Friend</button></a></div>
-                                            <?php }?>
+                                            <a href="<?php echo ISVIPI_URL. '/users/fRequests'?>?action=3&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>"><button type="submit" class="btn btn-success">Add Friend</button></a>
+											<?php }?>
+											</div>
                                         </li>
 										<?php }?>
                                      </div>
@@ -92,3 +94,4 @@
                  <!--========ANNOUNCEMENTS=====---->
                     <?php include ISVIPI_THEMES_BASE.'/global/announcements.php';?> 
                   <!--========/ANNOUNCEMENTS=====---->
+<?php get_footer();?>

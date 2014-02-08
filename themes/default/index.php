@@ -1,3 +1,14 @@
+<?php
+/*
+Theme Name: Default
+Theme URL: http://isvipi.com/
+Description: Default IsVipi Theme
+Version: 1.0.0
+Author: IsVipi
+Author URL: http://isvipi.com/
+*/
+include ISVIPI_THEMES_BASE.'/global/index_header.php';?>
+<link href="<?php echo ISVIPI_STYLE_URL; ?>css/tcal.css" rel="stylesheet" type="text/css" />
 <div class="home_content">
     <div class="home_welcome">
     
@@ -12,7 +23,7 @@
     <?php unset ($_SESSION['succ_reg']);}?>
     </div>
     <div class="home_register">
-      <form method="post" action="<?php echo ISVIPI_USER_INC_URL. 'users.process.php'?>" class="login-form">
+      <form method="post" action="<?php echo ISVIPI_USER_PROCESS; ?>" class="login-form">
         <input type="hidden" name="op" value="new">
       <h3>Create New Account</h3>
       <div class="form-group">
@@ -44,9 +55,11 @@
         <input class="form-control" type="text" name="user_city" value="<?php if(isset($_POST['user_city'])){echo $_POST['user_city'];}?>" placeholder="City" onclick="this.value='';" required="required">
       </div>
       <div class="form-group">
-        <input class="form-control" type="text" name="user_country" value="<?php if(isset($_POST['user_country'])){echo $_POST['user_country'];}?>" placeholder="Country" onclick="this.value='';" required="required">
+        <?php cSelect();?>
       </div>
         <button class="btn btn-lg btn-primary" type="submit">Register</button>
      </form>
      </div>
 </div>
+<?php get_home_footer();?>
+<script type="text/javascript" src="<?php echo ISVIPI_STYLE_URL; ?>js/tcal.js"></script>

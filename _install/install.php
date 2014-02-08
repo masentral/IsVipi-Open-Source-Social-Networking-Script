@@ -16,50 +16,89 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/
- session_start(); 
- ?>
+include_once '../init.php';
+include_once DOC_ROOT. '../inc/users.inc/users.func.php';
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-<title>Install IsVipi Social Network</title>
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/isvipi-install.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/alertify.core.css">
-    <link rel="stylesheet" href="css/alertify.default.css">
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="js/isvipi_alerts.js"></script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IsVipi System Installation</title>
+<link rel="shortcut icon" type="image/x-icon" href="<?php echo ISVIPI_STYLE_URL; ?>images/favicon.png">
+  <!-- Bootstrap -->
+  <link href="../inc/style.lib/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="../inc/style.lib/css/isvipi-install.css" rel="stylesheet" media="screen">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="../inc/style.lib/fontawesome/css/font-awesome.min.css">
+  <!-- Alertify -->
+  <link rel="stylesheet" href="../inc/style.lib/css/alertify.core.css">
+  <link rel="stylesheet" href="../inc/style.lib/css/alertify.default.css">
+   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
           <a class="navbar-brand" href="install.php">IsVipi Installation</a>
         </div>
-
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse pull-right">
           <ul class="nav navbar-nav">
-            <li><a href="#about">Documentation</a></li>
-            <li><a href="#contact">Help</a></li>
+            <li><a href="http://isvipi.com/documentation" target="_blank">Documentation</a></li>
+            <li><a href="http://forum.isvipi.com" target="_blank">Help/Forum</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container -->
     </nav>
+    <div class="system_requirements">
+    <h4>System Requirements Check</h4>
+    <div class="alert alert-warning">
+   <?php 
+   if (phpversion()<5.3){
+	$sys_req = 'err';
+   echo '<div class="alert alert-danger">';
+   echo 'Your php version is below 5.3';
+   echo '</div>';
+   }
+   else{
+   echo '<div class="alert alert-success">';
+   echo 'Your php version is above 5.3';
+   echo '</div>';
+   }
+ob_start(); 
+phpinfo(INFO_MODULES); 
+$info = ob_get_contents(); 
+ob_end_clean(); 
+$info = stristr($info, 'Client API version'); 
+preg_match('/[1-9].[0-9].[1-9][0-9]/', $info, $match); 
+$gd = $match[0]; 
+if ($gd<4.1){
+	$sys_req = 'err';
+   echo '<div class="alert alert-danger">';
+   echo 'Your mysql version is below 4.1';
+   echo '</div>';
+   }
+else{
+   echo '<div class="alert alert-success">';
+   echo 'Your mysql version is above 4.1';
+   echo '</div>';
+   }
+?>
+    </div>
+    </div>
   <div class="row">
-  <div class="alert alert-info">
-    <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-    <p>Please provide your database details.</p>
+  <?php 
+  $db_file_path = '../inc/db/db.php';
+if (file_exists($db_file_path)){
+?>
+  <div class="alert alert-danger">
+    <p>db.php file exists. Proceeding with the installation will delete the current db.php file and create a new one. If you are aware of this please proceed with the installation.</p>
   </div>
+  <?php
+}?>
   <div class="panel panel-default">
   <div class="panel-heading"><h4>Database Connection Details</h4></div>
   <div class="panel-body">
@@ -81,12 +120,12 @@
     <input type="name" class="form-control" placeholder="Database" name="dbname" required>
   </div>
   <input type="hidden" name="op" value="step1">
-  <button type="submit" class="btn btn-default">Proceed</button>
+  <?php if (isset($sys_req)){ echo '<span class="label label-info">Your server failed system check and cannot continue with installation</span>'; } else {?>
+  <button type="submit" class="btn btn-default" >Proceed</button>
+  <?php }?>
 </form>
 </div>
 </div>
-</div>
-</div>  
 </div>
 <?php
 if (isset($_GET['action'])) {
@@ -122,7 +161,7 @@ unset ($_SESSION['succ']);
  }
 ?>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-<script src="js/bootstrap.js"></script>
-<script type="text/javascript" src="js/alertify.min.js"></script>
+<script type="text/javascript" src="../inc/style.lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../inc/style.lib/js/alertify.min.js"></script>
 </body>
 </html>

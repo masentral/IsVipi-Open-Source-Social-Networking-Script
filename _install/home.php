@@ -16,41 +16,39 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/
+ include_once '../init.php';
+ include_once DOC_ROOT. '../inc/users.inc/users.func.php';
  session_start(); 
  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-<title>Install IsVipi Social Network</title>
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/isvipi-install.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/alertify.core.css">
-    <link rel="stylesheet" href="css/alertify.default.css">
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="js/isvipi_alerts.js"></script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IsVipi System Installation</title>
+<link rel="shortcut icon" type="image/x-icon" href="<?php echo ISVIPI_STYLE_URL; ?>images/favicon.png">
+  <!-- Bootstrap -->
+  <link href="../inc/style.lib/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="../inc/style.lib/css/isvipi-install.css" rel="stylesheet" media="screen">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="../inc/style.lib/fontawesome/css/font-awesome.min.css">
+  <!-- Alertify -->
+  <link rel="stylesheet" href="../inc/style.lib/css/alertify.core.css">
+  <link rel="stylesheet" href="../inc/style.lib/css/alertify.default.css">
+   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
           <a class="navbar-brand" href="install.php">IsVipi Installation</a>
         </div>
-
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse pull-right">
           <ul class="nav navbar-nav">
-            <li><a href="#about">Documentation</a></li>
-            <li><a href="#contact">Help</a></li>
+            <li><a href="http://isvipi.com/documentation" target="_blank">Documentation</a></li>
+            <li><a href="http://forum.isvipi.com" target="_blank">Help/Forum</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container -->
@@ -62,8 +60,9 @@
   </div>
   <div class="panel panel-default">
   <div class="panel-body">
-  <p>Your site should be working fine now. We are still working on the admin side of the script and will be released soon. Please visit our <a href="forum.isvipi.com">forum</a> if you have questions or suggestions for the next releases.</p>
+  <p>Your site should be working fine now. We are still working on the admin side of the script and will be released soon. Please visit our <a href="http://forum.isvipi.com" target="_blank">forum</a> if you have questions or suggestions for the next releases.</p>
    <p>You can also subscribe to our feeds by email to be notified when we release the admin side of the script.</p>
+   <p>You can also donate to the project to help provide more scripts like these for free. To donate please <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8EKWYJABNLDE2" target="_blank">follow this link</a></p>
    <p><a href="../" target="_blank">Visit my site</a></p>
     </div>
     </div>
@@ -101,7 +100,6 @@ unset ($_SESSION['succ']);
  }
 ?>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-<script src="js/bootstrap.js"></script>
-<script type="text/javascript" src="js/alertify.min.js"></script>
-</body>
+<script type="text/javascript" src="../inc/style.lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../inc/style.lib/js/alertify.min.js"></script>
 </html>

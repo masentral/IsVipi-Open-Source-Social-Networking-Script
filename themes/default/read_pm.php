@@ -1,3 +1,4 @@
+<?php include_once ISVIPI_THEMES_BASE.'/global/header.php';?>
                   <!--========SIDEBAR MENU=====---->
                     <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>
                   <!--========/SIDEBAR MENU=====---->
@@ -8,15 +9,19 @@
                         
                           <div class="panel-heading">Chat with <span class="chat_with"><?php $me = $_SESSION['user_id'];
 						  if($me == $msg_from){$user_id = $msg_to;}
-						  else if ($me == $msg_to){$user_id = $msg_from;}{getUserN($user_id);echo $name;} ?></span></div>
+						  else if ($me == $msg_to){$user_id = $msg_from;}
+						  else {$user_id = $_SESSION['user_id'];$_SESSION['err'] ="WARNING!! You cannot access someone else's chat!";}
+						  {getUserN($user_id);echo $name;} ?></span></div>
                                <div class="panel-body">
                                 	<div class="m_list">
                                         <div class="scrollable3">
                                         <?php if (getConvMsgs($user,$msg_from,$unique_id) >0){
+											if ($_SESSION['user_id'] == $msg_from || $_SESSION['user_id'] == $msg_to){
+												
 										while ($geUtmsgs->fetch())
 											{
 												$user = $msg_from;
-										  		getUserDetails($user)
+										  		getUserDetails($user);
 												
 										?>
                                          <div>
@@ -51,11 +56,13 @@
                                          </div>
                                          <?php } ?>
                                          <?php } ?>
+                                         <?php } else {?>
+                                         <?php } ?>
                                  		</div>
                                  	</div>
                                </div>
                                <div class="reply_msg">
-                                <form method="post" action="<?php echo ISVIPI_USER_INC_URL. 'users.pm.process.php'?>">
+                                <form method="post" action="<?php echo ISVIPI_URL. '/users/processPM'?>">
                                 <input type="hidden" name="msg" value="0">
                               <div class="form-group">
                                 <input class="form-control" type="hidden" name="recip" value="<?php echo htmlspecialchars($msg_from, ENT_QUOTES, 'utf-8');?>" placeholder="Recipient" onclick="this.value='';" required="required">
@@ -76,3 +83,4 @@
                   <!--========ANNOUNCEMENTS=====---->
                     <?php include ISVIPI_THEMES_BASE.'/global/announcements.php';?> 
                   <!--========/ANNOUNCEMENTS=====---->
+<?php get_footer();?>

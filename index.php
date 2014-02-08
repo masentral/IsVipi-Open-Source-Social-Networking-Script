@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once 'init.php';
+date_default_timezone_set (''.$time_zone.'');
 /*******************************************************
  *   Copyright (C) 2014  http://isvipi.com
 
@@ -17,30 +19,66 @@ session_start();
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
- require_once 'init.php';
- include_once ISVIPI_USER_INC_BASE. 'users.func.php';
- ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IsVipi: Open Source Social Networking Script</title>
+include_once ISVIPI_USER_INC_BASE. 'users.func.php';
+if (!file_exists('inc/db/db.php')){
+echo '<div style="width:500px;margin-left:50px; margin-top:10px;background:#F0F0F0;padding:10px">';
+echo 'Seems like your site is not yet set up. Click install to proceed... <br/>';
+echo '<a href="_install/"><input type="button" style="padding:5px 15px" value="Install"></button></a>';
+echo '</div>';	
+exit;
+}
+else 
+{
+require_once 'inc/db/db.php';
 
-<!--========HEADER=====---->
-<?php include ISVIPI_THEMES_BASE.'/global/index_header.php';?>
-<link href="<?php echo ISVIPI_THEME_URL; ?>css/tcal.css" rel="stylesheet" type="text/css" />
-<!--========/HEADER=====---->
+$URL = str_replace(
+	array( '\\', '../' ),
+	array( '/',  '' ),
+	$_SERVER['REQUEST_URI']
+);
 
-<!--========BODY=====---->
-<?php include_once ISVIPI_THEMES_BASE.'index.php'; ?>
-<!--========/BODY=====---->
+if ($offset = strpos($URL,'?')) {
+	// strip getData
+	$URL = substr($URL,0,$offset);
+} else if ($offset = strpos($URL,'#')) {
+		$URL = substr($URL,0,$offset);
+}
 
-<!--========FOOTER=====---->
-<script type="text/javascript" src="<?php echo ISVIPI_THEME_URL; ?>js/tcal.js"></script>
-<?php include_once ISVIPI_THEMES_BASE.'/global/index_footer.php';?>
-<!--========/FOOTER=====---->
-<?php globalAlerts();?>
+if (URL_ROOT != '/') $URL=substr($URL,strlen(URL_ROOT));
+
+$URL = trim($URL,'/');
+
+// 404 if trying to call a real file
+if (
+	file_exists(DOC_ROOT.'/'.$URL) &&
+	($_SERVER['SCRIPT_FILENAME'] != DOC_ROOT.$URL) &&
+ 	($URL != '') &&
+ 	($URL != 'index.php')
+) die404();
+
+$ACTION = (
+	($URL == '') ||
+	($URL == 'index.php') ||
+	($URL == 'index.html')
+) ? array('index') : explode('/',html_entity_decode($URL));
+$includeFile = ''.ISVIPI_USER_BASE.''.preg_replace('/[^\w]/','',$ACTION[0]).'.php';
+/**if($ACTION[0] == 'install'){
+			include_once '_install/'.preg_replace('/[^\w]/','',$ACTION[0]).'.php';
+		}**/
+
+if ($ACTION[0] == 'auth'){
+			include_once 'auth/'.preg_replace('/[^\w]/','',$ACTION[1]).'.php';
+		}
+else if ($ACTION[0] == 'users'){
+			require_once ''.ISVIPI_USER_INC_BASE.''.preg_replace('/[^\w]/','',$ACTION[1]).'.php';
+		}		
+else if (is_file($includeFile)) {
+	include($includeFile);
+	
+} 
+else die404();
+}
+?>
+
 </body>
 </html>

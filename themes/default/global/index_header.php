@@ -1,14 +1,15 @@
+<link rel="shortcut icon" type="image/x-icon" href="<?php echo ISVIPI_STYLE_URL; ?>images/favicon.png">
   <!-- Bootstrap -->
-  <link href="<?php echo ISVIPI_THEME_URL; ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="<?php echo ISVIPI_STYLE_URL; ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
   <!-- Main Style -->
-  <link href="<?php echo ISVIPI_THEME_URL; ?>css/isvipi.css" rel="stylesheet" media="screen">
+  <link href="<?php echo ISVIPI_STYLE_URL; ?>css/isvipi.css" rel="stylesheet" media="screen">
   <!-- FontAwesome -->
-  <link rel="stylesheet" href="<?php echo ISVIPI_THEME_URL; ?>fontawesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="<?php echo ISVIPI_STYLE_URL; ?>fontawesome/css/font-awesome.min.css">
   <!-- Alertify -->
-  <link rel="stylesheet" href="<?php echo ISVIPI_THEME_URL; ?>css/alertify.core.css">
-  <link rel="stylesheet" href="<?php echo ISVIPI_THEME_URL; ?>css/alertify.default.css">
+  <link rel="stylesheet" href="<?php echo ISVIPI_STYLE_URL; ?>css/alertify.core.css">
+  <link rel="stylesheet" href="<?php echo ISVIPI_STYLE_URL; ?>css/alertify.default.css">
    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-   <script type="text/javascript" src="<?php echo ISVIPI_THEME_URL; ?>js/isvipi_alerts.js"></script>
+   <script type="text/javascript" src="<?php echo ISVIPI_STYLE_URL; ?>js/isvipi_alerts.js"></script>
   </head>
       <body>
         <!-- main / large navbar -->
@@ -16,21 +17,13 @@
           <nav class="navbar navbar-default top-menu" role="navigation">
             <div class="container">
                 <div class="row">
-                  <a href="<?php echo ISVIPI_URL ?>" title="IsVipi Logo"><div class="admin_logo"><p class="Site_Title">IsVipi <span class="social_network">Social Network</span></p></div></a>
+                  <a href="<?php echo ISVIPI_URL ?>" title="IsVipi Logo"><div class="admin_logo"><img src="<?php echo ISVIPI_STYLE_URL.'images/logo.png';?>" width="70%" alt="" /></div></a>
                   
                   			<div class="index_login">
-                            <?php /** if(checkLogin())
-								{
-									$user = $_SESSION['user_id'];
- 									getUserDetails($user);
-									echo '<div class="alert alert-success">';
-									echo 'welcome back '.$d_name.'. ';
-									echo 'Go to <a href="members/">My Dashboard</a> or <a href="members/logout.php?action=logout">Logout</a>';
-									echo '</div>';
-								}
-								else{ **/
-								?>
-                            <form class="form-inline" action="<?php echo ISVIPI_USER_INC_URL. 'users.process.php'?>" method="POST">
+                            <?php if (isset($_SESSION['user_id'])){?>
+                            <span class="label label-info" style="font-size:12px; min-width:100px;padding:12px;">You are currently logged in. Visit <a class="home_link" href="<?php echo ISVIPI_URL.'home/' ?>">My Home</a> or <a class="home_link" href="<?php echo ISVIPI_URL.'/logout/' ?>"> Log Out</a> </span>
+                            <?php } else{?>
+                            <form class="form-inline" action="<?php echo ISVIPI_USER_PROCESS; ?>" method="POST">
                                 <div class="form-group">
                                     <input type="text" class="form-control" name="user" placeholder="Enter Username" required>
                                 </div>
@@ -39,8 +32,10 @@
                                 </div>
                                 <input type="hidden" name="op" value="login">
                                 <button type="submit" class="btn btn-primary">Sign in</button>
+                                <script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
+                                <a href="<?php echo ISVIPI_URL.'auth/forgot_password' ?>" data-toggle="tooltip" data-placement="bottom" title="Forgot Password"><span style="margin-left:10px; font-size:20px; color:#0C0;"><i class="fa fa-question-circle"></i></span></a>
                             </form>
-                            <?php // }?>
+                            <?php }?>
                            </div>
                     </div><!--end of row-->
                   </div><!-- /.container -->

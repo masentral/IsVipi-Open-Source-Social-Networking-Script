@@ -1,0 +1,407 @@
+/*!
+ * IsVipi 1.0.0 Default CSS
+ * Copyright 2014 IsVipi.
+ * Licensed under GPL V3
+ */
+/** The vertical centered content **/
+
+/** Body **/
+body{
+    background:#FFF;
+	overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/**Index page**/
+.index_login {float:right;margin-top:10px}
+.index_login .alert{margin-top:-10px}
+.home_content{height:533px;width:100%;margin-top:-25px;background:url(../images/bg.jpg);-moz-background-size:100% 100%;background-size:100% 100%; background-repeat:no-repeat;}
+.home_log_content{height:533px;width:100%;margin-top:-25px; background:#CCC}
+.home_register {float:right; margin-right:100px; margin-top:10px}
+.home_welcome {float:left; width:500px; height:400px; margin-left:100px}
+.home_login_welcome {float:left; width:500px; height:400px; margin-left:200px; margin-top:100px}
+.home_welcome h1{color:#FF0; font-size:30px; text-align:center; line-height:50px; font-weight:800}
+
+/** Login form **/
+.login-form{
+    min-width: 400px;
+    padding: 30px;
+    background-color: #FFF;
+	opacity:0.9;
+    filter:alpha(opacity=90); /* For IE8 and earlier */
+    border: 1px solid #E5E5E5;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.login-form h3{
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+.login-form .form-group{
+    margin-bottom: 5px;
+}
+.login-form label{
+    font-size: 15px;
+}
+.login-form input[type="text"],
+.login-form input[type="password"]{
+    font-size: 14px;
+    height: auto;
+    padding: 7px 9px;
+	width:350px
+}
+.login-form input[type="checkbox"]{
+    margin-right: 5px;
+}
+
+.login-form select{
+	cursor:pointer;
+    margin-right: 5px;
+}
+.login-form input[type="email"]{
+    width:350px;
+}
+.home_link {color:#FF0}
+
+.shortened {width:220px !important;border:solid #CCC thin; -moz-border-radius:4px; border-radius:4px}
+
+/** Header **/
+.top-menu{background:#343942; height:55px}
+.Site_Title {color:#FFF; font-size:22px; font-weight:700; font-family:"Comic Sans MS", cursive}
+.social_network {color:#FF0; font-size:14px; font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif}
+.admin_logo{background:#15171A; height:100%;position:absolute;left:0;top;0;width:200px;padding-left:40px}
+.admin_logo p{margin-top:10px; margin-left:10px}
+#not-bar{margin-left:150px; width:300px; padding-top:10px}
+.user_info{margin-right:10px; min-width:250px; height:50px; position:absolute; top:0; right:0; margin-top:1px; display:inline-block}
+.profile_pic {width:50px; height:50px; cursor:pointer; float:left;}
+.profile_pic img{border:0px;-moz-border-radius:8px; border-radius:8px;}
+.not-boxes{width:30px;height:30px;background:#282D33;margin-right:10px; display:inline-block;color:#FFF;}
+.dropdown {position:absolute; top:0; right:0; margin-right:100px; margin-top:15px}
+.dropdown a{color:#FFF; font-weight:800; text-decoration:none}
+.dropdown a:hover{text-decoration:none;color:#CCC}
+.not-boxes:hover{background:#1B1F23;text-decoration:none}
+.not-boxes i{color:#999;font-size:18px; cursor:pointer;margin-top:7px; margin-left:6px;text-decoration:none}
+.not-boxes i:hover{color:#FFF; text-decoration:none}
+.badge {
+  padding: 3px 6px 3px;
+  font-size: 11px;
+  font-weight: bold;
+  white-space: nowrap;
+  color: #ffffff;
+  background-color: #999999;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+  position:absolute;
+  margin-top:5px;
+}
+.badge:hover {
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+.badge-error {
+  background-color: #b94a48;
+}
+.badge-error:hover {
+  background-color: #953b39;
+}
+.badge-warning {
+  background-color: #f89406;
+}
+.badge-warning:hover {
+  background-color: #c67605;
+}
+.badge-success {
+  background-color: #468847;
+}
+.badge-success:hover {
+  background-color: #356635;
+}
+.badge-info {
+  background-color: #3a87ad;
+}
+.badge-info:hover {
+  background-color: #2d6987;
+}
+.badge-inverse {
+  background-color: #333333;
+}
+.badge-inverse:hover {
+  background-color: #1a1a1a;
+}
+/** Main container **/
+#content {
+    margin-left: 0px;
+}
+.dashboard_layout{width:1150px; border-right:solid #CCC thin; border-left:solid #CCC thin}
+.col-md-6 .row {float:left; margin-left:-130px} 
+.scrollable {max-height:400px; 
+overflow-y: scroll;
+overflow-x: hidden;
+}
+.scrollable2 {max-height:500px; 
+overflow-y: scroll;
+overflow-x: hidden;
+width:530px;
+}
+.scrollable3 {max-height:320px; 
+overflow-y: scroll;
+overflow-x: hidden;
+width:530px;
+}
+.reply_msg {padding:5px}
+.reply_msg textarea{border:solid #CCC thin; -moz-border-radius:4px; border-radius:4px; width:100%; height:80px}
+.chat_img{float:left}
+.r_msg {font-size:12px; width:490px; text-align:justify}
+.chat_time {
+	color: #FF9;
+	font-size: 11px;
+	display:block;
+	float:right
+}
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, rgb(122,153,217)),
+									   color-stop(0.72, rgb(73,125,189)),
+									   color-stop(0.86, rgb(28,58,148)));
+}
+/* Announcements */
+.dash_announce .panel {border:#CCC thin solid; float: right; min-height:300px; min-width:250px; overflow:hidden; margin-right:15px}
+.dash_announce .panel .panel-body {min-height:200px}
+
+/** central content **/
+.dash_content .panel {border:#CCC thin solid; min-height:300px; /**max-width:575px;**/ min-width:575; position:relative;overflow:hidden; float:left;margin-left:-113px}
+.dash_content .panel .panel-body {min-height:200px; width:580px}
+.dash_content .panel .panel-body .my_pic{width:150px;height:150px; border:solid thin #CCC; float:left}
+.dash_content .panel .panel-body .my_details{width:380px;float:left; margin-left:10px;}
+.dash_content .panel .panel-body .my_details table{font-size:13px}
+.dash_content .panel .panel-body .profile_options{width:150px;height:50px; float:left; margin-top:-30px;padding-left:5px}
+.dash_content .panel .panel-body .profile_edit{}
+.dash_content .panel .panel-body .c_prof{width:550px; margin-top:10px; margin-left:20px;}
+.dash_content .panel .panel-body .c_pass{min-width:550px; margin-top:10px; margin-left:-15px;}
+.edit_profile_i .form-group .edit_prof_hints{margin-top:-30px; margin-left:240px}
+.edit_profile_i .form-group .edit_prof_hints p{width:100px;color:#0F0}
+.edit_profile_i .form-group .radio{margin-left:-100px;}
+.edit_profile_i .form-group .radio label{margin-left:-100px;}
+.dash_content .panel .members_options{height:40px; width:200px;}
+.dash_content .panel .panel-body .m_list{width:700px; margin-top:10px; margin-left:20px;}
+.dash_content .panel .panel-body .m_list .friend_req_button{float:right; margin-top:-80px;margin-right:20px}
+.dash_content .panel .panel-body .m_list .msg_friend_button{float:right; margin-top:-90px;margin-right:20px}
+.dash_content .panel .panel-body .m_list .msg_friend_button hr{margin-top:5px !important; margin-bottom:5px !important}
+.dash_content .panel .panel-body li{list-style:none;border-bottom:dotted thin #CCC; width:500px; padding:5px}
+.dash_content .panel .panel-body .member_pic {width:100px;height:100px;margin-bottom:5px;float:left; padding:5px}
+.dash_content .panel .panel-body .member_pic img{border:0px;-moz-border-radius:8px; border-radius:8px;}
+.dash_content .panel .panel-body .member_pic_home img{border:0px;-moz-border-radius:8px; border-radius:8px;}
+.dash_content .panel .panel-body .member_info {width:300px;height:100px;margin-bottom:5px; margin-left:130px;padding:5px}
+.dash_content .panel .panel-body .member_info table{width:250px;}
+.dash_content .panel .panel-body .member_info table tr{height:10px}
+.dash_content .panel .panel-body .member_info a {font-size:13px; font-weight:800;}
+.dash_content .panel .panel-body .member_info a:hover{text-decoration:none}
+.members_list_info{font-size:11px;}
+.msglist {font-size:12px}
+.green {color:#060}
+.blue {color:#03F}
+.message_options_bar{font-size:15px;}
+.message_options_bar i{padding-right:5px; padding-left:5px;cursor:pointer;}
+.message_options_bar i:hover{color:#00F}
+.chat_user_ico i{float:left; margin-top:20px; font-size:16px}
+.chat_user_ico2 i{float:right; margin-top:20px; font-size:16px}
+.chat_user_ico .tooltip-arrow {
+  display:none
+}
+.chat_user_ico .tooltip-inner {
+	position:absolute;left:0;margin-right:-50px;margin-top:-10px
+}
+.chat_user_ico2 .tooltip-arrow {
+  display:none
+}
+.chat_user_ico2 .tooltip-inner {
+	position:absolute;right:0;margin-right:-490px;margin-top:-5px
+}
+.chat_with {font-weight:800;color:#FF0}
+/**Chat box**/
+/* THE SPEECH BUBBLE
+------------------------------------------------------------------------------------------------------------------------------- */
+
+.triangle-right {
+  position:relative;
+  width:380px;
+  padding:10px;
+  margin:1em auto;
+  color:#fff;
+  background:#075698; /* default background for browsers without gradient support */
+  /* css3 */
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#2e88c4), to(#075698));
+  background:-moz-linear-gradient(#2e88c4, #075698);
+  background:-o-linear-gradient(#2e88c4, #075698);
+  background:linear-gradient(#2e88c4, #075698);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+
+/* Variant : for left positioned triangle
+------------------------------------------ */
+
+.triangle-right.left {
+  margin-left:50px;
+  background:#075698;
+}
+
+/* Variant : for right positioned triangle
+------------------------------------------ */
+
+.triangle-right.right {
+  margin-right:50px;
+  background:#5cb85c;
+}
+
+/* THE TRIANGLE
+------------------------------------------------------------------------------------------------------------------------------- */
+
+.triangle-right:after {
+  content:"";
+  position:absolute;
+  bottom:-20px; /* value = - border-top-width - border-bottom-width */
+  left:60px; /* controls horizontal position */
+  border-width:10px 40px 0 0; /* vary these values to change the angle of the vertex */
+  border-style:solid;
+  border-color:#075698 transparent;
+  /* reduce the damage in FF3.0 */
+  display:block;
+  width:0;
+}
+
+/* Variant : left
+------------------------------------------ */
+
+.triangle-right.left:after {
+  top:16px;
+  left:-40px; /* value = - border-left-width - border-right-width */
+  bottom:auto;
+  border-width:10px 40px 0 0; /* vary these values to change the angle of the vertex */
+  border-color:transparent #075698;
+}
+
+/* Variant : right
+------------------------------------------ */
+
+.triangle-right.right:after {
+  top:16px;
+  right:-40px; /* value = - border-left-width - border-right-width */
+  bottom:auto;
+  left:auto;
+  border-width:10px 0 0 40px; /* vary these values to change the angle of the vertex */
+  border-color:transparent #5cb85c ;
+}
+
+/** Forms */
+.form-group label.control-label{
+    line-height: normal;
+}
+.form-group label{
+    line-height: 25px;
+}
+.form-group input{
+    width: 220px; margin-right:10px
+}
+.form-group select{
+    width: 220px; margin-right:10px
+}
+
+
+.modal-body .form-group label.control-label{
+    line-height: normal;
+}
+.modal-body .form-group label{
+    line-height: 25px;
+}
+.modal-body .form-group input{
+    width: 400px; margin-right:10px
+}
+.modal-body .form-group textarea{
+    width: 550px; margin-right:10px;border:#CCC thin solid; -moz-border-radius:4px; border-radius:4px;height:200px
+}
+
+/** Side Bar **/
+.sidebar-menu {
+    background-color: #fff;
+    max-height: none;
+    max-width: 228px;
+    padding: 0;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+    -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+    box-shadow: 0 1px 4px rgba(0,0,0,.065);
+}
+.sidebar-menu > li > a {
+    display: block;
+    width: 190px\9;
+    margin: 0 0 -1px;
+    padding: 8px 14px;
+    border: 1px solid #e5e5e5;
+}
+.sidebar-menu > li:first-child > a {
+    -webkit-border-radius: 6px 6px 0 0;
+    -moz-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+}
+.sidebar-menu > li:last-child > a {
+    -webkit-border-radius: 0 0 6px 6px;
+    -moz-border-radius: 0 0 6px 6px;
+    border-radius: 0 0 6px 6px;
+}
+.sidebar-menu > .active > a,
+.sidebar-menu .active a:hover{
+    background-color: #08C;
+    color: #fff;
+}
+.sidebar-menu > .active > a {
+    position: relative;
+    z-index: 2;
+    padding: 9px 15px;
+    border: 0;
+    text-shadow: 0 1px 0 rgba(0,0,0,.15);
+    -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+    -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+    box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+}
+
+
+/** Footer **/
+.index-footer {width:100%;border-top:solid thin #CCC; padding-top:20px;padding-bottom:10px;position:absolute; bottom:0; right:0;background:#343942;}
+.index-footer p{
+    text-align: right; margin-right:120px; color:#FFF
+}
+.index-footer a{
+    color:#CCC
+}
+.index-footer a:hover{
+    color:#FFF
+}
+.footer {width:100%;border-top:solid thin #CCC; margin-top:90px;padding-top:20px;clear:both;padding-bottom:10px}
+.footer p{
+    text-align: right; margin-right:120px;
+}

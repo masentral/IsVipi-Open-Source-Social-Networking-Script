@@ -1,5 +1,4 @@
 <?php
-session_start();
 /*******************************************************
  *   Copyright (C) 2014  http://isvipi.com
 
@@ -17,17 +16,13 @@ session_start();
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
- require_once '../init.php';
- include_once ISVIPI_DB_BASE.'db.php';
- include_once ISVIPI_USER_INC_BASE. 'users.func.php';
-
-if (isset($_GET['code'])) {
-$activation_code = $_GET['code'];
+if (isset($ACTION['2'])) {
+$activation_code = $ACTION['2'];
 //Sanitize our activation code
 if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $activation_code))
 	{
 	$_SESSION['err'] ="Invalid characters in activation code";
-    header ('location:../index.php');
+    header ('location:'.ISVIPI_URL.'');
 	exit();	
 	}
 // Check if the activation code exists in the database
@@ -37,7 +32,7 @@ $validateusr->execute();
 $validateusr->store_result();
 if ($validateusr->num_rows === 0){
 	$_SESSION['err'] ="The activation code is not valid";
-    header ('location:../index.php');
+    header ('location:'.ISVIPI_URL.'');
 	exit();	
 	}
 else
@@ -52,12 +47,12 @@ else
 		$actvusr->execute();
 
 	$_SESSION['succ'] ="Your account has been validated. Please log in.";
-    header ('location:../index.php');
+    header ('location:'.ISVIPI_URL.'');
 	exit();	
 	};
  }
  else
  {
-	 fail('Sorry! Nothing for you here');
+	 die404();
  }
  ?>

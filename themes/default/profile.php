@@ -1,3 +1,4 @@
+<?php include ISVIPI_THEMES_BASE.'/global/header.php';?>
                   <!--========SIDEBAR MENU=====---->
                     <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>
                   <!--========/SIDEBAR MENU=====---->
@@ -9,7 +10,7 @@
                                <div class="panel-body">
                                  <div class="my_pic">
                                  <?php if(htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8') == ""){$m_thumbnail="no-image.gif";}?>
-                                 <img src="<?php echo ISVIPI_MEMBER_URL.'pics/'.htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" />
+                                 <img src="<?php echo ISVIPI_PROFILE_PIC_URL.htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" />
                                  </div>
                                  <div class="my_details">
                                   <table class="table table-bordered">
@@ -39,16 +40,39 @@
                                     <button class="btn btn-primary" data-toggle="modal" data-target="#profilePic">Change Profile Pic</button>
                                     <?php } else {?>
                                  <button class="btn btn-primary" data-toggle="modal" data-target="#profilePic">Upload Profile Pic</button>							<?php }?>
-                                 <a href="edit_profile.php" class="btn btn-info" role="button">Edit my Profile</a>
+                                 <a href="<?php echo ISVIPI_URL.'edit_profile/' ?>" class="btn btn-info" role="button">Edit my Profile</a>
                                  
                                  <?php } else{?>
                                 <button class="btn btn-info" data-toggle="modal" data-target="#sendPM">
   									Send Message
 								</button>
+                                <?php if(checkExistingReq($id,$user)){
+												//Check if a friend request exists
+													echo '<span class="label label-primary">';
+													echo 'Request Pending';
+													echo '</span>';
+											}
+											//Check if the user is him/herself then hide add friend button
+											else if($id ===$user){
+											}
+											//Check if the request was rejected
+											else if(checkIfRejected($id,$user)){
+													echo '<span class="label label-danger">';
+													echo 'Request Rejected';
+													echo '</span>';
+											}
+											//Check if they are already friends
+											else if(checkFriendship($id,$user)){
+													
+											}
+												else
+											{?>
+                                            <a href="<?php echo ISVIPI_URL. '/users/fRequests'?>?action=3&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>"><button type="submit" class="btn btn-success">Add Friend</button></a>
+											<?php }?>
                                 <?php if(checkFriendship($id,$user)){?>
                                 <a href="#" id="focus"><button type="submit" class="btn btn-danger">Remove Friend</button></a>
                                 <?php }?>
-                                 <a href="<?php $from_url = $_SERVER['HTTP_REFERER']; echo $from_url;?>" class="btn btn-default pull-right" role="button">Back</a>
+                                 <a href="<?php echo $_SERVER['HTTP_REFERER'];?>" class="btn btn-default pull-right" role="button">Back</a>
                                  <?php }?>
                                  </div>
                                </div>
@@ -77,7 +101,7 @@
                                 alertify.set({ buttonFocus: "cancel" });
                                 alertify.confirm("Are you sure you want to unfriend <span><?php echo $m_name ?></span>?", function (e) {
                                     if (e) {
-                                        window.location = "../lib/users.inc/users.frequests.php?action=4&id=<?php echo $id;?>";
+                                        window.location = "<?php echo ISVIPI_URL. '/users/fRequests'?>?action=4&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>";
                                     } else {
                                         alertify.error("Cancelled");
                                     }
@@ -98,7 +122,7 @@
                         <h4 class="modal-title" id="myModalLabel">To: <span class="green"><?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?></span></h4>
                       </div>
                       <div class="modal-body">
-                              <form method="post" action="<?php echo ISVIPI_USER_INC_URL. 'users.pm.process.php'?>">
+                              <form method="post" action="<?php echo ISVIPI_URL. '/users/processPM'?>">
                                 <input type="hidden" name="msg" value="0">
                               <div class="form-group">
                                 <input class="form-control" type="hidden" name="recip" value="<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>" placeholder="Recipient" onclick="this.value='';" required="required">
@@ -128,7 +152,7 @@
                         <h4 class="modal-title" id="myModalLabel">Upload Profile Pic</h4>
                       </div>
                       <div class="modal-body">
-                       <form action="<?php echo ISVIPI_USER_INC_URL. 'users.profilepic.php'?>" method="post" enctype="multipart/form-data">
+                       <form action="<?php echo ISVIPI_URL. '/users/processPIC'?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="op" value="newpic">
                         <input type="hidden" name="userid" value="<?php echo $user?>">
                         <label for="file">Filename:</label>
@@ -142,4 +166,4 @@
                     </div><!-- /.modal-content -->
                   </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-         
+<?php get_footer();?>         

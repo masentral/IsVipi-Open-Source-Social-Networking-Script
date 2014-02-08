@@ -1,3 +1,4 @@
+<?php include ISVIPI_THEMES_BASE.'/global/header.php';?>
                   <!--========SIDEBAR MENU=====---->
                     <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>
                     
@@ -31,6 +32,9 @@
                                         <?php }?>
                                         <?php }?>
                                         <?php noticeSeen($user);?>
+                                        <?php if ($getnotice->num_rows()<1){?>
+                                        <td colspan="3">You have no notifications</td>
+                                        <?php } ?>
                                      </table>
                                   </div>
 							  </div>
@@ -39,3 +43,4 @@
                  <!--========ANNOUNCEMENTS=====---->
                     <?php include ISVIPI_THEMES_BASE.'/global/announcements.php';?> 
                   <!--========/ANNOUNCEMENTS=====---->
+<?php get_footer();?>

@@ -17,10 +17,11 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
 session_start();
+$from_url = $_SERVER['HTTP_REFERER'];
 $op = $_POST['op'];
 if ($op !== 'step1' && $op !== 'step2'){
 	$_SESSION['err'] ="Unknown request";
-    header ('location:install.php');
+    header ('location:'.$from_url.'');
 	exit();
 }
 /////////////////////////////////////////////////////////////
@@ -32,12 +33,12 @@ if ($op === 'step1') {
 $server = $_POST["dbhost"];
 if (empty($server)) {
     $_SESSION['err'] ="Please fill in the server field";
-    header ('location:install.php');
+    header ('location:'.$from_url.'');
 	exit();
 }
 if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $server)){
 	$_SESSION['err'] ="Invalid input for server";
-    header ('location:install.php');
+    header ('location:'.$from_url.'');
 	exit();
 }
 
@@ -45,12 +46,12 @@ if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $server)){
 $username = $_POST["dbusername"];
 if (empty($username)) {
     $_SESSION['err'] ="Please fill in the username field";
-    header ('location:install.php');
+    header ('location:'.$from_url.'');
 	exit();
 }
 if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $username)){
 	$_SESSION['err'] ="Invalid Input for username";
-    header ('location:install.php');
+    header ('location:'.$from_url.'');
 	exit();
 }
 
@@ -58,7 +59,7 @@ if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $username)){
 $password = $_POST["dbpassword"];
 if (empty($password)) {
     $_SESSION['err'] ="Please fill in the password field";
-    header ('location:install.php');
+    header ('location:'.$from_url.'');
 	exit();
 }
 
@@ -66,12 +67,12 @@ if (empty($password)) {
 $database = $_POST["dbname"];
 if (empty($database)) {
     $_SESSION['err'] ="Please fill in the database field";
-    header ('location:install.php');
+    header ('location:'.$from_url.'');
 	exit();
 }
 if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $database)){
 	$_SESSION['err'] ="Invalid Input for database";
-    header ('location:install.php');
+    header ('location:'.$from_url.'');
 	exit();
 }
 $filename = 'sql.sql';
@@ -84,8 +85,11 @@ if (mysqli_connect_errno()){
 	exit();
 }
 //Create the db file
-$my_file = '../lib/db/db.php';
-$handle = fopen($my_file, 'a') or die('Cannot open file:  '.$my_file);
+$db_file = '../inc/db/db.php';
+if (file_exists($db_file)){
+unlink($db_file);	
+}
+$handle = fopen($db_file, 'a') or die('Cannot open file:  '.$db_file);
 $copyr = '<?php
 /*******************************************************
  *   Copyright (C) 2014  http://isvipi.com
@@ -104,10 +108,8 @@ $copyr = '<?php
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
- ?>';
+ ';
 fwrite($handle, $copyr);
-$open_php = "\n".'<?php';
-fwrite($handle, $open_php);
 $localhost = "\n".'$db_host = "'.$server.'";';
 fwrite($handle, $localhost);
 $database = "\n".'$db_name = "'.$database.'";';
@@ -122,10 +124,14 @@ $dbconnect = "\n".'$db = new mysqli($db_host, $db_user, $db_pass, $db_name);
 if (mysqli_connect_errno())
 	fail("MySQL connect", mysqli_connect_error());';
 fwrite($handle, $dbconnect);
-$select_db = "\n".'//If in development mode, debugging should be set to TRUE otherwise it should be FALSE';
-fwrite($handle, $select_db);
-$dbselect = "\n".'$debug = TRUE;';
-fwrite($handle, $dbselect);
+$select_sett = "\n".'//get important config settings from the database
+$getconf = $db->prepare("SELECT site_url,site_title,site_email,theme,time_zone FROM site_settings");
+$getconf->execute();
+$getconf->store_result();
+$getconf->bind_result($site_url,$site_title,$site_email,$theme,$time_zone);
+$getconf->fetch();
+$getconf->close( );';
+fwrite($handle, $select_sett);
 $close_php = "\n".'?>';
 fwrite($handle, $close_php);
 
@@ -160,17 +166,17 @@ if (substr(trim($line), -1, 1) == ';')
 
 if ($op === 'step2') {
 
-include_once '../lib/db/db.php';
+include_once '../inc/db/db.php';
 //SITE URL
 $site_url = $_POST["site_url"];
 if (empty($site_url)) {
     $_SESSION['err'] ="Please fill in the site url field";
-    header ('location:install_step_2.php');
+    header ('location:'.$from_url.'');
 	exit();
 }
 if (!preg_match('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', $site_url)){
 	$_SESSION['err'] ="Invalid input for site url";
-    header ('location:install_step_2.php');
+    header ('location:'.$from_url.'');
 	exit();
 }
 
@@ -178,12 +184,12 @@ if (!preg_match('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-
 $site_title = $_POST["site_title"];
 if (empty($site_title)) {
     $_SESSION['err'] ="Please fill in the Site Title field";
-    header ('location:install_step_2.php');
+    header ('location:'.$from_url.'');
 	exit();
 }
 if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $site_title)){
 	$_SESSION['err'] ="Invalid input for site title";
-    header ('location:install_step_2.php');
+    header ('location:'.$from_url.'');
 	exit();
 }	
 
@@ -191,12 +197,12 @@ if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $site_title)){
 $site_email = $_POST["site_email"];
 if (empty($site_email)) {
     $_SESSION['err'] ="Please fill in the Site Email field";
-    header ('location:install_step_2.php');
+    header ('location:'.$from_url.'');
 	exit();
 }
 if (!preg_match('/([\w\-]+\@[\w\-]+\.[\w\-]+)/', $site_email)){
 	$_SESSION['err'] ="Invalid input for site email";
-    header ('location:install_step_2.php');
+    header ('location:'.$from_url.'');
 	exit();
 }	
 
@@ -204,12 +210,12 @@ if (!preg_match('/([\w\-]+\@[\w\-]+\.[\w\-]+)/', $site_email)){
 $site_timezone = $_POST["time_zone"];
 if (empty($site_timezone)) {
     $_SESSION['err'] ="Please fill in the Site Timezone field";
-    header ('location:install_step_2.php');
+    header ('location:'.$from_url.'');
 	exit();
 }
 if (!preg_match('/^[A-Za-z0-9:_.\/\\\\ ]+$/', $site_timezone)){
 	$_SESSION['err'] ="Invalid input for site timezone";
-    header ('location:install_step_2.php');
+    header ('location:'.$from_url.'');
 	exit();
 }	
 
@@ -217,7 +223,7 @@ if (!preg_match('/^[A-Za-z0-9:_.\/\\\\ ]+$/', $site_timezone)){
 $site_theme = $_POST["theme"];
 if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $site_theme)){
 	$_SESSION['err'] ="Invalid input for hidden field theme";
-    header ('location:install_step_2.php');
+    header ('location:'.$from_url.'');
 	exit();
 }	
 
@@ -233,8 +239,6 @@ $_SESSION['succ'] ="Site settings saved";
 	exit();
 }
 $_SESSION['err'] ="System Error. Please try again";
-    header ('location:home.php');
+    header ('location:'.$from_url.'');
 	exit();	
-	
-	
 }

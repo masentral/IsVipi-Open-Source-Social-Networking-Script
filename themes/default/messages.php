@@ -1,3 +1,4 @@
+<?php include ISVIPI_THEMES_BASE.'/global/header.php';?>
                   <!--========SIDEBAR MENU=====---->
                     <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>
                   <!--========/SIDEBAR MENU=====---->
@@ -27,20 +28,20 @@
                                         <tbody>
                                           <tr>
                                           <?php 
-										  $user = $msg_from;
-										  getUserDetails($user);
+										  getUserDetails($msg_from);
 										  $user1 = $_SESSION['user_id'];
 										  ?>
                                          <td><?php echo date('d M Y \a\t g:ia', strtotime($timestamp));?></td>
                                          <?php newSingMsg($user1,$unique_id); ?>
 										 <?php if ($newmsgs >0){?>
-           <td><a href="<?php echo ISVIPI_MEMBER_URL.'profile.php?id='.$msg_from.'&msg='.$msg_id.''?>" title="View Profile"><?php echo htmlspecialchars($d_name, ENT_QUOTES, 'utf-8');?></a> <span class="label label-success">new</span></td>
+           <td><a href="<?php echo ISVIPI_URL.'profile/';?><?php if($user1 == $msg_from){getUserDetails($msg_to);echo $username ;}else if ($user1 == $msg_to){$msg_from; getUserDetails($msg_from);echo $username ;}?>" title="View Profile"><?php if($user1 == $msg_from){getUserN($msg_to);echo $name ;}else if ($user1 == $msg_to){$msg_from; getUserN($msg_from);echo $name ;}?></a> <span class="label label-success">new</span></td>
                                             <?php } else{?>
-                                            <td><a href="<?php echo ISVIPI_MEMBER_URL.'profile.php?id='.$msg_from.''?>" title="View Profile"><?php $me = $_SESSION['user_id']; if($me == $msg_from){$user_id = $msg_to; getUserN($user_id);echo $name ;}else if ($me == $msg_to){$user_id = $msg_from; getUserN($user_id);echo $name ;}?></a></td>
+                                            <td><a href="<?php echo ISVIPI_URL.'profile/'?><?php if($user1 == $msg_from){getUserDetails($msg_to);echo $username ;}else if ($user1 == $msg_to){$msg_from; getUserDetails($msg_from);echo $username ;}?>" title="View Profile"><?php if($user1 == $msg_from){getUserN($msg_to);echo $name ;}else if ($user1 == $msg_to){$msg_from; getUserN($msg_from);echo $name ;}?></a></td>
                                             <?php }?>
                                             <td><div class="message_options_bar">
-                                            <?php $code = implode('-', array($msg_from, $unique_id, $msg_to,$msg_id));?>
-                                <a href="read_pm.php?id=<?php echo $code?>" title="Read">Read <i class="fa fa-external-link"></i></a>
+                                            <?php $code = implode('/', array($msg_from, $unique_id, $msg_to,$msg_id));?>
+                                            
+                                <a href="<?php echo ISVIPI_URL.'read_pm/'.encrypt_str($code);?>" title="Read">Read <i class="fa fa-external-link"></i></a>
                                     </div>
                                     </td>
                                         </tr>
@@ -59,3 +60,4 @@
                  <!--========ANNOUNCEMENTS=====---->
                     <?php include ISVIPI_THEMES_BASE.'/global/announcements.php';?> 
                   <!--========/ANNOUNCEMENTS=====---->
+<?php get_footer();?>
