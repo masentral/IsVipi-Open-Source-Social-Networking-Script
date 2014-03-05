@@ -1,5 +1,5 @@
-<?php include ISVIPI_THEMES_BASE.'/global/index_header.php';?>
-<link href="<?php echo ISVIPI_THEME_URL; ?>css/tcal.css" rel="stylesheet" type="text/css" />
+<?php get_home_header()?>
+<link href="<?php echo ISVIPI_STYLE_URL ?>css/tcal.css" rel="stylesheet" type="text/css" />
 <div class="home_log_content">
     <div class="home_login_welcome">
         <div class="home_register">
@@ -57,4 +57,4 @@
      </form>
      </div>
 </div>
-<?php get_home_footer();?>
+<?php get_home_footer()?>

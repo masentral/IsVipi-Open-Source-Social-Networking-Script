@@ -1,9 +1,5 @@
-<?php include ISVIPI_THEMES_BASE.'/global/header.php';?>
-                  <!--========SIDEBAR MENU=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>
-                    
-                  <!--========/SIDEBAR MENU=====---->
-                  <!--========EDIT PROFILE=====---->
+<?php get_header()?>
+<?php get_sidebar()?>
                   <?php getOnlineMembers();?>
                        <div class="dash_content">
                         <div class="panel panel-primary">
@@ -81,17 +77,18 @@
 											}
 												else
 											{?>
-                                            <a href="<?php echo ISVIPI_URL. '/users/fRequests'?>?action=3&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>"><button type="submit" class="btn btn-success">Add Friend</button></a>
+                                            <a href="<?php echo ISVIPI_URL. 'users/fRequests'?>?action=3&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>"><button type="submit" class="btn btn-success">Add Friend</button></a>
 											<?php }?>
 											</div>
                                         </li>
 										<?php }?>
+                                        <?php getOnlineMembers(); if ($getmembers->num_rows<1){?>
+                                        <p>You have no new members</p>
+                                        <?php }?>
                                      </div>
                                    </div>
 							  </div>
                           </div><!--end of panel-->
                         </div><!--end of dash_content-->
-                 <!--========ANNOUNCEMENTS=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/announcements.php';?> 
-                  <!--========/ANNOUNCEMENTS=====---->
-<?php get_footer();?>
+<?php get_r_sidebar()?>
+<?php get_footer()?>

@@ -1,16 +1,13 @@
-<?php include ISVIPI_THEMES_BASE.'/global/header.php';?>
+<?php get_header()?>
 <link href="<?php echo ISVIPI_STYLE_URL; ?>css/isvipi-timeline.css" rel="stylesheet" type="text/css" />
-                  <!--========SIDEBAR MENU=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>
-                  <!--========/SIDEBAR MENU=====---->
-                  <!--========TIMELINE=====---->
+<?php get_sidebar()?>
                   <?php getFeeds();?>
                        <div class="dash_content">
                         <div class="panel panel-primary">
                           <div class="panel-heading">Timeline</div>
                                <div class="panel-body">
                                 <div id="isvipi-timeline">
-                         <form id="tweetForm" action="<?php echo ISVIPI_URL. '/users/processUsers'?>" method="post">
+                         <form id="tweetForm" action="<?php echo ISVIPI_USER_PROCESS ?>" method="post">
                          <input type="hidden" value="<?php echo $username; ?>" name="user" />
                          <input type="hidden" value="feed" name="op" />
                          <span class="counter">500</span>
@@ -32,12 +29,12 @@
                                     <div class='timeline_pic'>
                                     <?php t_thumb($uid);?>
                                     <?php if(htmlspecialchars($t_thumb, ENT_QUOTES, 'utf-8') == ""){$t_thumb="no-image.gif";}?>
-                                    <div class="member_pic_home"><a href="<?php echo ISVIPI_URL.'profile/' ?><?php getUserDetails($uid); echo $username;?>"><img src='<?php echo ISVIPI_PROFILE_PIC_URL.htmlspecialchars($t_thumb, ENT_QUOTES, 'utf-8');?>' height='60' width='60' alt='' /></a></div>
+                                    <div class="member_pic_home"><a href="<?php echo ISVIPI_URL.'profile/' ?><?php getUserDetails($uid); echo $username;?>" data-toggle="tooltip" data-placement="top" title="<?php getUserDetails($uid); echo $username;?>"><img src='<?php echo ISVIPI_PROFILE_PIC_URL.htmlspecialchars($t_thumb, ENT_QUOTES, 'utf-8');?>' height='60' width='60' alt='' /></a></div>
                                     </div>
                                     <div class='timeline_posts'>
                                     <li>
-                                    <a href='<?php echo ISVIPI_URL.'profile/' ?><?php echo $act_user;?>'><?php echo htmlspecialchars($act_user, ENT_QUOTES, 'utf-8');?></a><br/>
-                                    <?php echo $activity;?><br/>
+                 <a href='<?php echo ISVIPI_URL.'profile/' ?><?php echo $act_user;?>'><?php echo htmlspecialchars($act_user, ENT_QUOTES, 'utf-8');?></a><br/>
+                                    <?php echo makeLinks($activity);?><br/>
                                     <span class='time_stamp'><?php echo relativeTime($time)?></span> <br/>
                                     </li>
                                     </div>
@@ -47,7 +44,6 @@
                                </div>
                           </div><!--end of panel-->
                         </div><!--end of dash_content-->
-                  <!--========/TIMELINE=====---->
                   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
                              <script type="text/javascript">
 							 $(document).ready(function(){
@@ -77,7 +73,5 @@
 		           $('.counter').css('color','#cccccc');
                  }
               </script>
-                  <!--========ANNOUNCEMENTS=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/announcements.php';?> 
-                  <!--========/ANNOUNCEMENTS=====---->
-<?php get_footer();?>
+<?php get_r_sidebar()?>
+<?php get_footer()?>

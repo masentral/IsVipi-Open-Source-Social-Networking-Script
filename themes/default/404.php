@@ -1,4 +1,4 @@
-<?php include ISVIPI_THEMES_BASE.'/global/index_header.php';?>
+<?php get_home_header()?>
              <?php if (isset($_SESSION['user_id'])){?>
              <?php $user = $_SESSION['user_id'];getUserDetails($user);?>
 			 <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>    
@@ -16,4 +16,4 @@
                                </div>
                           </div><!--end of panel-->
                         </div><!--end of dash_content-->
-<?php get_home_footer();?>
+<?php get_home_footer()?>

@@ -56,14 +56,14 @@
   <div class="row">
   <div class="alert alert-success">
     <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-    <p>Installation successful.</p>
+    <p>Installation complete!</p>
   </div>
   <div class="panel panel-default">
   <div class="panel-body">
-  <p>Your site should be working fine now. We are still working on the admin side of the script and will be released soon. Please visit our <a href="http://forum.isvipi.com" target="_blank">forum</a> if you have questions or suggestions for the next releases.</p>
-   <p>You can also subscribe to our feeds by email to be notified when we release the admin side of the script.</p>
-   <p>You can also donate to the project to help provide more scripts like these for free. To donate please <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8EKWYJABNLDE2" target="_blank">follow this link</a></p>
-   <p><a href="../" target="_blank">Visit my site</a></p>
+  <p>Easy, wasn't it? If you have questions or suggestions for new features please visit our <a href="http://forum.isvipi.com" target="_blank">forum</a> and create a new post. You can also go through our <a href="http://isvipi.com/documentation/" target="_blank">Documentation</a> to find out more about this software.</p>
+   <p style="font-weight:600; background:#CCF;padding:10px">It has taken us many hours of research and development of this software only to provide it for <strong>FREE</strong> and all we can ask from you is a simple donation to this project. Your donations will help us keep this software <strong>FREE</strong> while developing new features of interest to you. Support this project by making a <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8EKWYJABNLDE2" target="_blank"><strong>Donation</strong>.</a></p>
+   <p>Visit my <a href="../" target="_blank">newly installed site</a> &raquo;</p>
+   <p>Visit my <a href="../admin/" target="_blank">Admin Area</a> &raquo;</p>
     </div>
     </div>
 <?php

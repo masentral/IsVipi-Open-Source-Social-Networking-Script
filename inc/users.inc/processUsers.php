@@ -53,6 +53,12 @@ $hasher = new PasswordHash($hash_cost_log2, $hash_portable);
 //////////////// REGISTRATION //////////////////////////////
 ////////////////////////////////////////////////////////////
 if ($op === 'new') {
+	getAdminGenSett();
+	if ($usrReg == "1"){
+	$_SESSION['err'] ="The adminisrator has disabled registrations on this site";
+    header ('location:'.$from_url.'');
+	exit();	
+	}
 	
 /* Validate Display Name */
 $d_name = get_post_var('d_name');
@@ -145,7 +151,11 @@ $user_dob = get_post_var('user_dob');
     header ('location:'.$from_url.'');
 	exit();
 }
-
+if (!checkDateTime($user_dob)){
+$_SESSION['err'] ="Wrong date format. Correct format is mm/dd/yyyy (month/day/year)";
+    header ('location:'.$from_url.'');
+	exit();	
+}
 // Validate City
 $user_city = get_post_var('user_city');
 if (empty($user_city)) 
@@ -203,13 +213,23 @@ if(checkEmail($email))
 	 xtractUID($user);
 	 updateTimeline($uid,$user,$activity);
 	 //send activation email
+	 getAdminGenSett();
+	 if ($usrValid=="1"){ 
 	 sendActEmail($site_url,$site_email,$user,$site_title,$randomstring,$email);
+	 }
    } 
 }
+if ($usrValid=="1"){
 $_SESSION['succ_reg'] ="Registration successful. We have sent you an email with an activation code. Please follow instructions provided";
 $_SESSION['succ'] ="Registration successful. We have sent you an email with an activation code. Please follow instructions provided";
 		header ('location:'.$from_url.'');
 		exit();
+} else {
+$_SESSION['succ_reg'] ="Registration successful. Please log in to your new account";
+$_SESSION['succ'] ="Registration successful. Please log in to your new account";
+		header ('location:'.$from_url.'');
+		exit();	
+}
 $db->close();
 }
 /////////////////////////////////////////////////////////////
@@ -285,13 +305,17 @@ if (empty($user)) {
 	
 			//Update user status to online
 	  		userOnline($user);
+			//Update timeline/activity feeds
+			 $activity = 'has just logged in';
+			 xtractUID($user);
+			 updateTimeline($uid,$user,$activity);
 	
 			//Redirect to members area
 			header ('location:'.ISVIPI_URL.'home/');
 			exit();
 		} else {
 			$_SESSION['err'] ="The username and/or password is incorrect";
-			header ('location:../../index.php');
+			header ('location:'.$from_url.'');
 			exit();
 		$op = 'fail'; 
 	}
@@ -343,17 +367,12 @@ if ($op === 'change') {
 				header ('location:'.$from_url.'');
 				exit();
 			}
-			unset($hasher);
-			$hasher = new PasswordHash($hash_cost_log2, $hash_portable);
-        //update password
 		$stmt = $db->prepare('update members set password=? where username=?');
 		$stmt->bind_param('ss', $hash, $user);
 		$stmt->execute();
-		{
 			$_SESSION['succ'] ="Password changed successfully";
 			header ('location:'.$from_url.'');
 			exit();
-		}
 	  $db->close();
 	 }
 	unset($hasher);
@@ -405,6 +424,12 @@ if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $gender_n)){
 }
 /* Date of Birth */
 $dob_n = get_post_var('dob');
+if (!checkDateTime($dob_n))
+{
+$_SESSION['err'] ="Wrong date format. Correct format is mm/dd/yyyy (month/day/year)";
+    header ('location:'.$from_url.'');
+	exit();	
+}
 if (!preg_match('/^[A-Za-z0-9:_.\/\\\\ ]+$/', $dob_n))
 	{
 	$_SESSION['err'] ="Invalid input for date of birth";
@@ -424,7 +449,7 @@ $city_n = preg_replace('/[^a-zA-Z0-9 ]/','',$city_nn);
 $coutry_nn = get_post_var('user_country');
 $coutry_n = preg_replace('/[^a-zA-Z0-9 ]/','',$coutry_nn);
 	 /* Update profile*/
-	 updateProfile($user,$display_n,$user_id_n,$gender_n,$dob_n,$phone_n,$city_n,$coutry_n);
+	 updateProfile($display_n,$user_id_n,$gender_n,$dob_n,$phone_n,$city_n,$coutry_n);
 	 $_SESSION['succ'] ="Profile update successful";
 	 header("location: ".$from_url."");
 	 exit ();
@@ -463,6 +488,7 @@ if ($op === 'forgot_pass') {
 		updtRecov($recov_email,$randomstring);
 		//Get username so that we can send password recovery email
 		emailUsername($recov_email);
+		//passRecovEmail();
 		sendRecEmail($recov_email,$randomstring,$site_title,$site_email,$username,$site_url);
 		$_SESSION['succ'] ="Your password reset link has been sent to ".$recov_email."";
         header ('location:'.$from_url.'');

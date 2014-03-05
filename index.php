@@ -1,7 +1,19 @@
 <?php
 session_start();
+if (!file_exists('inc/db/db.php')){
+echo '<div style="width:500px;margin-left:50px; margin-top:10px;background:#F0F0F0;padding:10px">';
+echo 'Seems like your site is not yet set up. Click install to proceed... <br/>';
+echo '<a href="_install/"><input type="button" style="padding:5px 15px" value="Install"></button></a>';
+echo '</div>';	
+exit;
+}
+else 
+{
+require_once 'inc/db/db.php';
+date_default_timezone_set ($time_zone);
 require_once 'init.php';
-date_default_timezone_set (''.$time_zone.'');
+include_once ISVIPI_USER_INC_BASE. 'users.func.php';
+getAdminGenSett();
 /*******************************************************
  *   Copyright (C) 2014  http://isvipi.com
 
@@ -19,18 +31,6 @@ date_default_timezone_set (''.$time_zone.'');
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
-include_once ISVIPI_USER_INC_BASE. 'users.func.php';
-if (!file_exists('inc/db/db.php')){
-echo '<div style="width:500px;margin-left:50px; margin-top:10px;background:#F0F0F0;padding:10px">';
-echo 'Seems like your site is not yet set up. Click install to proceed... <br/>';
-echo '<a href="_install/"><input type="button" style="padding:5px 15px" value="Install"></button></a>';
-echo '</div>';	
-exit;
-}
-else 
-{
-require_once 'inc/db/db.php';
-
 $URL = str_replace(
 	array( '\\', '../' ),
 	array( '/',  '' ),
@@ -62,23 +62,29 @@ $ACTION = (
 	($URL == 'index.html')
 ) ? array('index') : explode('/',html_entity_decode($URL));
 $includeFile = ''.ISVIPI_USER_BASE.''.preg_replace('/[^\w]/','',$ACTION[0]).'.php';
-/**if($ACTION[0] == 'install'){
-			include_once '_install/'.preg_replace('/[^\w]/','',$ACTION[0]).'.php';
-		}**/
 
-if ($ACTION[0] == 'auth'){
+if ($ACTION[0] == 'cron'){
+			include_once ''.ISVIPI_CRON_BASE.'/'.preg_replace('/[^\w]/','',$ACTION[0]).'.php';
+		}
+else if ($ACTION[0] == 'auth'){
 			include_once 'auth/'.preg_replace('/[^\w]/','',$ACTION[1]).'.php';
 		}
 else if ($ACTION[0] == 'users'){
 			require_once ''.ISVIPI_USER_INC_BASE.''.preg_replace('/[^\w]/','',$ACTION[1]).'.php';
+		}
+else if ($ACTION[0] == 'admin'){
+			if (!isset($ACTION[1])){$ACTION[1] = 'login';}
+			require_once 'admincp/'.preg_replace('/[^\w]/','',$ACTION[1]).'.php';
+		}
+else if ($ACTION[0] == 'conf'){
+			require_once ''.ISVIPI_ADMIN_INC_BASE.''.preg_replace('/[^\w]/','',$ACTION[1]).'.php';
 		}		
 else if (is_file($includeFile)) {
-	include($includeFile);
-	
+		include($includeFile);
 } 
 else die404();
 }
-?>
 
+?>
 </body>
 </html>

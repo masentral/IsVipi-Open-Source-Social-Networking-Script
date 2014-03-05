@@ -39,7 +39,7 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = fa
    
   //Config Section    
   //Set file upload path
-  $path = ISVIPI_USER_BASE.'/pics/'; //with trailing slash
+  $path = ISVIPI_USER_BASE.'pics/'; //with trailing slash
   //Set max file size in bytes
   $max_size = 1000000;
   //Set default file extension whitelist

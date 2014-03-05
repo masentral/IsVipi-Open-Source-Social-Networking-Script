@@ -116,7 +116,7 @@ if (isset($id)){
 	{getUserDetails($id); $userto = $username ;}
 	$activity = 'is now friends with <a href='.ISVIPI_URL.'profile/'.$username.'>'.$userto.'</a>';
 	updateTimeline($id,$userfrom,$activity);
-	$notice = "<a href=".ISVIPI_URL."profile/".$username.">".$username."</a> accepted your friend request";
+	$notice = "<a href=".ISVIPI_URL."profile/".$userfrom.">".$userfrom."</a> accepted your friend request";
 	$user = $id;
 	//Then we update
 	updNotices($user,$notice);

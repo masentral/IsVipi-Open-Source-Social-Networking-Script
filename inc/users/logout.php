@@ -23,6 +23,10 @@
 	if (isset($_SESSION['msg'])){
 		$value=$_SESSION['msg'];
 		} else {$value='logout';}
+			 $activity = 'has just logged out';
+			 $uid = $_SESSION['user_id'];
+			 getUserDetails($uid);
+			 updateTimeline($uid,$username,$activity);
 	logout($value);
-	
+	//Update timeline/activity feeds
  ?>

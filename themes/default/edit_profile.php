@@ -1,10 +1,6 @@
-<?php include ISVIPI_THEMES_BASE.'/global/header.php';?>
+<?php get_header()?>
 <link href="<?php echo ISVIPI_STYLE_URL; ?>css/tcal.css" rel="stylesheet" type="text/css" />
-                  <!--========SIDEBAR MENU=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>
-                    
-                  <!--========/SIDEBAR MENU=====---->
-                  <!--========EDIT PROFILE=====---->
+<?php get_sidebar()?>
                        <div class="dash_content">
                         <div class="panel panel-primary">
                           <div class="panel-heading">My Profile</div>
@@ -84,9 +80,6 @@
 							  </div>
                           </div><!--end of panel-->
                         </div><!--end of dash_content-->
-                  <!--========/EDIT PROFILE=====---->
-                  <!--========ANNOUNCEMENTS=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/announcements.php';?> 
-                  <!--========/ANNOUNCEMENTS=====---->
-<?php get_footer();?>
+<?php get_r_sidebar()?>
+<?php get_footer()?>
 <script type="text/javascript" src="<?php echo ISVIPI_STYLE_URL; ?>js/tcal.js"></script>

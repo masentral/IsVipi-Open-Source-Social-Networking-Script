@@ -79,12 +79,20 @@ body{
 .user_info{margin-right:10px; min-width:250px; height:50px; position:absolute; top:0; right:0; margin-top:1px; display:inline-block}
 .profile_pic {width:50px; height:50px; cursor:pointer; float:left;}
 .profile_pic img{border:0px;-moz-border-radius:8px; border-radius:8px;}
-.not-boxes{width:30px;height:30px;background:#282D33;margin-right:10px; display:inline-block;color:#FFF;}
+.not-boxes{width:30px;height:30px;margin-right:10px; display:inline-block;color:#FFF;}
 .dropdown {position:absolute; top:0; right:0; margin-right:100px; margin-top:15px}
 .dropdown a{color:#FFF; font-weight:800; text-decoration:none}
 .dropdown a:hover{text-decoration:none;color:#CCC}
-.not-boxes:hover{background:#1B1F23;text-decoration:none}
-.not-boxes i{color:#999;font-size:18px; cursor:pointer;margin-top:7px; margin-left:6px;text-decoration:none}
+.not-boxes i{
+	color: #737373;
+	font-size: 22px;
+	cursor: pointer;
+	margin-top: 7px;
+	margin-left: 6px;
+	text-decoration: none;
+	text-shadow: 0px 1px 1px #000;
+}
+.not-boxes .badge{margin-top:7px; margin-left:-6px;}
 .not-boxes i:hover{color:#FFF; text-decoration:none}
 .badge {
   padding: 3px 6px 3px;
@@ -186,8 +194,14 @@ width:530px;
 									   color-stop(0.86, rgb(28,58,148)));
 }
 /* Announcements */
-.dash_announce .panel {border:#CCC thin solid; float: right; min-height:300px; min-width:250px; overflow:hidden; margin-right:15px}
+.dash_announce .panel {border:#CCC thin solid; float: right; min-height:300px; max-width:250px; overflow:hidden; margin-right:15px}
 .dash_announce .panel .panel-body {min-height:200px}
+.dash_announce .panel .panel-body hr{padding:2px;margin:0}
+.dash_announce .panel .panel-body p {pading:0;margin:0}
+.ann {display:block; padding:5px}
+.ann_date {font-style:italic; font-size:12px; color:#999}
+.ann_title a {text-decoration:underline; font-size:12px}
+.ann_content {text-align:justify; font-size:12px}
 
 /** central content **/
 .dash_content .panel {border:#CCC thin solid; min-height:300px; /**max-width:575px;**/ min-width:575; position:relative;overflow:hidden; float:left;margin-left:-113px}
@@ -217,6 +231,8 @@ width:530px;
 .dash_content .panel .panel-body .member_info table tr{height:10px}
 .dash_content .panel .panel-body .member_info a {font-size:13px; font-weight:800;}
 .dash_content .panel .panel-body .member_info a:hover{text-decoration:none}
+.admin_front_head {padding:10px}
+.admin_front_head span {font-size:12px}
 .members_list_info{font-size:11px;}
 .msglist {font-size:12px}
 .green {color:#060}

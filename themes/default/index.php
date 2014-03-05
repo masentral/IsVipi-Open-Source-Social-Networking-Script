@@ -1,13 +1,17 @@
 <?php
 /*
 Theme Name: Default
-Theme URL: http://isvipi.com/
+Theme URL: http://isvipi.com
 Description: Default IsVipi Theme
 Version: 1.0.0
 Author: IsVipi
-Author URL: http://isvipi.com/
+Author URL: http://isvipi.com
 */
-include ISVIPI_THEMES_BASE.'/global/index_header.php';?>
+get_home_header();
+if ($sysCron=="1"){
+tenMinsCron();
+}
+?>
 <link href="<?php echo ISVIPI_STYLE_URL; ?>css/tcal.css" rel="stylesheet" type="text/css" />
 <div class="home_content">
     <div class="home_welcome">
@@ -15,9 +19,15 @@ include ISVIPI_THEMES_BASE.'/global/index_header.php';?>
     <h1>Meet New People, Chat and Have Fun!</h1>
     <?php if (isset($_SESSION['succ_reg'])){?>
     <div class="alert alert-info">
+    <?php getAdminGenSett(); if ($usrValid=="1"){?>
     <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
     <h3>
     Registration successful! An email with a validation link has been sent to the email you provided. Please follow the instructions provided to validate your account. If you fail to find the email in your inbox, please check your <strong>spam folder</strong>.
+    <?php } else {?>
+    <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+    <h3>
+    Registration successful! You can now log in to your account</strong>.
+    <?php }?>
     </h3>
     </div>
     <?php unset ($_SESSION['succ_reg']);}?>
@@ -57,9 +67,13 @@ include ISVIPI_THEMES_BASE.'/global/index_header.php';?>
       <div class="form-group">
         <?php cSelect();?>
       </div>
-        <button class="btn btn-lg btn-primary" type="submit">Register</button>
+      <?php getAdminGenSett(); if ($usrReg == "1"){?>
+      <button class="btn btn-lg btn-primary" type="submit" disabled="disabled">Registration is Disabled</button>
+      <?php } else {?>
+        <button class="btn btn-lg btn-primary" type="submit" >Register</button>
+        <?php }?>
      </form>
      </div>
 </div>
-<?php get_home_footer();?>
+<?php get_home_footer()?>
 <script type="text/javascript" src="<?php echo ISVIPI_STYLE_URL; ?>js/tcal.js"></script>

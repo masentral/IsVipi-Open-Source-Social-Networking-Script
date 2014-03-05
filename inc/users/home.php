@@ -17,10 +17,13 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
  isLoggedIn();
+ if (isset($_SESSION['user_id'])){
  $user = $_SESSION['user_id'];
  getUserDetails($user);
+ pollUser($user);
+ }
  base_header($site_title,$ACTION[0]);
- include_once ISVIPI_THEMES_BASE.'page.php';
+ include_once ISVIPI_THEMES_BASE.'home.php';
  globalAlerts();?>
 </body>
 </html>

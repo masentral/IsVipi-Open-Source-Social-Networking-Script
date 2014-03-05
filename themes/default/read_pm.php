@@ -1,8 +1,5 @@
-<?php include_once ISVIPI_THEMES_BASE.'/global/header.php';?>
-                  <!--========SIDEBAR MENU=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>
-                  <!--========/SIDEBAR MENU=====---->
-                  <!--========PROFILE=====---->
+<?php get_header()?>
+<?php get_sidebar()?>
                        <div class="dash_content">
                         <div class="panel panel-primary">
                         <script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
@@ -47,12 +44,6 @@
                                          <?php }?>
                                          
                                          </div>
-                                         <div class="tooltip">
-                                            <div class="tooltip-inner">
-                                            Tooltip!
-                                            </div>
-                                            <div class="tooltip-arrow"></div>
-                                            </div>
                                          </div>
                                          <?php } ?>
                                          <?php } ?>
@@ -62,7 +53,7 @@
                                  	</div>
                                </div>
                                <div class="reply_msg">
-                                <form method="post" action="<?php echo ISVIPI_URL. '/users/processPM'?>">
+                                <form method="post" action="<?php echo ISVIPI_URL. 'users/processPM'?>">
                                 <input type="hidden" name="msg" value="0">
                               <div class="form-group">
                                 <input class="form-control" type="hidden" name="recip" value="<?php echo htmlspecialchars($msg_from, ENT_QUOTES, 'utf-8');?>" placeholder="Recipient" onclick="this.value='';" required="required">
@@ -79,8 +70,5 @@
 
                           </div><!--end of panel-->
                         </div><!--end of dash_content-->
-                  <!--========/PROFILE=====---->
-                  <!--========ANNOUNCEMENTS=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/announcements.php';?> 
-                  <!--========/ANNOUNCEMENTS=====---->
+<?php get_r_sidebar()?>
 <?php get_footer();?>

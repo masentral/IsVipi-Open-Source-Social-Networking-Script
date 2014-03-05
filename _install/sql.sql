@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `country` (
   `numcode` smallint(6) DEFAULT NULL,
   `phonecode` int(5) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
  
 --
 -- Dumping data for table `country`
@@ -283,6 +283,36 @@ CREATE TABLE IF NOT EXISTS `site_settings` (
   `site_email` varchar(85) NOT NULL,
   `theme` varchar(85) NOT NULL,
   `time_zone` varchar(155) NOT NULL,
+  `last_version_check` varchar(155) NOT NULL,
+  `status` int(2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+--
+-- Table structure for table `Other Settings`
+--
+
+CREATE TABLE IF NOT EXISTS `general_settings` (
+  `id` int(2) NOT NULL AUTO_INCREMENT,
+  `user_registration` int(1) NOT NULL,
+  `user_validate` int(1) NOT NULL,
+  `sys_cron` int(1) NOT NULL,
+  `timezone` int(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+--
+-- Table structure for table `Themes`
+--
+
+CREATE TABLE IF NOT EXISTS `themes` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `theme_name` varchar(85) NOT NULL,
+  `theme_url` varchar(155) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `version` varchar(10) NOT NULL,
+  `author` varchar(155) NOT NULL,
+  `author_url` varchar(155) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
@@ -300,8 +330,47 @@ CREATE TABLE IF NOT EXISTS `members` (
   `level` int(1) NOT NULL,
   `reg_date` varchar(45) NOT NULL,
   `online` int(1) NOT NULL,
+  `last_activity` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE IF NOT EXISTS `admin` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `email` varchar(35) NOT NULL,
+  `active` int(1) NOT NULL,
+  `level` int(1) NOT NULL,
+  `online` int(1) NOT NULL,
+  `ip` varchar(255) NOT NULL,
+  `user_agent` varchar(255) NOT NULL,
+  `last_activity` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+--
+-- Table structure for table `Site Messages`
+--
+
+CREATE TABLE IF NOT EXISTS `site_messages` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `purpose` varchar(140) NOT NULL,
+  `subject` varchar(140) NOT NULL,
+  `message` varchar(1500) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+--
+-- Dumping data for table `site_messages`
+--
+
+INSERT INTO `site_messages` (`id`, `purpose`, `subject`, `message`) VALUES
+(1, 'recovery', 'Recover Password', '<html>\n<head>\n<title>Change Password Request at ".$site_title."</title>\n</head>\n<body>\n<table style=''width:700px;'' align=''center'' bgcolor=''#CCCCCC'' cellpadding=''2''>\n<th bgcolor=''#FFFFFF'' height=''20px''><h1> ".$site_title." - Reset Password</h1></th>\n<tr>\n<td><p>Dear ".$username.",</p></td>\n</tr>\n<tr>\n<td><p>You recently requested to change your password at ".$site_title." </p>\n    <p> Your password reset link is ".$site_url."/auth/recover_password/".$randomstring."</p>\n    <p> -------------------------------</p>\n    <p> If you however did not make this request please ignore this email</p>\n    </td>\n</tr>\n<tr bgcolor=''#FFFFFF''>\n      <td>Best Regards,<br />\n      ".$site_title." Team.<br />\n	  ".$site_url."\n	  </td>\n    </tr>\n</table>\n</html>'),
+(2, 'activation', 'Account Activation', '<html>\n<head>\n<title>Activate your account at ".$site_title."</title>\n</head>\n<body>\n<table style=''width:700px;'' align=''center'' bgcolor=''#CCCCCC'' cellpadding=''2''>\n<th bgcolor=''#FFFFFF'' height=''50px''><h1> ".$site_title." - Account Activation</h1></th>\n<tr>\n<td><p>Dear ".$user.",</p></td>\n</tr>\n<tr>\n<td><p>Your account at ".$site_title." has been created. You will however need to validate your email before you can log in. To validate your email, please click the link below.</p>\n                      <p> Link: ".$site_url."/auth/activate/".$randomstring."</p>\n                      <p> If for some reason you cannot click on the link above, copy and paste it in your browser.</p></td>\n</tr>\n<tr bgcolor=''#FFFFFF''>\n      <td>Best Regards,<br />\n      ".$site_title." Team.<br />\n	  ".$site_url."\n	  </td>\n    </tr>\n</table>\n</body>\n</html>');
 
 --
 -- Table structure for table `member_sett`
@@ -343,6 +412,18 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `notice` varchar(500) NOT NULL,
   `time` datetime NOT NULL,
   `seen` varchar(8) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+--
+-- Table structure for table `Announcements`
+--
+
+CREATE TABLE IF NOT EXISTS `announcements` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `date` varchar(100) NOT NULL,
+  `subject` varchar(150) NOT NULL,
+  `content` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 

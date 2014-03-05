@@ -17,11 +17,9 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
 function sendActEmail($site_url,$site_email,$user,$site_title,$randomstring,$email){
-   $to = $email;
+$to = $email;
 $subject = "Account Activation";
-
-$message = "
-<html>
+$message = "<html>
 <head>
 <title>Activate your account at ".$site_title."</title>
 </head>
@@ -44,9 +42,7 @@ $message = "
     </tr>
 </table>
 </body>
-</html>
-";
-
+</html>";
 $headers = "MIME-Version: 1.0" . "\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
@@ -56,9 +52,9 @@ mail($to,$subject,$message,$headers);
 }
 
 function sendRecEmail($recov_email,$randomstring,$site_title,$site_email,$username,$site_url){
+	
 $to = $recov_email;
-$subject = "Change Password";
-
+$subject = "Recover Password";
 $message = "
 <html>
 <head>

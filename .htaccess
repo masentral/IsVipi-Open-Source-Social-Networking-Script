@@ -33,3 +33,7 @@ Header set Cache-Control "private, no-cache, no-store, proxy-revalidate, no-tran
 Header set Pragma "no-cache"
 </FilesMatch>
 </IfModule>
+
+# enable PHP error logging
+#php_flag  log_errors on
+#php_value error_log  c:xampp/htdocs/isvipi/error_log.log

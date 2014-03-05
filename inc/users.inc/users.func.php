@@ -16,26 +16,54 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
-//Function Get Header
 function base_header($site_title,$ACTION){
 $ACTION = str_replace("_", " ", $ACTION);
 $ACTION = str_replace("index", "Homepage", $ACTION);
 $ACTION = ucwords($ACTION);
-include ISVIPI_USER_BASE.'/base_header.php';	
+include_once ISVIPI_USER_BASE.'base_header.php';	
 }
-
+function admin_base_header($site_title,$ACTION){
+$ACTION = str_replace("_", " ", $ACTION);
+$ACTION = ucwords($ACTION);
+include_once ISVIPI_USER_BASE.'admin_base_header.php';	
+}
 //Function Get Header
 function get_header(){
-include ISVIPI_THEMES_BASE.'/global/header.php';	
+include_once ISVIPI_THEMES_BASE.'global/header.php';	
 }
-
 //Function Get Footer
 function get_footer(){
-include_once ISVIPI_THEMES_BASE.'/global/footer.php';	
+include_once ISVIPI_THEMES_BASE.'global/footer.php';	
+}
+//Function Get Homepage Header
+function get_home_header(){
+include_once ISVIPI_THEMES_BASE.'global/index_header.php';	
 }
 //Function Get Homepage Footer
 function get_home_footer(){
-include_once ISVIPI_THEMES_BASE.'/global/index_footer.php';	
+include_once ISVIPI_THEMES_BASE.'global/index_footer.php';	
+}
+//Function Get Sidebar Menu
+function get_sidebar(){
+include_once ISVIPI_THEMES_BASE.'global/sidebar_menu.php';	
+}
+
+//Function Get Sidebar Menu
+function get_r_sidebar(){
+include_once ISVIPI_THEMES_BASE.'global/announcements.php';	
+}
+//Function Get Announcements
+function getAnnouncements(){
+	global $db;
+	global $ann_id;
+	global $ann_date;
+	global $ann_subject;
+	global $ann_content;
+	global $getAnn;
+	$getAnn = $db->prepare("SELECT id,date,subject,content FROM announcements ORDER BY id DESC LIMIT 5");
+	$getAnn->execute();
+	$getAnn->store_result();
+	$getAnn->bind_result($ann_id,$ann_date,$ann_subject,$ann_content);
 }
 
 //Function 404 
@@ -189,9 +217,12 @@ function emailUsername($value){
 //Add User after completing all validation requirements
 function addUser($user,$d_name,$hash,$email,$randomstring,$user_gender,$user_dob,$user_city,$user_country){
 	global $db;
-	$active = "0";
-	$stmt = $db->prepare('insert into members (username, password, email, a_code, active, reg_date, level, online) values (?, ?, ?, ?, ?, NOW(), "1", "5")');
-	$stmt->bind_param('ssssi', $user, $hash, $email, $randomstring, $active);
+	getAdminGenSett();
+	global $usrValid;
+	if ($usrValid=="1"){$active = "0";} else {$active = "1";}
+	$time = date("Y-m-d H-i-s");
+	$stmt = $db->prepare('insert into members (username, password, email, a_code, active, reg_date, level, online, last_activity) values (?, ?, ?, ?, ?, NOW(), "1", "0", ?)');
+	$stmt->bind_param('ssssis', $user, $hash, $email, $randomstring, $active, $time);
 	$stmt->execute();
 	//Extract the ID of the user that has just signed up
 	$xtrctid = $db->prepare("SELECT id FROM members WHERE username=?");
@@ -223,7 +254,7 @@ function xtractUID($value){
 	$xtrctid->close();
 }
 //Update user profile
-function updateProfile($user,$display_n,$user_id_n,$gender_n,$dob_n,$phone_n,$city_n,$coutry_n){
+function updateProfile($display_n,$user_id_n,$gender_n,$dob_n,$phone_n,$city_n,$coutry_n){
 	global $db;
 	//Update user status to online
 	$upoprf = $db->prepare('UPDATE member_sett set d_name=?,gender=?,dob=?,phone=?,city=?,country=? where user_id=?');
@@ -254,7 +285,7 @@ $_SESSION['timeout'] = time();
 
 //Check login function to authenticate users before accessing the member area
 function isLoggedIn(){
-	if(!isset($_SESSION['logged_in'])) {
+	if(!isset($_SESSION['logged_in'])&&(!isAdmin())&&(!isset($_SESSION['user_id']))) {
 		$_SESSION['err'] ="You MUST be logged in to view that page";
 		header('location: '.ISVIPI_URL.'login/');
 		exit();
@@ -262,14 +293,62 @@ function isLoggedIn(){
 	else if(timedOut()){
 		header('location: '.ISVIPI_URL.'session_expire/');
 	}
+	/**else if (!isAdmin()){
+		$_SESSION['err'] ="You MUST be logged in to view that page";
+		header('location: '.ISVIPI_URL.'login/');
+		exit();
+	}**/
+  }
+ function signedIn(){
+	if(isset($_SESSION['logged_in'])) {
+		return true;
+	}
+	else {
+		return false;
+	}
+  }
+  function isAdmin(){
+	if(isset($_SESSION['admin_logged_in'])) {
+		return true;
+	}
+	else {
+		return false;
+	}
   }
 
+//Check if user is logged in
+function isOnline($value){
+	global $db;
+	$getusr = $db->prepare("SELECT last_activity FROM members WHERE id=?");
+	$getusr->bind_param("i",$value);
+	$getusr->execute();
+	$getusr->store_result();
+	$getusr->bind_result($last_activity);
+	$getusr->fetch();
+	$getusr->close();
+		$timeNow = date('m/d/Y h:i:s a', time());
+		$start_date = new DateTime($timeNow);
+		$since_start = $start_date->diff(new DateTime($last_activity));
+		//echo $since_start->i.' minutes';
+		if ($since_start->i>=10){
+		$session_expire ="session_expire";
+		logout($session_expire);	
+		}
+}
+//Poll users and update on every page load
+function pollUser($value){
+	global $db;
+	$pollusr = $db->prepare('update members set last_activity=NOW() where id=?');
+	$pollusr->bind_param('i', $value);
+	$pollusr->execute();
+	$pollusr->close();	
+	}
 //Update user status to online
 function userOnline($user){
 	global $db;
 	$online = "1";
 	//Update user status to online
-	$uponl = $db->prepare('update members set online=? where username=?');
+	$uponl = $db->prepare('update members set online=?, last_activity=NOW() where username=?');
 	$uponl->bind_param('is', $online, $user);
 	$uponl->execute();
 	$uponl->close();
@@ -347,7 +426,7 @@ function getFeeds(){
 
 //Get relative time
 function relativeTime($time,$precision=3)
-                   { $times=array(	365*24*60*60	=> "year",
+                   {$times=array(	365*24*60*60	=> "year",
 					30*24*60*60		=> "month",
 					7*24*60*60		=> "week",
 					24*60*60		=> "day",
@@ -386,6 +465,7 @@ function relativeTime($time,$precision=3)
 //Retrieve Thumbnail
 function t_thumb($value){
 	global $t_thumb;
+	$GLOBALS['foobar'] = $t_thumb;
 	global $db;
 	$getusr = $db->prepare("SELECT thumbnail FROM member_sett WHERE id=?");
 	$getusr->bind_param('i', $value);
@@ -431,13 +511,75 @@ function getNewMembers(){
 	global $getmembers;
 	global $id;
 	global $n_count;
+	global $username;
+	global $email;
 	$active = '1';
-	$getmembers = $db->prepare("SELECT id FROM members where active=? ORDER BY ID Desc LIMIT 10");
+	$getmembers = $db->prepare("SELECT id,username,email FROM members where (active=? AND reg_date > NOW() - INTERVAL 1 DAY) ORDER BY ID Desc LIMIT 0, 20");
 	$getmembers->bind_param('i', $active);
 	$getmembers->execute();
 	$getmembers->store_result();
-	$getmembers->bind_result($id);
+	$getmembers->bind_result($id,$username,$email);
 	$n_count = $getmembers->num_rows();
+}
+
+//Get unvalidated members
+function getUnValMembers(){
+	global $db;
+	global $getunmembers;
+	global $id;
+	global $un_count;
+	$active = '0';
+	$getunmembers = $db->prepare("SELECT id FROM members where active=? ORDER BY ID Desc");
+	$getunmembers->bind_param('i', $active);
+	$getunmembers->execute();
+	$getunmembers->store_result();
+	$getunmembers->bind_result($id);
+	$un_count = $getunmembers->num_rows();
+}
+
+//Get suspended members
+function getSusMembers(){
+	global $db;
+	global $getunmembers;
+	global $id;
+	global $sus_count;
+	$active = '3';
+	$getsusmembers = $db->prepare("SELECT id FROM members where active=? ORDER BY ID Desc");
+	$getsusmembers->bind_param('i', $active);
+	$getsusmembers->execute();
+	$getsusmembers->store_result();
+	$getsusmembers->bind_result($id);
+	$sus_count = $getsusmembers->num_rows();
+}
+
+//Get Female members
+function getFemMembers(){
+	global $db;
+	global $getfemales;
+	global $id;
+	global $fem_count;
+	$gender = 'Female';
+	$getfemales = $db->prepare("SELECT id FROM member_sett where gender=? ORDER BY ID Desc");
+	$getfemales->bind_param('s', $gender);
+	$getfemales->execute();
+	$getfemales->store_result();
+	$getfemales->bind_result($id);
+	$fem_count = $getfemales->num_rows();
+}
+
+//Get Male members
+function getMaleMembers(){
+	global $db;
+	global $getmales;
+	global $id;
+	global $male_count;
+	$gender = 'Male';
+	$getmales = $db->prepare("SELECT id FROM member_sett where gender=? ORDER BY ID Desc");
+	$getmales->bind_param('s', $gender);
+	$getmales->execute();
+	$getmales->store_result();
+	$getmales->bind_result($id);
+	$male_count = $getmales->num_rows();
 }
 
 //Get member details
@@ -605,7 +747,7 @@ function getNotices($user){
 	global $time;
 	global $getnotice;
 	global $noticesno;
-	$getnotice = $db->prepare("SELECT id, notice, time FROM notifications WHERE user=? Limit 20 ");
+	$getnotice = $db->prepare("SELECT id, notice, time FROM notifications WHERE user=? ORDER BY ID DESC Limit 20 ");
 	$getnotice->bind_param('i', $user);
 	$getnotice->execute();
 	$getnotice->store_result();
@@ -808,5 +950,118 @@ function encrypt_str($value){
 		$s=base64_decode($s);
 			return $s;
 	};
+//Cron every ten minutes
+function tenMinsCron(){
+include_once ISVIPI_ROOT. 'inc/cron/cron.php';
+}
 
+function trunc_text($text, $limit) {
+      if (str_word_count($text, 0) > $limit) {
+          $words = str_word_count($text, 2);
+          $pos = array_keys($words);
+          $text = substr($text, 0, $pos[$limit]) . '...';
+      }
+      return $text;
+    }
+	
+function makeLinks($value) {
+    return preg_replace(
+        '@(https?://([-\w\.]+[-\w])+(:\d+)?(/([\w/_\.#-~]*(\?\S+)?)?)?)@',
+        '<a href="$1">$1</a>', $value);
+}
+
+function chooseTimeZone(){
+	global $time_zone;
+	$regions = array(
+    'Africa' => DateTimeZone::AFRICA,
+    'America' => DateTimeZone::AMERICA,
+    'Antarctica' => DateTimeZone::ANTARCTICA,
+    'Aisa' => DateTimeZone::ASIA,
+    'Atlantic' => DateTimeZone::ATLANTIC,
+    'Europe' => DateTimeZone::EUROPE,
+    'Indian' => DateTimeZone::INDIAN,
+    'Pacific' => DateTimeZone::PACIFIC
+);
+ 
+$timezones = array();
+foreach ($regions as $name => $mask)
+{
+    $zones = DateTimeZone::listIdentifiers($mask);
+    foreach($zones as $timezone)
+    {
+		// Lets sample the time there right now
+		$time = new DateTime(NULL, new DateTimeZone($timezone));
+ 
+		// Us dumb Americans can't handle millitary time
+		$ampm = $time->format('H') > 12 ? ' ('. $time->format('g:i a'). ')' : '';
+ 
+		// Remove region name and add a sample time
+		$timezones[$name][$timezone] = substr($timezone, strlen($name) + 1) . ' - ' . $time->format('H:i') . $ampm;
+	}
+}
+// View
+print '<select id="timezone" class="form-control" name="time_zone">';
+foreach($timezones as $region => $list)
+{
+	print '<optgroup label="' . $region . '">' . "\n";
+	foreach($list as $timezone => $name)
+	{?>
+		<option <?php if ($time_zone == $timezone){echo 'selected';}?>><?php echo $timezone ?></option>
+	<?php }
+	print '<optgroup>' . "\n";
+}
+print '</select>';
+}
+
+function getAdminGenSett(){
+	global $db;
+	global $usrReg;
+	global $usrValid;
+	global $sysCron;
+	global $timeZ;
+	$getAdminGen = $db->prepare("SELECT user_registration,user_validate,sys_cron,timezone FROM general_settings LIMIT 1");
+	$getAdminGen->execute();
+	$getAdminGen->store_result();
+	$getAdminGen->bind_result($usrReg,$usrValid,$sysCron,$timeZ);
+	$getAdminGen->fetch();
+	$getAdminGen->close();	
+}
+
+/////////////////////////////////
+////// MESSAGES ////////////////
+////////////////////////////////
+function actEmail(){
+	global $db;
+	global $activation_email;
+	global $act_subject;
+	$purpose ="activation";
+	$actEml = $db->prepare("SELECT subject,message FROM site_messages WHERE purpose=?");
+	$actEml->bind_param("s",$purpose);
+	$actEml->execute();
+	$actEml->store_result();
+	$actEml->bind_result($act_subject,$activation_email);
+	$actEml->fetch();
+	$actEml->close();	
+}
+function passRecovEmail(){
+	global $db;
+	global $recov_email;
+	global $rec_subject;
+	$purpose ="recovery";
+	$actEml = $db->prepare("SELECT subject,message FROM site_messages WHERE purpose=?");
+	$actEml->bind_param("s",$purpose);
+	$actEml->execute();
+	$actEml->store_result();
+	$actEml->bind_result($rec_subject,$recov_email);
+	$actEml->fetch();
+	$actEml->close();	
+}
+function checkDateTime($value) {
+	list($m, $d, $y) = explode('/', $value);
+		if(checkdate($m, $d, $y)){
+  	return TRUE;
+	} else {
+	return FALSE;
+	}
+}
 ?>

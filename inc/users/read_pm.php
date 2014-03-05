@@ -17,8 +17,11 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
  isLoggedIn();
+ if (isset($_SESSION['user_id'])){
  $user = $_SESSION['user_id'];
  getUserDetails($user);
+ pollUser($user);
+ }
  //Define key actions
 //It will return fail if no correct action is defined from a POST command
 //We retrieve the message id then update the message as read

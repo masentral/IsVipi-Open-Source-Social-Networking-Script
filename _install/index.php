@@ -15,12 +15,6 @@
     You should have received a copy of the GNU General Public License along
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- ******************************************************/ 
- isLoggedIn();
- $user = $_SESSION['user_id'];
- getUserDetails($user);
- base_header($site_title,$ACTION[0]);
- include_once ISVIPI_THEMES_BASE.'my_profile.php';
- globalAlerts();?>
-</body>
-</html>
+ ******************************************************/
+header ('location:install.php');
+?>

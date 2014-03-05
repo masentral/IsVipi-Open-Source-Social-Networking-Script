@@ -1,9 +1,5 @@
-<?php include ISVIPI_THEMES_BASE.'/global/header.php';?>
-                  <!--========SIDEBAR MENU=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>
-                  <!--========/SIDEBAR MENU=====---->
-                  
-                  <!--========PROFILE=====---->
+<?php get_header()?>
+<?php get_sidebar()?>
                        <div class="dash_content">
                         <div class="panel panel-primary">
                           <div class="panel-heading"><?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?>'s Profile</div>
@@ -67,7 +63,7 @@
 											}
 												else
 											{?>
-                                            <a href="<?php echo ISVIPI_URL. '/users/fRequests'?>?action=3&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>"><button type="submit" class="btn btn-success">Add Friend</button></a>
+                                            <a href="<?php echo ISVIPI_URL. 'users/fRequests'?>?action=3&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>"><button type="submit" class="btn btn-success">Add Friend</button></a>
 											<?php }?>
                                 <?php if(checkFriendship($id,$user)){?>
                                 <a href="#" id="focus"><button type="submit" class="btn btn-danger">Remove Friend</button></a>
@@ -78,11 +74,7 @@
                                </div>
                           </div><!--end of panel-->
                         </div><!--end of dash_content-->
-                  <!--========/PROFILE=====---->
-                  <!--========ANNOUNCEMENTS=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/announcements.php';?> 
-                  <!--========/ANNOUNCEMENTS=====---->
-                  <!--========ALERT=====---->
+<?php get_r_sidebar()?>
 					<script>
                             function reset () {
                                 $("#toggleCSS").attr("href", "../themes/alertify.default.css");
@@ -101,7 +93,7 @@
                                 alertify.set({ buttonFocus: "cancel" });
                                 alertify.confirm("Are you sure you want to unfriend <span><?php echo $m_name ?></span>?", function (e) {
                                     if (e) {
-                                        window.location = "<?php echo ISVIPI_URL. '/users/fRequests'?>?action=4&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>";
+                                        window.location = "<?php echo ISVIPI_URL. 'users/fRequests'?>?action=4&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>";
                                     } else {
                                         alertify.error("Cancelled");
                                     }
@@ -109,10 +101,7 @@
                                 return false;
                             });
                     </script>
-
-                  <!--========/ALERT=====---->
-                 
-                 <!--=========SEND PM MODAL===========--->
+                
                 <!-- Modal -->
                 <div class="modal fade" id="sendPM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
@@ -122,7 +111,7 @@
                         <h4 class="modal-title" id="myModalLabel">To: <span class="green"><?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?></span></h4>
                       </div>
                       <div class="modal-body">
-                              <form method="post" action="<?php echo ISVIPI_URL. '/users/processPM'?>">
+                              <form method="post" action="<?php echo ISVIPI_URL. 'users/processPM'?>">
                                 <input type="hidden" name="msg" value="0">
                               <div class="form-group">
                                 <input class="form-control" type="hidden" name="recip" value="<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>" placeholder="Recipient" onclick="this.value='';" required="required">
@@ -142,7 +131,6 @@
                   </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->       
                 
-                                 <!--=========PROFILE PIC MODAL===========--->
                  <!-- Modal -->
                 <div class="modal fade" id="profilePic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  
                   <div class="modal-dialog">
@@ -152,7 +140,7 @@
                         <h4 class="modal-title" id="myModalLabel">Upload Profile Pic</h4>
                       </div>
                       <div class="modal-body">
-                       <form action="<?php echo ISVIPI_URL. '/users/processPIC'?>" method="post" enctype="multipart/form-data">
+                       <form action="<?php echo ISVIPI_URL. 'users/processPIC'?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="op" value="newpic">
                         <input type="hidden" name="userid" value="<?php echo $user?>">
                         <label for="file">Filename:</label>
@@ -166,4 +154,4 @@
                     </div><!-- /.modal-content -->
                   </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-<?php get_footer();?>         
+<?php get_footer()?>         

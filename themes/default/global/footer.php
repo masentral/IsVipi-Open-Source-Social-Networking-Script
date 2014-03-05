@@ -1,6 +1,6 @@
 <div class="row">
     <div class="footer">
-     <p>&copy; <?php echo date("Y"); ?> <a href="http://isvipi.com" target="_blank">IsVipi.com - Open Source Social Networking Script</a></p>
+     <p>Copyright &copy;. <?php echo date("Y"); ?>. This site is proudly powered by <a href="http://isvipi.com" target="_blank">IsVipi Open Source Social Networking Script</a></p>
     </div>
 </div><!--end of row-->
      
@@ -13,7 +13,7 @@
    <script type="text/javascript" src="<?php echo ISVIPI_STYLE_URL; ?>js/idle.min.js"></script>
    <script type="text/javascript">
 setIdleTimeout(1800000);
-document.onIdle = function() {window.location = "<?php echo ISVIPI_URL. '/session_expire'?>";}
+document.onIdle = function() {window.location = "<?php echo ISVIPI_URL. 'session_expire'?>";}
 </script>
        </body>
 </html>

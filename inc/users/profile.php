@@ -17,9 +17,13 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
  isLoggedIn();
+ if (isset($_SESSION['user_id'])){
  $user = $_SESSION['user_id'];
  getUserDetails($user);
+ pollUser($user);
+ }
 //It will return fail if no correct action is defined from a POST command
+if (isset($ACTION[1])){
 $xid = $ACTION[1];
 xtractUID($xid);
 $id = $uid;
@@ -27,6 +31,7 @@ if (!is_numeric($id)){
 	$_SESSION['err'] ="Invalid ID";
 }
 	getMemberDet($id);
+}
 	base_header($site_title,$ACTION[0]);
  include_once ISVIPI_THEMES_BASE.'profile.php';
  globalAlerts();?>

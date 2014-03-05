@@ -19,7 +19,7 @@
 session_start();
 $from_url = $_SERVER['HTTP_REFERER'];
 $op = $_POST['op'];
-if ($op !== 'step1' && $op !== 'step2'){
+if ($op !== 'step1' && $op !== 'step2' && $op !== 'step3'){
 	$_SESSION['err'] ="Unknown request";
     header ('location:'.$from_url.'');
 	exit();
@@ -36,12 +36,8 @@ if (empty($server)) {
     header ('location:'.$from_url.'');
 	exit();
 }
-if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $server)){
-	$_SESSION['err'] ="Invalid input for server";
-    header ('location:'.$from_url.'');
-	exit();
+preg_replace("/&#?[a-z0-9]{2,8};/i","",$server);{
 }
-
 //USERNAME
 $username = $_POST["dbusername"];
 if (empty($username)) {
@@ -187,7 +183,7 @@ if (empty($site_title)) {
     header ('location:'.$from_url.'');
 	exit();
 }
-if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $site_title)){
+if (!preg_match('/[^,;:a-zA-Z0-9_-]/s', $site_title)){
 	$_SESSION['err'] ="Invalid input for site title";
     header ('location:'.$from_url.'');
 	exit();
@@ -229,12 +225,138 @@ if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $site_theme)){
 
 //Add to our database
 global $db;
-$stmt = $db->prepare('insert into site_settings (site_url,site_title,site_email,theme,time_zone) values (?,?,?,?,?)');
-	$stmt->bind_param('sssss', $site_url, $site_title,$site_email,$site_theme,$site_timezone);
+$site_status = 0;
+$stmt = $db->prepare('insert into site_settings (site_url,site_title,site_email,theme,time_zone,last_version_check,status) values (?,?,?,?,?,NOW(),?)');
+	$stmt->bind_param('sssssi', $site_url, $site_title,$site_email,$site_theme,$site_timezone,$site_status);
+	$stmt->execute();
+	$stmt->close();
+	$user_registration = "0";
+	$user_validate = "1";
+	$sys_cron = "0";
+	$timezone = "0";
+$stmt = $db->prepare('insert into general_settings (user_registration,user_validate,sys_cron,timezone) values (?,?,?,?)');
+	$stmt->bind_param('iiii', $user_registration,$user_validate,$sys_cron,$timezone);
+	$stmt->execute();
+	$stmt->close();
+$stmt = $db->prepare('insert into themes (theme_name,theme_url,description,version,author,author_url) values (?,?,?,?,?,?)');
+	$theme_name = "default";
+	$theme_url = "http://isvipi.com";
+	$description = "Default IsVipi Theme";
+	$author = "IsVipi";
+	$version = "1.0.0";
+	$author_url = "http://isvipi.com";
+	$stmt->bind_param('ssssss', $theme_name, $theme_url,$description,$version,$author,$author_url);
+	$stmt->execute();
+	$stmt->close();
+$_SESSION['succ'] ="Site settings saved";
+    header ('location:install_step_3.php');
+	exit();
+}
+
+/////////////////////////////////////////////////////////////
+//////////////// STEP THREE //////////////////////////////////
+////////////////////////////////////////////////////////////
+
+if ($op === 'step3') {
+
+include_once '../inc/db/db.php';
+include_once '../inc/users.inc/PasswordHash.php';
+//Admin Username
+$adm_username = $_POST["admin_username"];
+if (empty($adm_username)) {
+    $_SESSION['err'] ="Please fill in the admin username field";
+    header ('location:'.$from_url.'');
+	exit();
+}
+if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $adm_username)){
+	$_SESSION['err'] ="Invalid characters in admin username (ONLY numbers,letters and underscores are allowed)";
+    header ('location:'.$from_url.'');
+	exit();
+}
+//Admin Email
+$adm_email = $_POST["admin_email"];
+if (empty($adm_email)) {
+    $_SESSION['err'] ="Please fill in the Admin Email field";
+    header ('location:'.$from_url.'');
+	exit();
+}
+if (!preg_match('/([\w\-]+\@[\w\-]+\.[\w\-]+)/', $adm_email)){
+	$_SESSION['err'] ="Invalid input for admin email";
+    header ('location:'.$from_url.'');
+	exit();
+}	
+
+//Admin Password
+$adm_pass = $_POST["pass1"];
+if (empty($adm_pass)) {
+    {
+	$_SESSION['err'] ="Please fill in the admin password";
+    header ('location:'.$from_url.'');
+	exit();
+   }
+  }
+if (strlen($adm_pass) < 6)
+	{
+	$_SESSION['err'] ="Admin Password MUST be more than 6 characters";
+    header ('location:'.$from_url.'');
+	exit();
+}	
+if (strlen($adm_pass) > 72)
+	{
+	$_SESSION['err'] ="Password too long";
+    header ('location:'.$from_url.'');
+	exit();
+}
+$pass2 = $_POST["pass2"];
+if (empty($pass2)) 
+    {
+	$_SESSION['err'] ="Please fill in your repeat password field";
+    header ('location:'.$from_url.'');
+	exit();
+}
+if ($adm_pass!= $pass2)
+    {
+	$_SESSION['err'] ="Passwords do not match";
+    header ('location:'.$from_url.'');
+	exit();
+}
+//And now here comes the hasher
+$hash_cost_log2 = 8;
+$hash_portable = FALSE;
+$hasher = new PasswordHash($hash_cost_log2, $hash_portable);
+$hash = $hasher->HashPassword($adm_pass);
+if (strlen($hash) < 20)
+	{
+	$_SESSION['err'] ="System error. Please try again";
+    header ('location:'.$from_url.'');
+	exit();
+}
+	unset($hasher);
+//Admin active
+$adm_act = $_POST["admin_act"];
+if (!is_numeric($adm_act)||(empty($adm_act))){
+	$_SESSION['err'] ="Admin Act has not been set";
+    header ('location:'.$from_url.'');
+	exit();
+}
+
+//Admin Level
+$adm_lev = $_POST["admin_lev"];
+if (!is_numeric($adm_lev)||(empty($adm_lev))){
+	$_SESSION['err'] ="Admin level has not been set";
+    header ('location:'.$from_url.'');
+	exit();
+}
+
+//Add to our database
+global $db;
+$act = '0';
+$stmt = $db->prepare('insert into admin (username,password,email,active,level,online,last_activity) values (?,?,?,?,?,?,NOW())');
+	$stmt->bind_param('sssiii', $adm_username,$hash,$adm_email,$adm_act,$adm_lev,$act);
 	$stmt->execute();
 	$stmt->close();
 {	
-$_SESSION['succ'] ="Site settings saved";
+$_SESSION['succ'] ="Admin Account Created";
     header ('location:home.php');
 	exit();
 }

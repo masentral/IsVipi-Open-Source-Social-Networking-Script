@@ -21,7 +21,6 @@ $user = $_SESSION['user_id'];
 getUserDetails($user);
 $from_url = $_SERVER['HTTP_REFERER'];
 
-
 //Define key actions
 //It will return fail if no correct action is defined from a POST command
 $msg = $_POST['msg'];
@@ -73,6 +72,7 @@ addPM($user,$recip,$message,$unique_id);
 }
 
 updMsgUnRead($user,$recip);
+
 		$_SESSION['succ'] ="Your message has been sent";
 		header("location:".$from_url."");
 		exit();

@@ -20,9 +20,11 @@
                   <a href="<?php echo ISVIPI_URL ?>" title="IsVipi Logo"><div class="admin_logo"><img src="<?php echo ISVIPI_STYLE_URL.'images/logo.png';?>" width="70%" alt="" /></div></a>
                   
                   			<div class="index_login">
-                            <?php if (isset($_SESSION['user_id'])){?>
-                            <span class="label label-info" style="font-size:12px; min-width:100px;padding:12px;">You are currently logged in. Visit <a class="home_link" href="<?php echo ISVIPI_URL.'home/' ?>">My Home</a> or <a class="home_link" href="<?php echo ISVIPI_URL.'/logout/' ?>"> Log Out</a> </span>
-                            <?php } else{?>
+                            <?php if (signedIn()){?>
+                            <span class="label label-info" style="font-size:12px; min-width:100px;padding:12px;">You are currently logged in. Visit <a class="home_link" href="<?php echo ISVIPI_URL.'home/' ?>">My Home</a> or <a class="home_link" href="<?php echo ISVIPI_URL.'logout/' ?>"> Log Out</a> </span>
+                            <?php } else if (isAdmin()){?>
+                            <span class="label label-info" style="font-size:12px; min-width:100px;padding:12px;">You are logged in as an Admin. Go <a class="home_link" href="<?php echo ISVIPI_URL.'admin/dashboard/' ?>">to Admin Backend</a></span>
+                            <?php } else {?>
                             <form class="form-inline" action="<?php echo ISVIPI_USER_PROCESS; ?>" method="POST">
                                 <div class="form-group">
                                     <input type="text" class="form-control" name="user" placeholder="Enter Username" required>

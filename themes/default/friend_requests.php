@@ -1,9 +1,5 @@
-<?php include ISVIPI_THEMES_BASE.'/global/header.php';?>
-                  <!--========SIDEBAR MENU=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>
-                    
-                  <!--========/SIDEBAR MENU=====---->
-                  <!--========EDIT PROFILE=====---->
+<?php get_header()?>
+<?php get_sidebar()?>
                   <?php DisplayFReq($user);?>
                        <div class="dash_content">
                         <div class="panel panel-primary">
@@ -25,8 +21,8 @@
                                             <td><?php echo htmlspecialchars($timestamp, ENT_QUOTES, 'utf-8');?></td>
                                             <td><a href="<?php echo ISVIPI_URL. 'profile/'?><?php getUserDetails($from_id); echo $username;?>" title="View Profile"><?php getUsername(); echo htmlspecialchars($user_name, ENT_QUOTES, 'utf-8');?></a></td>
                                             <td><div class="message_options_bar">
-                                <a href="<?php echo ISVIPI_URL. '/users/fRequests'?>?action=1&id=<?php echo htmlspecialchars($from_id, ENT_QUOTES, 'utf-8');?>" title="Accept Friend Request"><i class="fa fa-check"></i></a>
-                                <a href="<?php echo ISVIPI_URL. '/users/fRequests'?>?action=0&id=<?php echo htmlspecialchars($from_id, ENT_QUOTES, 'utf-8');?>" title="Reject Friend Request"><i class="fa fa-times"></i></a>
+                                <a href="<?php echo ISVIPI_URL. 'users/fRequests'?>?action=1&id=<?php echo htmlspecialchars($from_id, ENT_QUOTES, 'utf-8');?>" title="Accept Friend Request"><i class="fa fa-check"></i></a>
+                                <a href="<?php echo ISVIPI_URL. 'users/fRequests'?>?action=0&id=<?php echo htmlspecialchars($from_id, ENT_QUOTES, 'utf-8');?>" title="Reject Friend Request"><i class="fa fa-times"></i></a>
                                 </div></td>
                                 
                                 </tr>
@@ -39,7 +35,5 @@
 							  </div>
                           </div><!--end of panel-->
                         </div><!--end of dash_content-->
-                 <!--========ANNOUNCEMENTS=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/announcements.php';?> 
-                  <!--========/ANNOUNCEMENTS=====---->
-<?php get_footer();?>
+<?php get_r_sidebar()?>
+<?php get_footer()?>

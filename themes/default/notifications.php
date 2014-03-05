@@ -1,9 +1,5 @@
-<?php include ISVIPI_THEMES_BASE.'/global/header.php';?>
-                  <!--========SIDEBAR MENU=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/sidebar_menu.php';?>
-                    
-                  <!--========/SIDEBAR MENU=====---->
-                  <!--========EDIT PROFILE=====---->
+<?php get_header()?>
+<?php get_sidebar()?>
                        <div class="dash_content">
                         <div class="panel panel-primary">
                           <div class="panel-heading">Site Notifications
@@ -40,7 +36,5 @@
 							  </div>
                           </div><!--end of panel-->
                         </div><!--end of dash_content-->
-                 <!--========ANNOUNCEMENTS=====---->
-                    <?php include ISVIPI_THEMES_BASE.'/global/announcements.php';?> 
-                  <!--========/ANNOUNCEMENTS=====---->
-<?php get_footer();?>
+<?php get_r_sidebar()?>
+<?php get_footer()?>
