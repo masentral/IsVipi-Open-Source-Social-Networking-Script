@@ -1,19 +1,24 @@
 <?php
 session_start();
-if (!file_exists('inc/db/db.php')){
-echo '<div style="width:500px;margin-left:50px; margin-top:10px;background:#F0F0F0;padding:10px">';
-echo 'Seems like your site is not yet set up. Click install to proceed... <br/>';
-echo '<a href="_install/"><input type="button" style="padding:5px 15px" value="Install"></button></a>';
-echo '</div>';	
+if (!file_exists('inc/db/db.php')){?>
+<div style="width:500px;margin-left:50px; margin-top:10px;background:#F0F0F0;padding:10px">
+Seems like your site is not yet set up. Click install to proceed... <br/>
+<a href="_install/"><input type="button" style="padding:5px 15px" value="Install"></button></a>
+</div>	
+<?php
 exit;
 }
 else 
 {
 require_once 'inc/db/db.php';
-date_default_timezone_set ($time_zone);
 require_once 'init.php';
 include_once ISVIPI_USER_INC_BASE. 'users.func.php';
+define('VERSION', '1.0.1');
 getAdminGenSett();
+if ($timeZ=="1"){
+$zone = ini_get('date.timezone');	
+} else { $zone = $time_zone;}
+date_default_timezone_set ($zone);
 /*******************************************************
  *   Copyright (C) 2014  http://isvipi.com
 
@@ -62,7 +67,6 @@ $ACTION = (
 	($URL == 'index.html')
 ) ? array('index') : explode('/',html_entity_decode($URL));
 $includeFile = ''.ISVIPI_USER_BASE.''.preg_replace('/[^\w]/','',$ACTION[0]).'.php';
-
 if ($ACTION[0] == 'cron'){
 			include_once ''.ISVIPI_CRON_BASE.'/'.preg_replace('/[^\w]/','',$ACTION[0]).'.php';
 		}
@@ -78,6 +82,9 @@ else if ($ACTION[0] == 'admin'){
 		}
 else if ($ACTION[0] == 'conf'){
 			require_once ''.ISVIPI_ADMIN_INC_BASE.''.preg_replace('/[^\w]/','',$ACTION[1]).'.php';
+		}	
+else if ($ACTION[0] == 'feed'){
+			require_once 'inc/feeds/'.preg_replace('/[^\w]/','',$ACTION[0]).'.php';
 		}		
 else if (is_file($includeFile)) {
 		include($includeFile);
@@ -86,5 +93,3 @@ else die404();
 }
 
 ?>
-</body>
-</html>

@@ -19,6 +19,7 @@
 	require_once 'init.php';
 	require_once ISVIPI_ROOT.'inc/db/db.php';
 	include_once ISVIPI_USER_INC_BASE. 'users.func.php';
+	require_once ISVIPI_ROOT.'inc/admin.inc/adminFunc.php';
 	//update user status to offline
 	global $db;
 	$status = '1';
@@ -37,5 +38,10 @@
 	//Delete old feeds
 	$delfeeds = $db->prepare("DELETE FROM timeline where time < NOW() - INTERVAL 1 DAY");
 	$delfeeds->execute();	
-	$delfeeds->close();	
+	$delfeeds->close();
+	
+	//Call weekly cron.php if one week has elased
+	if (isOneWeeks()){
+	include_once 'weekly.php';	
+	}
 ?>

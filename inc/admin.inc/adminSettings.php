@@ -207,6 +207,11 @@ if (isset($_POST["sysCron"])){
 	} else {
 		$sysCron = "0";
 	}
+if (isset($_POST["sysMaint"])){
+	upSiteStatus('3');
+	} else {
+	upSiteStatus('1');
+	}
 	$stmt = $db->prepare('UPDATE general_settings SET user_registration=?,user_validate=?,sys_cron=?,timezone=? LIMIT 1');
 	$stmt->bind_param('iiii', $AllowReg,$usrValidate,$sysCron,$sysZone);
 	$stmt->execute();

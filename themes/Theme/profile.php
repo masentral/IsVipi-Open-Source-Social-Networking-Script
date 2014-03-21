@@ -5,8 +5,8 @@
                           <div class="panel-heading"><?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?>'s Profile</div>
                                <div class="panel-body">
                                  <div class="my_pic">
-                                 <?php if(htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8') == ""){$m_thumbnail=".gif";}?>
-                                 <img src="<?php echo ISVIPI_PROFILE_PIC_URL.ISVIPI_THUMB_150.htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8');?>" alt="" />
+                                 <?php if(htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8') == ""){$m_thumbnail="no-image.gif";}?>
+                                 <img src="<?php echo ISVIPI_PROFILE_PIC_URL.htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" />
                                  </div>
                                  <div class="my_details">
                                   <table class="table table-bordered">

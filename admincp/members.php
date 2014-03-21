@@ -83,10 +83,10 @@
           <div class="pagination_options">
           <?php getMembersAll(); if($Allcount > $p_limit && $filter=="5"){?>
           <ul class="pagination upped pull-left">
-              <li><a href="<?php echo ISVIPI_URL."admin/members"?>" title="Go to First" data-toggle="tooltip" data-placement="bottom">&laquo;&laquo;</a></li>
+              <li <?php if ($pager=="0"){echo "class='disabled'";}?>><a href="<?php echo ISVIPI_URL."admin/members"?>" title="Go to First" data-toggle="tooltip" data-placement="bottom">&laquo;&laquo;</a></li>
               <li <?php if ($pager=="0"){echo "class='disabled'";}?>><a href="<?php echo ISVIPI_URL."admin/members?pager=".($pager-$p_limit)?>" title="Back" data-toggle="tooltip" data-placement="bottom">Back</a></li>
               <li <?php if ($pager>=$Allcount - $p_limit){echo "class='disabled'";}?>><a href="<?php echo ISVIPI_URL."admin/members?pager=".($pager+$p_limit)?>&filter=<?php $filter ?>" title="Next" data-toggle="tooltip" data-placement="bottom">Next</a></li>
-              <li><a href="<?php echo ISVIPI_URL."admin/members?pager=".($Allcount-$p_limit)?>&filter=<?php $filter ?>" title="Go to Last" data-toggle="tooltip" data-placement="bottom">&raquo;&raquo;</a></li>
+              <li <?php if ($pager>=$Allcount - $p_limit){echo "class='disabled'";}?>><a href="<?php echo ISVIPI_URL."admin/members?pager=".($Allcount-$p_limit)?>&filter=<?php $filter ?>" title="Go to Last" data-toggle="tooltip" data-placement="bottom">&raquo;&raquo;</a></li>
 		</ul>
         <?php } ?>
         <div class="member_manage_options">

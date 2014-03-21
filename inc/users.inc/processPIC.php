@@ -18,6 +18,7 @@
  ******************************************************/ 
 isLoggedIn();
 $user = $_SESSION['user_id'];
+getUserDetails($user);
 $from_url = $_SERVER['HTTP_REFERER'];
 
 $op = $_POST['op'];
@@ -34,9 +35,9 @@ if ($op !== 'newpic' && $op !== 'deletepic')
 ////////////////////////////////////////////////////////////
 
 if ($op === 'newpic') {
-function uploadFile ($file_field = null, $check_image = false, $random_name = false) {
+function uploadFile ($file_field = null, $check_image = false, $random_name = true) {
+	$from_url = $_SERVER['HTTP_REFERER'];
     if(isset($_POST['name'])){ $name = $_POST['name']; } 
-   
   //Config Section    
   //Set file upload path
   $path = ISVIPI_USER_BASE.'pics/'; //with trailing slash
@@ -46,6 +47,7 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = fa
   $whitelist_ext = array('jpg','png','gif');
   //Set default file type whitelist
   $whitelist_type = array('image/jpeg', 'image/png','image/gif');
+  $sizes = array(100 => 100, 150 => 150, 500 => 500);
 
   //The Validation
   // Create an array to hold any output
@@ -113,11 +115,13 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = fa
 	exit();
 	}
     }
-
+	$image_det = $_FILES[$file_field]['tmp_name'];
     //Create full filename including path
     if ($random_name) {
+		getUserDetails($_SESSION['user_id']);
+		global $username;
       // Generate random filename
-      $tmp = str_replace(array('.',' '), array('',''), microtime());
+      $tmp = str_replace(array('.',' '), array('',''), $username.'-'.microtime());
                        
       if (!$tmp || $tmp == '') 
 	  {
@@ -147,12 +151,18 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = fa
     header ('location:'.$from_url.'');
 	exit();
     } 
-	}
-
-    if (move_uploaded_file($_FILES[$file_field]['tmp_name'], $path.$newname)) {
+}
+		foreach ($sizes as $w => $h) {
+			$filept = getimagesize($_FILES[$file_field]['tmp_name']);
+			$filenName = $_FILES[$file_field]['tmp_name'];
+			$filenType = $_FILES[$file_field]["type"];
+				$files[] = GenThumbs($w, $h, $filept, $filenName, $filenType, $newname);
+			}
+    //if (move_uploaded_file($_FILES[$file_field]['tmp_name'], $path.$newname)) {
+		
       //Success
-      $out['filepath'] = $path;
-      $out['filename'] = $newname;
+     // $out['filepath'] = $path;
+      //$out['filename'] = $newname;
 	  global $db;
 	  $user_id = get_post_var('userid');
 	  $name = $newname;
@@ -160,11 +170,11 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = fa
 	$upoprf = $db->prepare('UPDATE member_sett set thumbnail=? where user_id=?');
 		$upoprf->bind_param('si', $name,$user_id);
 		$upoprf->execute();
-     return $out;
-    } else $_SESSION['err'] ="System error. Please try again";
-	$user_id = $_SESSION['user_id'];
-    header ('location:'.$from_url.'');
-	exit();
+     //return $out;
+    //} else $_SESSION['err'] ="System error. Please try again";
+	//$user_id = $_SESSION['user_id'];
+    //header ('location:'.$from_url.'');
+	//exit();
          
   } else $_SESSION['err'] ="No file has been uploaded";
 	$user_id = $_SESSION['user_id'];

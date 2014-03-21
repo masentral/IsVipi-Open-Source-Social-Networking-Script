@@ -26,23 +26,10 @@
                         <?php if(pendingFReq($user)){ echo '<span class="badge badge-warning"> '.$pendreq.' </span>';}else{};?></sup></div></a>
                       </div>
                       </div>
-                      <div class="col-lg-6 header_search">
-                      <?php global $site_url;?>
-                      <form name="search" method="post" action="<?php echo $site_url.'/users/search' ?>">
-                      <input type="hidden" name="search" value="search">
-                        <div class="input-group">
-                          <input type="text" class="form-control" name="searchTerm" value="" placeholder="Type a username to search e.g. John">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                          </span>
-                        </div><!-- /input-group -->
-                        </form>
-                      </div><!-- /.col-lg-6 -->
                       <div class="user_info pull-right">
-                      <?php if (!isAdmin()){?>
                       <?php global $t_thumb; t_thumb($user);?>
-                      <?php if(htmlspecialchars($t_thumb, ENT_QUOTES, 'utf-8') == ""){$t_thumb=".gif";}?>
-                      <div class="profile_pic"><a href="<?php echo ISVIPI_URL.'profile/' ?><?php echo htmlspecialchars($username, ENT_QUOTES, 'utf-8');?>"><img src="<?php echo ISVIPI_PROFILE_PIC_URL.ISVIPI_THUMB_100.htmlspecialchars($t_thumb, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" /></a>
+                      <?php if(htmlspecialchars($t_thumb, ENT_QUOTES, 'utf-8') == ""){$t_thumb="no-image.gif";}?>
+                      <div class="profile_pic"><a href="<?php echo ISVIPI_URL.'profile/' ?><?php echo htmlspecialchars($username, ENT_QUOTES, 'utf-8');?>"><img src="<?php echo ISVIPI_PROFILE_PIC_URL.htmlspecialchars($t_thumb, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" /></a>
                       <div class="dropdown">
                         <a data-toggle="dropdown" href="#"><?php echo htmlspecialchars($username, ENT_QUOTES, 'utf-8');?><b class="caret"></b></a>
                          <ul class="dropdown-menu" role="menu">
@@ -52,12 +39,6 @@
                            <li><a href="<?php echo ISVIPI_URL.'logout/' ?>">Log Out</a></li>
                          </ul>
                       </div><!--end of dropdown-->
-                      <?php } else {?>
-                      <div class="admin_front_head">
-                      <span class="label label-info">You are logged in as an Admin.</span>
-                      <span class="label label-warning"><a href="<?php echo ISVIPI_URL.'admin/dashboard/' ?>">Go back to Admin Backend</a></span>
-                      </div>
-                      <?php }?>
                      </div><!--end of user_info-->
                      
                     </div><!--end of row-->

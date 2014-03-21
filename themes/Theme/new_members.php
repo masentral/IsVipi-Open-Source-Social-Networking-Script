@@ -1,6 +1,6 @@
 <?php get_header()?>
 <?php get_sidebar()?>
-                  <?php getOnlineMembers();?>
+                  <?php getNewMembers();?>
                        <div class="dash_content">
                         <div class="panel panel-primary">
                           <div class="panel-heading"><div class="members_options">
@@ -17,7 +17,7 @@
                                     <li><a href="<?php echo ISVIPI_URL.'new_members/' ?>">New Members</a></li>
                                   </ul>
                                 </div>
-                                <span class="label" style="font-size:15px; float:right; position:absolute; margin-left:50px;padding:10px">(<?php echo $o_count?>) Members Online</span>
+                                <span class="label" style="font-size:15px; float:right; position:absolute; margin-left:50px;padding:10px">(<?php echo $n_count?>) New Members</span>
                             </div>
                            </div>
                                <div class="panel-body members_full">
@@ -32,8 +32,8 @@
                                             
                                             <li>
                                             <div class="member_pic">
-                              <?php if(htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8') == ""){$m_thumbnail=".gif";}?>
-                                 <a href="<?php echo ISVIPI_URL.'profile/' ?><?php echo htmlspecialchars($profile_name, ENT_QUOTES, 'utf-8');?>" title="<?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?>"><img src="<?php echo ISVIPI_PROFILE_PIC_URL.ISVIPI_THUMB_150.htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" /></a>
+                                  <?php if(htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8') == ""){$m_thumbnail="no-image.gif";}?>
+                                 <a href="<?php echo ISVIPI_URL.'profile/'; getUserDetails($id); echo $username;?>" title="<?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?>"><img src="<?php echo ISVIPI_PROFILE_PIC_URL.htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" /></a>
                                             </div>
                                             <div class="member_info">
                                             <span class="members_list_info">                                  
@@ -82,9 +82,6 @@
 											</div>
                                         </li>
 										<?php }?>
-                                        <?php getOnlineMembers(); if ($getmembers->num_rows<1){?>
-                                        <p>You have no members online</p>
-                                        <?php }?>
                                      </div>
                                    </div>
 							  </div>

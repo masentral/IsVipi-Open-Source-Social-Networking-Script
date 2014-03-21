@@ -5,6 +5,7 @@
 						global $ann_date;
 						global $ann_subject;
 						global $ann_content;
+						
 						?>
                         <div class="dash_announce">
                         <div class="panel panel-primary">
@@ -22,15 +23,13 @@
 								<?php echo makeLinks($announc)?>
 								<?php //echo $announc ?></span>
                                 <hr />
+                                 </div>
                                 <?php }?>
-                                <?php if ($getAnn->num_rows <1){?>
-                                <p>There are no announcements</p>
-                                <?php }?>
-                                </div>
                                </div>
                           </div><!--end of panel-->
                         </div><!--end of dash_announce-->
                      </div><!--End of row-->
+                   </div><!--End of col-md-6-->
                 </div><!--End of row-->
             </div><!--end of container-->
 

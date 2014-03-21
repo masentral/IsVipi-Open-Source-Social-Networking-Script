@@ -59,6 +59,12 @@ if ($op === 'new') {
     header ('location:'.$from_url.'');
 	exit();	
 	}
+if (strlen($user) < 6)
+	{
+	$_SESSION['err'] ="Username must be 6 characters or more";
+    header ('location:'.$from_url.'');
+	exit();
+}	
 	
 /* Validate Display Name */
 $d_name = get_post_var('d_name');
@@ -67,6 +73,13 @@ if (empty($d_name)) {
     header ('location:'.$from_url.'');
 	exit();
 }
+$d_name = preg_replace('/\s\s+/',' ', $d_name);
+if (strlen($d_name) < 6)
+	{
+	$_SESSION['err'] ="Display name must be 6 characters or more";
+    header ('location:'.$from_url.'');
+	exit();
+}	
 if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $d_name))
 	{
 	$_SESSION['err'] ="Invalid characters for display name";

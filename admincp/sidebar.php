@@ -20,5 +20,6 @@
         <li <?php if ($ACTION[1]=="edit_profile"){echo "class='active'";}?>><a href="<?php echo ISVIPI_URL.'admin/edit_profile' ?>">&raquo; Edit my Profile</a></li>
         </ul>
     </li>
+    <li <?php if ($ACTION[1]=="sys_management"){echo "class='active'";}?>><a href="<?php echo ISVIPI_URL.'admin/sys_management' ?>"><i class="fa fa-cog"></i>&nbsp;System Management</a></li>
   </ul> 
 </div>

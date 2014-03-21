@@ -43,6 +43,11 @@ include_once ISVIPI_THEMES_BASE.'global/index_header.php';
 function get_home_footer(){
 include_once ISVIPI_THEMES_BASE.'global/index_footer.php';	
 }
+function footer_text(){
+	echo"
+<p>Copyright &copy;. ".date("Y").". This site is proudly powered by <a href='http://isvipi.com' target='_blank'>IsVipi Open Source Social Networking Script</a></p>
+";
+}
 //Function Get Sidebar Menu
 function get_sidebar(){
 include_once ISVIPI_THEMES_BASE.'global/sidebar_menu.php';	
@@ -52,6 +57,23 @@ include_once ISVIPI_THEMES_BASE.'global/sidebar_menu.php';
 function get_r_sidebar(){
 include_once ISVIPI_THEMES_BASE.'global/announcements.php';	
 }
+function siteGenSett(){
+	global $db;
+	global $site_url;
+	global $site_title;
+	global $site_email;
+	global $theme;
+	global $time_zone;
+	global $site_status;
+	$status ="1";
+	$siteGen = $db->prepare("SELECT site_url,site_title,site_email,theme,time_zone,status FROM site_settings LIMIT 1");
+	$siteGen->execute();
+	$siteGen->store_result();
+	$siteGen->bind_result($site_url,$site_title,$site_email,$theme,$time_zone,$site_status);
+	$siteGen->fetch();
+	$siteGen->close();	
+}
+
 //Function Get Announcements
 function getAnnouncements(){
 	global $db;
@@ -66,8 +88,11 @@ function getAnnouncements(){
 	$getAnn->bind_result($ann_id,$ann_date,$ann_subject,$ann_content);
 }
 
-//Function 404 
 function die404() {header('location: '.ISVIPI_URL.'404/');}
+function siteMaintanance() {
+	include_once ISVIPI_USER_BASE.'maintenance.php';
+	exit;
+	}
 
 function cSelect(){
 	global $db;
@@ -418,10 +443,11 @@ function getFeeds(){
 	global $getusr;
 	global $time;
 	global $act_user;
-	$getusr = $db->prepare("SELECT username,activity,time FROM timeline ORDER BY id DESC LIMIT 55");
+	global $feed_id;
+	$getusr = $db->prepare("SELECT id,username,activity,time FROM timeline ORDER BY id DESC LIMIT 55");
 	$getusr->execute();
 	$getusr->store_result();
-	$getusr->bind_result($act_user,$activity,$time);
+	$getusr->bind_result($feed_id,$act_user,$activity,$time);
 }
 
 //Get relative time
@@ -490,6 +516,23 @@ function getMembers(){
 	$getmembers->bind_result($id,$profile_name);
 	$m_count = $getmembers->num_rows();
 }
+
+//Get Members function
+function getFeedMembers($limit){
+	global $db;
+	global $getmembers;
+	global $id;
+	global $profile_name;
+	global $m_count;
+	$active = '1';
+	$getmembers = $db->prepare("SELECT id,username FROM members where active=? LIMIT ?");
+	$getmembers->bind_param('ii', $active, $limit);
+	$getmembers->execute();
+	$getmembers->store_result();
+	$getmembers->bind_result($id,$profile_name);
+	$m_count = $getmembers->num_rows();
+}
+
 //Get Online Members function
 function getOnlineMembers(){
 	global $db;
@@ -1064,4 +1107,49 @@ function checkDateTime($value) {
 	return FALSE;
 	}
 }
+function GenThumbs($width, $height, $filept, $filenName, $filenType, $newname){
+	/* Get original image x y*/
+	global $file_field;
+	list($w, $h) = $filept;
+	/* calculate new image size with ratio */
+	$ratio = max($width/$w, $height/$h);
+	$h = ceil($height / $ratio);
+	$x = ($w - $width / $ratio) / 2;
+	$w = ceil($width / $ratio);
+	/* new thumb names */
+	$newThumbName = $width.'x'.$height.'_'.$newname;
+	$path = ''.ISVIPI_USER_BASE.'thumbs/'.$newThumbName;
+	/* read binary data from image file */
+	$imgString = file_get_contents($filenName);
+	/* create image from string */
+	$image = imagecreatefromstring($imgString);
+	$tmp = imagecreatetruecolor($width, $height);
+	imagealphablending( $tmp, false );
+	imagesavealpha( $tmp, true );
+	imagecopyresampled($tmp, $image,
+  	0, 0,
+  	$x, 0,
+  	$width, $height,
+  	$w, $h);
+	/* Save image */
+	switch ($filenType) {
+		case 'image/jpeg':
+			imagejpeg($tmp, $path, 100);
+			break;
+		case 'image/png':
+			imagepng($tmp, $path, 0);
+			break;
+		case 'image/gif':
+			imagegif($tmp, $path);
+			break;
+		default:
+			exit;
+			break;
+	}
+	imagedestroy($image);
+	imagedestroy($tmp);
+	return $path;
+	
+}
+
 ?>

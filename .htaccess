@@ -35,5 +35,5 @@ Header set Pragma "no-cache"
 </IfModule>
 
 # enable PHP error logging
-#php_flag  log_errors on
-#php_value error_log  c:xampp/htdocs/isvipi/error_log.log
+php_flag  log_errors on
+php_value error_log  c:xampp/htdocs/isvipi/error_log.log

@@ -21,7 +21,7 @@ body{
 .home_welcome {float:left; width:500px; height:400px; margin-left:100px}
 .home_login_welcome {float:left; width:500px; height:400px; margin-left:200px; margin-top:100px}
 .home_welcome h1{color:#FF0; font-size:30px; text-align:center; line-height:50px; font-weight:800}
-
+.header_search {float:right; width:450px; margin-right:400px; margin-top:-30px}
 /** Login form **/
 .login-form{
     min-width: 400px;
@@ -224,7 +224,7 @@ width:530px;
 .dash_content .panel .panel-body .m_list .msg_friend_button hr{margin-top:5px !important; margin-bottom:5px !important}
 .dash_content .panel .panel-body li{list-style:none;border-bottom:dotted thin #CCC; width:500px; padding:5px}
 .dash_content .panel .panel-body .member_pic {width:100px;height:100px;margin-bottom:5px;float:left; padding:5px}
-.dash_content .panel .panel-body .member_pic img{border:0px;-moz-border-radius:8px; border-radius:8px;}
+.dash_content .panel .panel-body .member_pic img{border:none;-moz-border-radius:8px; border-radius:8px;}
 .dash_content .panel .panel-body .member_pic_home img{border:0px;-moz-border-radius:8px; border-radius:8px;}
 .dash_content .panel .panel-body .member_info {width:300px;height:100px;margin-bottom:5px; margin-left:130px;padding:5px}
 .dash_content .panel .panel-body .member_info table{width:250px;}

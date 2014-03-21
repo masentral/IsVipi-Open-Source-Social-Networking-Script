@@ -12,8 +12,8 @@
                          <input type="hidden" value="feed" name="op" />
                          <span class="counter">500</span>
                          <label for="inputField">What are you doing?</label>
-                         <textarea name="myfeed" class="form-control" id="inputField" tabindex="1" rows="2" cols="40"></textarea>
-                                  <input type="submit" class="btn btn-primary" value="Update"/>
+                         <textarea name="myfeed" class="form-control" id="inputField" tabindex="1"rows="2" cols="40"></textarea>
+                                  <input type="submit" class="btn btn-primary" value"Update"/>
                                  <div class="clear"></div>
                                  </form>
                                   </div>
@@ -21,7 +21,6 @@
                                 <hr />
                                 <div class="refresh_timeline">
                                 <div class="scrollable">
-                                <?php $i = "1"; $i++ ?>
 								<?php while ($getusr->fetch()) {?>
                                 <?php 	
 								xtractUID($act_user)
@@ -29,8 +28,8 @@
                                                                     
                                     <div class='timeline_pic'>
                                     <?php t_thumb($uid);?>
-                                    <?php if(htmlspecialchars($t_thumb, ENT_QUOTES, 'utf-8') == ""){$t_thumb=".gif";}?>
-                                    <div class="member_pic_home"><a href="<?php echo ISVIPI_URL.'profile/' ?><?php getUserDetails($uid); echo $username;?>" data-toggle="tooltip" data-placement="top" title="<?php getUserDetails($uid); echo $username;?>"><img src='<?php echo ISVIPI_PROFILE_PIC_URL.ISVIPI_THUMB_150.htmlspecialchars($t_thumb, ENT_QUOTES, 'utf-8');?>' height='60' width='60' alt='' /></a></div>
+                                    <?php if(htmlspecialchars($t_thumb, ENT_QUOTES, 'utf-8') == ""){$t_thumb="no-image.gif";}?>
+                                    <div class="member_pic_home"><a href="<?php echo ISVIPI_URL.'profile/' ?><?php getUserDetails($uid); echo $username;?>" data-toggle="tooltip" data-placement="top" title="<?php getUserDetails($uid); echo $username;?>"><img src='<?php echo ISVIPI_PROFILE_PIC_URL.htmlspecialchars($t_thumb, ENT_QUOTES, 'utf-8');?>' height='60' width='60' alt='' /></a></div>
                                     </div>
                                     <div class='timeline_posts'>
                                     <li>
@@ -39,7 +38,7 @@
                                     <span class='time_stamp'><?php echo relativeTime($time)?></span> <br/>
                                     </li>
                                     </div>
-                                    <?php $i++; } ?>
+                                    <?php } ?>
 								</div>
                                 </div>
                                </div>

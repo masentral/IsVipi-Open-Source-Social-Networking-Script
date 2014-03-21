@@ -68,6 +68,10 @@
            <td><input type="checkbox" name="sysZone" value="1" <?php if ($timeZ=="1"){echo "checked='checked'";}?>></td>
            </tr>
            <tr>
+           <td><strong>Change site status to maintenance mode</strong> <a href="#" title="This is useful during site updates." data-toggle="tooltip" data-placement="bottom"><i class="fa fa-question"></i></a></td>
+           <td width="70"><input type="checkbox" name="sysMaint" <?php if ($site_status=="3"){echo "checked='checked'";}?> / value="1"></td>
+           </tr>
+           <tr>
            <td><strong>Use system Cron Job </strong> <a href="#" title="When checked, the system cron job will run when a user visits your site" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-question"></i></a></td>
            <td><input type="checkbox" name="sysCron" value="1" <?php if ($sysCron=="1"){echo "checked='checked'";}?>></td>
            </tr>

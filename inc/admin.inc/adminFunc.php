@@ -75,7 +75,7 @@ function getIsVipiFeeds(){
 			);
 		array_push($feed, $item);
 	}
-	$limit = 1;
+	$limit = 2;
 	for($x=0;$x<$limit;$x++) {
 		$title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
 		$link = $feed[$x]['link'];
@@ -86,26 +86,6 @@ function getIsVipiFeeds(){
 		echo '<p><strong><a href="'.$link.'" title="'.$title.'">'.$title.'</a></strong><br />';
 		echo '<p>'.$descr.'</p>';
 	}
-}
-
-function checkVersion(){
-siteGenSett();
-global $site_url;
-$referrer = $site_url;
-define('REMOTE_VERSION', 'http://isvipi.com/version/version.php?referrer='.urlencode($referrer).'');
-define('VERSION', '1.0.0');
-$script = file_get_contents(REMOTE_VERSION);
-$version = VERSION;
-if($version == $script) {
-	/**global $db;
-	$uplastVcheck = $db->prepare('UPDATE site_settings set last_version_check=NOW() LIMIT 1');
-	$uplastVcheck->execute();
-	$uplastVcheck->close();	**/
-} else {
-	echo "<div class='alert alert-info'>";
-    echo "<i class='fa fa-warning'></i> <a href='http://isvipi.com/download/' target='_blank' title='Download Latest Version' data-toggle='tooltip' data-placement='bottom'>New Version Available</a>";
-	echo "</div>";
-}
 }
 
 //Get Members function
@@ -167,6 +147,17 @@ function getMembersAll2($pager,$filter,$p_limit){
 	}
 }
 
+function vInit(){
+	$curl = curl_init();
+	curl_setopt_array($curl, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => 'http://isvipi.com/version/sites.php?url='.urlencode(ISVIPI_FULL_HTTP_URL),
+    CURLOPT_USERAGENT => 'IsVipi Curl Ping Request'
+	));
+$resp = curl_exec($curl);
+curl_close($curl);
+upSiteStatus("1");
+	}
 //Get New Members function
 function getNewMembersAll(){
 	global $db;
@@ -197,23 +188,6 @@ function getNewMembersAll2(){
 	$n_count = $getmembers->num_rows();
 }
 
-//Get site settings
-function siteGenSett(){
-	global $db;
-	global $site_url;
-	global $site_title;
-	global $site_email;
-	global $theme;
-	global $time_zone;
-	global $site_status;
-	$status ="1";
-	$siteGen = $db->prepare("SELECT site_url,site_title,site_email,theme,time_zone,status FROM site_settings LIMIT 1");
-	$siteGen->execute();
-	$siteGen->store_result();
-	$siteGen->bind_result($site_url,$site_title,$site_email,$theme,$time_zone,$site_status);
-	$siteGen->fetch();
-	$siteGen->close();	
-}
 
 function upSiteStatus($value){
 	global $db;
@@ -237,9 +211,9 @@ function selectTheme(){
 	echo '</select>';
 }
 
-function isTwoWeeks(){
+function isOneWeeks(){
 	global $db;
-	$isTwoW = $db->prepare("SELECT id FROM site_settings WHERE (last_version_check > NOW() - INTERVAL 2 WEEK)");
+	$isTwoW = $db->prepare("SELECT id FROM site_settings WHERE (last_version_check > NOW() - INTERVAL 1 WEEK)");
 	$isTwoW->execute();
 	$isTwoW->store_result();
 	if ($isTwoW->num_rows > 0){
@@ -251,4 +225,51 @@ function isTwoWeeks(){
 	$isTwoW->close();
 }
 
+function updateSystem() {
+	global $db;
+	upSiteStatus('3');
+	$url  = 'http://isvipi.com/files/isvipi.zip';
+    $path = ISVIPI_ROOT.'temp/isvipi.zip';
+    $fp = fopen($path, 'w');
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_FILE, $fp);
+    $data = curl_exec($ch);
+    curl_close($ch);
+    fclose($fp);
+   
+    $zip = new ZipArchive;
+	$extractPath = ISVIPI_ROOT;
+    $res = $zip->open($path);
+    if ($res === TRUE) {
+        $zip->extractTo($extractPath);
+        $zip->close();
+        return TRUE;
+		unlink ($path);
+    } else {
+        return FALSE;
+    }
+	$uplastVcheck = $db->prepare('UPDATE site_settings set last_version_check=NOW() LIMIT 1');
+	$uplastVcheck->execute();
+	$uplastVcheck->close();
+}
+function checkVersion(){
+	global $db;
+define('REMOTE_VERSION', 'http://isvipi.com/version/version1.php');
+$script = file_get_contents(REMOTE_VERSION);
+$version = VERSION;
+if($version == $script) {
+	$uplastVcheck = $db->prepare('UPDATE site_settings set last_version_check=NOW() LIMIT 1');
+	$uplastVcheck->execute();
+	$uplastVcheck->close();
+	$_SESSION['up-to-date'] = TRUE;
+} else {
+	upSiteStatus("5"); //status 5 for update available
+	$uplastVcheck = $db->prepare('UPDATE site_settings set last_version_check=NOW() LIMIT 1');
+	$uplastVcheck->execute();
+	$uplastVcheck->close();
+}
+}
+function genBackUp(){
+	include_once ISVIPI_ADMIN_INC_BASE. 'backup.php';
+}
 ?>

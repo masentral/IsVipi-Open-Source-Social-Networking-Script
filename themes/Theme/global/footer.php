@@ -1,6 +1,6 @@
 <div class="row">
     <div class="footer">
-     <?php footer_text()?>
+     <p>Copyright &copy;. <?php echo date("Y"); ?>. This site is proudly powered by <a href="http://isvipi.com" target="_blank">IsVipi Open Source Social Networking Script</a></p>
     </div>
 </div><!--end of row-->
      

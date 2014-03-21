@@ -1,7 +1,8 @@
 <?php 
 include_once ISVIPI_ADMIN_INC_BASE. 'adminFunc.php';
 isAdminLoggedIn ();
-admin_base_header($site_title,$ACTION[1]);?>
+admin_base_header($site_title,$ACTION[1]);
+?>
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo ISVIPI_STYLE_URL; ?>images/favicon.png">
     <link href="<?php echo ISVIPI_STYLE_URL; ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="<?php echo ISVIPI_STYLE_URL; ?>fontawesome/css/font-awesome.min.css">
@@ -27,8 +28,15 @@ admin_base_header($site_title,$ACTION[1]);?>
     <a href="<?php echo ISVIPI_URL.'admin/email_settings' ?>" title="Email Settings" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-envelope"></i></a>
     </div>
     <div class="version_check">
-    <?php siteGenSett();?>
-    <?php if($site_status=="0"||isTwoWeeks()){checkVersion();upSiteStatus("1");}?>
+    <?php siteGenSett(); 
+	if ($site_status=="0"){
+		vInit();
+	}
+	else if ($site_status=="5"){?>
+    <div class='alert alert-info'>
+    <i class='fa fa-warning'></i> <a href="<?php echo ISVIPI_URL.'admin/sys_management' ?>" title='Update to the Latest Version' data-toggle='tooltip' data-placement='bottom'>New Version Available</a>
+	</div>
+    <?php }?>
     </div>
     <div class="admin_top_right">
     <a href="<?php echo ISVIPI_URL.'admin/logout' ?>" title="Log Out" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-sign-out"></i></a>
