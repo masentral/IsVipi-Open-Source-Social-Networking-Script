@@ -40,7 +40,7 @@
                                             <table class="table table-striped" style="width:200px">
                                                 <tbody>
                                                   <tr>
-                                                    <td><a href="<?php echo ISVIPI_URL.'profile/'; getUserDetails($id); echo $username;?>"><?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?></a></td>
+                                                    <td><a href="<?php echo ISVIPI_URL.'profile/'; getUserDetails($id); echo $username;?>"><?php echo $username?></a></td>
                                                   </tr>
                                                   <tr>
                                                     <td><?php echo htmlspecialchars($m_gender, ENT_QUOTES, 'utf-8');?> (<?php echo htmlspecialchars($m_age, ENT_QUOTES, 'utf-8');?>)</td>

@@ -76,8 +76,8 @@ else if ($ACTION[0] == 'auth'){
 else if ($ACTION[0] == 'users'){
 			require_once ''.ISVIPI_USER_INC_BASE.''.preg_replace('/[^\w]/','',$ACTION[1]).'.php';
 		}
-else if ($ACTION[0] == 'admin'){
-			if (!isset($ACTION[1])){$ACTION[1] = 'login';}
+else if ($ACTION[0] == $adminPath){
+			if (!isset($ACTION[1])){$ACTION[1] = '/login';}
 			require_once 'admincp/'.preg_replace('/[^\w]/','',$ACTION[1]).'.php';
 		}
 else if ($ACTION[0] == 'conf'){
@@ -85,7 +85,7 @@ else if ($ACTION[0] == 'conf'){
 		}	
 else if ($ACTION[0] == 'feed'){
 			require_once 'inc/feeds/'.preg_replace('/[^\w]/','',$ACTION[0]).'.php';
-		}		
+		}	
 else if (is_file($includeFile)) {
 		include($includeFile);
 } 

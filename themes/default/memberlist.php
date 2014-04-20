@@ -29,7 +29,7 @@
 												getMemberDet($id);
 											?> 
                                             
-                                            <li>
+                                            <li <?php if ($id == $_SESSION['user_id']){echo 'style="display:none"';}?>>
                                             <div class="member_pic">
                               <?php if(htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8') == ""){$m_thumbnail=".gif";}?>
                                  <a href="<?php echo ISVIPI_URL.'profile/' ?><?php echo htmlspecialchars($profile_name, ENT_QUOTES, 'utf-8');?>" title="<?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?>"><img src="<?php echo ISVIPI_PROFILE_PIC_URL.ISVIPI_THUMB_150.htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" /></a>
@@ -39,7 +39,7 @@
                                             <table class="table table-striped" style="width:200px">
                                                 <tbody>
                                                   <tr>
-                                                    <td><a href="<?php echo ISVIPI_URL.'profile/' ?><?php echo htmlspecialchars($profile_name, ENT_QUOTES, 'utf-8');?>"><?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?></a></td>
+                                                    <td><a href="<?php echo ISVIPI_URL.'profile/' ?><?php echo $profile_name;?>"><?php echo $profile_name?></a></td>
                                                   </tr>
                                                   <tr>
                                                     <td><?php echo htmlspecialchars($m_gender, ENT_QUOTES, 'utf-8');?> (<?php echo htmlspecialchars($m_age, ENT_QUOTES, 'utf-8');?>)</td>

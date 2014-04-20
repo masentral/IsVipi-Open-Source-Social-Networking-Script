@@ -1,6 +1,5 @@
 <?php get_header()?>
 <?php get_sidebar()?>
-                  <?php getNewMembers();?>
                        <div class="dash_content">
                         <div class="panel panel-primary">
                           <div class="panel-heading"><div class="members_options">
@@ -11,36 +10,36 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                   </button>
                                   <ul class="dropdown-menu" role="menu">
-                                  <li><a href="<?php echo ISVIPI_URL.'memberlist/' ?>"> All</a></li>
                                     <li><a href="<?php echo ISVIPI_URL.'online/' ?>"> Online Now</a></li>
                                     <li class="divider"></li>
                                     <li><a href="<?php echo ISVIPI_URL.'new_members/' ?>">New Members</a></li>
                                   </ul>
                                 </div>
-                                <span class="label" style="font-size:15px; float:right; position:absolute; margin-left:50px;padding:10px">(<?php echo $n_count?>) New Members</span>
+                               <span class="label" style="font-size:15px; float:right; position:absolute; margin-left:50px;padding:10px">(<?php echo $results ?>) result(s) found for "<?php echo $term ?>"</span>
                             </div>
+                            
                            </div>
                                <div class="panel-body members_full">
                                      <div class="m_list">
                                        <div class="scrollable2">
                                      
-                                     	
-                                        <?php while ($getmembers->fetch())
+                                        <?php while ($search->fetch())
 											{
 												getMemberDet($id);
+												getUserDetails($id)
 											?> 
                                             
                                             <li>
                                             <div class="member_pic">
-                                  <?php if(htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8') == ""){$m_thumbnail="no-image.gif";}?>
-                                 <a href="<?php echo ISVIPI_URL.'profile/'; getUserDetails($id); echo $username;?>" title="<?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?>"><img src="<?php echo ISVIPI_PROFILE_PIC_URL.htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" /></a>
+                              <?php if(htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8') == ""){$m_thumbnail=".gif";}?>
+                                 <a href="<?php echo ISVIPI_URL.'profile/' ?><?php echo htmlspecialchars($username, ENT_QUOTES, 'utf-8');?>" title="<?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?>"><img src="<?php echo ISVIPI_PROFILE_PIC_URL.ISVIPI_THUMB_150.htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" /></a>
                                             </div>
                                             <div class="member_info">
                                             <span class="members_list_info">                                  
                                             <table class="table table-striped" style="width:200px">
                                                 <tbody>
                                                   <tr>
-                                                    <td><a href="<?php echo ISVIPI_URL.'profile/'; getUserDetails($id); echo $username;?>"><?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?></a></td>
+                                                    <td><a href="<?php echo ISVIPI_URL.'profile/' ?><?php echo htmlspecialchars($username, ENT_QUOTES, 'utf-8');?>"><?php echo $username?></a></td>
                                                   </tr>
                                                   <tr>
                                                     <td><?php echo htmlspecialchars($m_gender, ENT_QUOTES, 'utf-8');?> (<?php echo htmlspecialchars($m_age, ENT_QUOTES, 'utf-8');?>)</td>
@@ -82,8 +81,11 @@
 											</div>
                                         </li>
 										<?php }?>
+                                        <?php if ($results < 1){?>
+                                        <p>Member with username "<?php echo $term ?>" not found</p>
+                                        <?php }?>
                                      </div>
-                                   </div>
+                                     </div>
 							  </div>
                           </div><!--end of panel-->
                         </div><!--end of dash_content-->

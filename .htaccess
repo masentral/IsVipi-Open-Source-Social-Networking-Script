@@ -2,7 +2,6 @@
   RewriteEngine On
   RewriteRule !\.(gif|jpg|png|css|js|html|ico|zip|rar|pdf|xml|mp4|mpg|flv|swf|mkv|ogg|avi|woff|svg|eot|ttf|jar)$ index.php
 </IfModule>
-
 <IfModule mod_expires.c>
 # Turn on Expires and set default to 0
 ExpiresActive On
@@ -33,7 +32,5 @@ Header set Cache-Control "private, no-cache, no-store, proxy-revalidate, no-tran
 Header set Pragma "no-cache"
 </FilesMatch>
 </IfModule>
-
-# enable PHP error logging
-php_flag  log_errors on
-php_value error_log  c:xampp/htdocs/isvipi/error_log.log
+# directory browsing
+Options All -Indexes

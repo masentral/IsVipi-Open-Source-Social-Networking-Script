@@ -1,3 +1,4 @@
+<?php global $adminPath ?>
   <link rel="shortcut icon" type="image/x-icon" href="<?php echo ISVIPI_STYLE_URL; ?>images/favicon.png">
   <!-- Bootstrap -->
   <link href="<?php echo ISVIPI_STYLE_URL; ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -28,12 +29,12 @@
                       </div>
                       <div class="col-lg-6 header_search">
                       <?php global $site_url;?>
-                      <form name="search" method="post" action="<?php echo $site_url.'/users/search' ?>">
+                      <form name="search" method="post" action="<?php echo ISVIPI_URL.'/users/search' ?>">
                       <input type="hidden" name="search" value="search">
                         <div class="input-group">
-                          <input type="text" class="form-control" name="searchTerm" value="" placeholder="Type a username to search e.g. John">
+                          <input type="text" class="form-control" name="searchTerm" value="" placeholder="Search by username e.g. john">
                           <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                            <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                           </span>
                         </div><!-- /input-group -->
                         </form>
@@ -55,7 +56,7 @@
                       <?php } else {?>
                       <div class="admin_front_head">
                       <span class="label label-info">You are logged in as an Admin.</span>
-                      <span class="label label-warning"><a href="<?php echo ISVIPI_URL.'admin/dashboard/' ?>">Go back to Admin Backend</a></span>
+                      <span class="label label-warning"><a href="<?php echo ISVIPI_URL.$adminPath.'/dashboard/' ?>">Go back to Admin Backend</a></span>
                       </div>
                       <?php }?>
                      </div><!--end of user_info-->

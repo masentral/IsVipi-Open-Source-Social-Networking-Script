@@ -55,6 +55,12 @@ if (!is_numeric($to_id))
 //We check if an existing request is available
 $from_id = $user;
 $id = $to_id;
+
+if ($from_id == $id){
+$_SESSION['err'] ="This action is not allowed";
+    header ('location:'.$from_url.'');
+	exit();	
+}
 if(checkExistingReq($id,$user)){
 	{
 	$_SESSION['err'] ="A friend request already exists";

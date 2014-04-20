@@ -7,7 +7,7 @@
         <input type="hidden" name="op" value="login">
       <h3>Log In</h3>
       <div class="form-group">
-        <input type="text" class="form-control" name="user" placeholder="Enter Username" required>
+        <input type="email" class="form-control" name="email" placeholder="Enter Email" required>
       </div>
       <div class="form-group">
         <input type="password" class="form-control" name="pass" placeholder="Password" required>

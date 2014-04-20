@@ -298,6 +298,7 @@ CREATE TABLE IF NOT EXISTS `general_settings` (
   `user_validate` int(1) NOT NULL,
   `sys_cron` int(1) NOT NULL,
   `timezone` int(1) NOT NULL,
+  `admin_end` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
@@ -426,6 +427,27 @@ CREATE TABLE IF NOT EXISTS `announcements` (
   `content` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
+
+--
+-- Table structure for table `pages`
+--
+
+CREATE TABLE IF NOT EXISTS `pages` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `p_slug` varchar(150) NOT NULL,
+  `date` varchar(100) NOT NULL,
+  `title` varchar(150) NOT NULL,
+  `content` varchar(2000) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `pages`
+--
+
+INSERT INTO `pages` (`id`, `p_slug`, `date`, `title`, `content`) VALUES
+(1, 'terms', '2014-03-07 16:24:46', 'Terms', 'Terms and conditions go here...'),
+(2, 'pPolicy', '2014-03-07 16:24:46', 'Privacy Policy', 'Privacy Policy goes here...');
 
 --
 -- Table structure for table `friend_requests`

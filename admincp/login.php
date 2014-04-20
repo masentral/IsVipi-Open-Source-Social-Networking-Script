@@ -15,6 +15,7 @@
 	  		</div>
 	  		
 	  		<div class="panel-body">
+            <div class="admin_login_form">
       <form method="post" action="<?php echo ISVIPI_URL.'conf/adminSelf/' ?>" class="login-form">
         <input type="hidden" name="action" value="login">
       <div class="form-group">
@@ -26,7 +27,7 @@
 		        	<button class="btn btn-lg btn-primary btn-block" type="submit"><i class="fa fa-unlock"></i> Sign in</button>
 		      	</form>
 		  	</div>
-
+	</div>
 		</div>            
 	    
 	</div>

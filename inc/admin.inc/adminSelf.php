@@ -101,7 +101,7 @@ if ($adm == 'login') {
 	  		$updadmin = $db->prepare("UPDATE admin SET online=?, ip=?, user_agent=?, last_activity=NOW() WHERE email=?");
 			$updadmin->bind_param("isss",$online,$ip,$useragent,$adm_email);
 			$updadmin->execute();
-			header ('location:'.ISVIPI_URL.'admin/dashboard/');
+			header ('location:'.ISVIPI_URL.$adminPath.'/dashboard/');
 			exit();
 		} else
 			$_SESSION['err'] ="The email and/or password is incorrect";

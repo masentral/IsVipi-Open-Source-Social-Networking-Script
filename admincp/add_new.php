@@ -81,20 +81,5 @@
      </div><!--end of dash_cont_stat-->
      </div><!-- End of main_content-->
     </div> <!-- End of the container-->
-    
-    <!--/////////////////////////////-->
-   <div class="modal fade" id="AddNew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-   <div class="modal-content">
-   <div class="modal-header">
-   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h4 class="modal-title" id="myModalLabel">Add New User</h4>
-    </div>
-
-
-     </div><!-- /.modal-content -->
-     </div><!-- /.modal-dialog -->
-     </div><!-- /.modal -->  
-     
 <?php include_once'footer.php';?>
 <script type="text/javascript" src="<?php echo ISVIPI_STYLE_URL; ?>js/tcal.js"></script>

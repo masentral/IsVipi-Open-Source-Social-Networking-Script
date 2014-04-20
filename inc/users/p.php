@@ -16,17 +16,29 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
-/////////////////////////////////////////////////////////////
-//////////////// LOG OUT USERS /////////////////////////////
-////////////////////////////////////////////////////////////
-    //Update database with logged in details
-			$online = "0";
-	  		$updadmin = $db->prepare("UPDATE admin SET online=? WHERE id=?");
-			$updadmin->bind_param("ii",$online,$_SESSION['admin_id']);
-			$updadmin->execute();
-    session_destroy();
-	session_start();
-	$_SESSION['succ'] ="You have logged out";
-	header('location: '.ISVIPI_URL.$adminPath.'/login/');
-	exit();
- ?>
+ base_header($site_title,$ACTION[1]);
+ if (isset($_SERVER['HTTP_REFERER'])){
+$from_url = $_SERVER['HTTP_REFERER'];	 
+ } else {
+$from_url = ISVIPI_URL.'404';	 
+ }
+ if (!$ACTION[1]){
+	 die404();
+	 exit();
+ }
+ $pageTitle = $ACTION[1];
+ $titleFull = str_replace("_", " ", $pageTitle);
+ $parts = explode("-", $titleFull);
+ $titleSplit = $parts[0];
+ $PID = $parts[1];
+ $PID = preg_replace('/[^0-9]/','',$PID);
+ readPage($titleSplit,$PID);
+ if ($sCount =="0"){
+	$_SESSION['err'] ="page not found";
+    header ('location:'.$from_url.'');
+	exit();	 
+ }
+ include_once ISVIPI_THEMES_BASE.'page.php'; 
+ globalAlerts();?>
+</body>
+</html>

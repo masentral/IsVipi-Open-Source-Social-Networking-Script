@@ -29,7 +29,7 @@
      <span class="dash_stat_txt blue"><center>Members Online</center></span>
      </div></a>
      <!--Unvalidated accounts-->
-     <a href="<?php echo ISVIPI_URL.'admin/members' ?>"><div class="col-md-3 col-md-3-3">
+     <a href="<?php echo ISVIPI_URL.'admin/members?pager=0&filter=0' ?>"><div class="col-md-3 col-md-3-3">
      <span class="dash_stat red"><center><?php getUnValMembers(); echo $un_count?></center></span>
      <hr>
      <span class="dash_stat_txt black"><center>Unvalidated Accounts</center></span>
@@ -129,6 +129,31 @@
         <button class="btn btn-primary" type="submit">Publish</button>
         </form>
   		</div> 
+        <div class="panel-heading"><strong>Published Announcements </strong></div>
+        <table class="table table-bordered">
+        <?php getAllAnnounc()?>
+          <thead>
+          <tr>
+          <th width="20">ID</th>
+          <th width="160">Date</th>
+           <th width="200">Title</th>
+           <th width="50">Action</th>
+           </tr>
+           </thead>
+           <tbody>
+           <?php while ($getAllAnn->fetch()){?>
+           <tr>
+           <td><?php echo $annID ?></td>
+           <td><?php echo $annDate ?></td>
+           <?php
+			$sub = str_replace(" ", "_", $annSubject);
+			?>
+           <td><a href="<?php echo ISVIPI_URL.'p/'.$sub.'-p'.$annID.'#.'.rand(0, 9999) ?>" target="_blank" title="View Announcement" data-toggle="tooltip" data-placement="top"><?php echo $annSubject ?></a></td>
+           <td><a href="<?php echo ISVIPI_URL.'admin/edit_ann/'.encrypt_str($annID) ?>" title="Edit Page" data-toggle="tooltip" data-placement="top"><i class="fa fa-pencil"></i></a> | <a href="<?php echo ISVIPI_URL.'conf/annManage/del/'.encrypt_str($annID) ?>" title="Delete Page" data-toggle="tooltip" data-placement="top" onclick="return confirm('Are you sure you want to delete this announcement?')"><i class="fa fa-trash-o"></i></a></td>
+           </tr>
+           <?php }?>
+           </tbody>
+           </table>
 		</div>
      </div>
      </div><!--end of dash_cont_stat-->

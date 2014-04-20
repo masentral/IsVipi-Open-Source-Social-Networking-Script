@@ -1,3 +1,4 @@
+<?php global $adminPath ?>
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo ISVIPI_STYLE_URL; ?>images/favicon.png">
   <!-- Bootstrap -->
   <link href="<?php echo ISVIPI_STYLE_URL; ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -23,11 +24,11 @@
                             <?php if (signedIn()){?>
                             <span class="label label-info" style="font-size:12px; min-width:100px;padding:12px;">You are currently logged in. Visit <a class="home_link" href="<?php echo ISVIPI_URL.'home/' ?>">My Home</a> or <a class="home_link" href="<?php echo ISVIPI_URL.'logout/' ?>"> Log Out</a> </span>
                             <?php } else if (isAdmin()){?>
-                            <span class="label label-info" style="font-size:12px; min-width:100px;padding:12px;">You are logged in as an Admin. Go <a class="home_link" href="<?php echo ISVIPI_URL.'admin/dashboard/' ?>">to Admin Backend</a></span>
+                            <span class="label label-info" style="font-size:12px; min-width:100px;padding:12px;">You are logged in as an Admin. Go <a class="home_link" href="<?php echo ISVIPI_URL.$adminPath.'/dashboard/' ?>">to Admin Backend</a></span>
                             <?php } else {?>
                             <form class="form-inline" action="<?php echo ISVIPI_USER_PROCESS; ?>" method="POST">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="user" placeholder="Enter Username" required>
+                                    <input type="email" class="form-control" name="email" placeholder="Enter Email" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control" name="pass" placeholder="Password" required>

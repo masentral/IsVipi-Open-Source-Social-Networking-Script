@@ -19,7 +19,7 @@
 include_once ISVIPI_ADMIN_INC_BASE. 'adminFunc.php';
 $from_url = $_SERVER['HTTP_REFERER'];
 $adm = $_POST['action'];
-if ($adm !== 'new_ann' && $adm !== 'GenS' && $adm !== 'upTheme' && $adm !== 'c_theme' && $adm !=='otherSett'){
+if ($adm !== 'new_ann' && $adm !== 'GenS' && $adm !== 'upTheme' && $adm !== 'c_theme' && $adm !=='otherSett' && $adm !=='adminURL'){
 	$_SESSION['err'] ="Unknown request";
     header ('location:'.$from_url.'');
 	exit();
@@ -220,5 +220,23 @@ if (isset($_POST["sysMaint"])){
 		exit();
 
 }
+
+/////////////////////////////////////////////////////////////
+//////////////// CHANGR ADMIN PATH /////////////////////////
+////////////////////////////////////////////////////////////
+if ($adm == 'adminURL') {
+	$adminURL = get_post_var('admPath');	
+	}
+	if (empty($adminURL)) {
+	$_SESSION['err'] ="The admin path/folder cannot be empty";
+	header ('location:'.$from_url.'');
+	exit();
+	}
+	$stmt = $db->prepare('UPDATE general_settings SET admin_end=? LIMIT 1');
+	$stmt->bind_param('s', $adminURL);
+	$stmt->execute();
+		$_SESSION['succ'] ="Setting updated";
+    	header ('location:'.ISVIPI_URL.$adminURL.'/sys_management');
+		exit();
 		$db->close();
 ?>

@@ -16,6 +16,14 @@ if(isset($_POST['backUp']))
 	$dbBackUp = TRUE;
 	}
 }
+if(isset($_POST['genSitemap']))
+{
+    $check = $_POST['genSitemap'];
+	$sanitized = get_post_var($check);
+	if ($sanitized = "genSitemap"){
+	$genSitemap = TRUE;
+	}
+}
 if(isset($_POST['sysUpdate']))
 {
     $check = $_POST['sysUpdate'];
@@ -103,29 +111,42 @@ include_once'sidebar.php';?>
            </div>
   		</div>  
         <div class="panel panel-default midi-left2">
-    	<div class="panel-heading"><strong>Theme Settings </strong></div>
+    	<div class="panel-heading"><strong>Admin URL </strong></div>
           <table class="table">
+          <div class='alert alert-success' style="margin:5px; padding:3px">
+          Changing the url to your admin backend will make your site more secure. 
+          <li><strong>MAXIMUM 50 characters!</strong></li>
+          <li>You can choose any name apart from "<strong>admincp</strong>"</li>
+          </div>
            <tbody>
            <form role="form" action="<?php echo ISVIPI_URL.'conf/adminSettings/' ?>" method="post">
-           <tr><td></td></tr>
+           <input type="hidden" name="action" value="adminURL" />
            <tr>
-           <td width="200"><span class="label label-info" style="font-size:14px;"><strong><?php echo $theme ?></strong></span></td>
-           <td><strong>Current Theme</strong></td>
-           </tr>
-           <tr><td></td></tr>
-           <tr><td></td></tr>
-           <tr>
-            <td width="200"><?php selectTheme()?></td>
-           <td><strong>Available Themes</strong></td>
-           </tr>
-           <tr>
-           <td><input type="hidden" name="action" value="c_theme"></td>
+            <td width="200"><input type="text" class="form-control" name="admPath" value="<?php echo $adminPath?>"></td>
            <td><button type="submit" class="btn btn-default">Update</button></td>
            </tr>
            </form>
            </tbody>
            </table>
+           <?php global $site_url ?>
+           <p style="padding-left:10px; margin-top:10px"><strong>Current path to admin:</strong> <?php echo $site_url.'/'.$adminPath ?></p>
            <hr />
+           <div class="panel-heading"><strong>Generate Sitemap </strong></div>
+          <div class="padded">
+          <form method="post" action="">
+          <input type="hidden" name="genSitemap" value="genSitemap">
+          <button type="submit" class="btn btn-primary">Generate Sitemap</button>
+           </form>
+           <?php if (isset($genSitemap)){
+			  genSitemap();
+		   }
+			  ?>
+              <?php if (isset($_SESSION['sitemap'])){?>
+              <span style="color:#090; font-size:16px"><i class="fa fa-check-circle"></i></span>
+              <?php echo $site_url.'/sitemap'?>
+              <?php unset ($_SESSION['sitemap']);}?>
+           </div>
+  		</div>  
   		</div> 
      </div> 
 <div style="clear:both"></div>

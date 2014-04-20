@@ -17,7 +17,10 @@
 						    $announc = trunc_text($ann_content, 20);
 									?>
                                 <span class="ann_date"><?php echo $ann_date ?></span>
-                                <p class="ann_title"><a href=""><?php echo $subject ?></a></p>
+                                <?php
+								$sub = str_replace(" ", "_", $subject);
+								?>
+                                <p class="ann_title"><a href="<?php echo ISVIPI_URL.'p/'.$sub.'-p'.$ann_id.'#.'.rand(0, 9999) ?>"><?php echo $subject ?></a></p>
                                 <span class="ann_content">
 								<?php echo makeLinks($announc)?>
 								<?php //echo $announc ?></span>

@@ -16,17 +16,16 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
-/////////////////////////////////////////////////////////////
-//////////////// LOG OUT USERS /////////////////////////////
-////////////////////////////////////////////////////////////
-    //Update database with logged in details
-			$online = "0";
-	  		$updadmin = $db->prepare("UPDATE admin SET online=? WHERE id=?");
-			$updadmin->bind_param("ii",$online,$_SESSION['admin_id']);
-			$updadmin->execute();
-    session_destroy();
-	session_start();
-	$_SESSION['succ'] ="You have logged out";
-	header('location: '.ISVIPI_URL.$adminPath.'/login/');
-	exit();
- ?>
+	$from_url = $_SERVER['HTTP_REFERER'];
+	$searchType = get_post_var('type');
+	$searchTerm = get_post_var('searchTerm');
+	if (empty($searchTerm)) {
+		$_SESSION['err'] ="Please provide a search term";
+		header ('location:'.$from_url.'');
+		exit();
+		}
+	$searchTerm = trim($searchTerm);
+	$searchTerm = strip_tags($searchTerm);
+	$searchTerm = str_replace('%', '', $searchTerm);
+	header ('location:'.ISVIPI_URL.$adminPath.'/search/'.$searchType.'/'.$searchTerm)
+?>

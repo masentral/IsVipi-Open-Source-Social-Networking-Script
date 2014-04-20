@@ -44,8 +44,10 @@ function get_home_footer(){
 include_once ISVIPI_THEMES_BASE.'global/index_footer.php';	
 }
 function footer_text(){
+	global $site_title;
+	global $site_url;
 	echo"
-<p>Copyright &copy;. ".date("Y").". This site is proudly powered by <a href='http://isvipi.com' target='_blank'>IsVipi Open Source Social Networking Script</a></p>
+Copyright &copy; ".date("Y").". <a href='".$site_url."'>".$site_title."</a>. Powered by <a href='http://isvipi.com' target='_blank'>IsVipi OSSN</a>
 ";
 }
 //Function Get Sidebar Menu
@@ -87,7 +89,39 @@ function getAnnouncements(){
 	$getAnn->store_result();
 	$getAnn->bind_result($ann_id,$ann_date,$ann_subject,$ann_content);
 }
+function getAllPagesFront(){
+	global $db;
+	global $getAllP;
+	global $p_title;
+	global $p_id;
+	$getAllP = $db->prepare('SELECT id,title,content FROM pages ORDER by id ASC');
+	$getAllP->execute();
+	$getAllP->store_result();
+	$getAllP->bind_result($p_id,$p_title,$p_content);
+}
 
+function readPage($titleSplit,$PID){
+	global $db;
+	global $content;
+	global $sCount;
+	$readP = $db->prepare("SELECT content FROM announcements WHERE subject=? AND id=?");
+	$readP->bind_param("si",$titleSplit,$PID);
+	$readP->execute();
+	$readP->store_result();
+	$readP->bind_result($content);
+	$readP->fetch();
+	$fCount = $readP->num_rows();
+	if ($fCount == "0"){
+		$readP = $db->prepare("SELECT content FROM pages WHERE title=? AND id=?");
+		$readP->bind_param("si",$titleSplit,$PID);
+		$readP->execute();
+		$readP->store_result();
+		$readP->bind_result($content);
+		$readP->fetch();
+		$sCount = $readP->num_rows();	
+	}
+	
+}
 function die404() {header('location: '.ISVIPI_URL.'404/');}
 function siteMaintanance() {
 	include_once ISVIPI_USER_BASE.'maintenance.php';
@@ -1062,10 +1096,11 @@ function getAdminGenSett(){
 	global $usrValid;
 	global $sysCron;
 	global $timeZ;
-	$getAdminGen = $db->prepare("SELECT user_registration,user_validate,sys_cron,timezone FROM general_settings LIMIT 1");
+	global $adminPath;
+	$getAdminGen = $db->prepare("SELECT user_registration,user_validate,sys_cron,timezone,admin_end FROM general_settings LIMIT 1");
 	$getAdminGen->execute();
 	$getAdminGen->store_result();
-	$getAdminGen->bind_result($usrReg,$usrValid,$sysCron,$timeZ);
+	$getAdminGen->bind_result($usrReg,$usrValid,$sysCron,$timeZ,$adminPath);
 	$getAdminGen->fetch();
 	$getAdminGen->close();	
 }
@@ -1073,31 +1108,33 @@ function getAdminGenSett(){
 /////////////////////////////////
 ////// MESSAGES ////////////////
 ////////////////////////////////
-function actEmail(){
+function termsConditions(){
 	global $db;
-	global $activation_email;
-	global $act_subject;
-	$purpose ="activation";
-	$actEml = $db->prepare("SELECT subject,message FROM site_messages WHERE purpose=?");
-	$actEml->bind_param("s",$purpose);
-	$actEml->execute();
-	$actEml->store_result();
-	$actEml->bind_result($act_subject,$activation_email);
-	$actEml->fetch();
-	$actEml->close();	
+	global $Termscontent;
+	global $Termstitle;
+	global $termsID;
+	$slug = "terms";
+	$termsCond = $db->prepare("SELECT id,title,content FROM pages WHERE p_slug=?");
+	$termsCond->bind_param("s",$slug);
+	$termsCond->execute();
+	$termsCond->store_result();
+	$termsCond->bind_result($termsID,$Termstitle,$Termscontent);
+	$termsCond->fetch();
+	$termsCond->close();	
 }
-function passRecovEmail(){
+function privacyPolicy(){
 	global $db;
-	global $recov_email;
-	global $rec_subject;
-	$purpose ="recovery";
-	$actEml = $db->prepare("SELECT subject,message FROM site_messages WHERE purpose=?");
-	$actEml->bind_param("s",$purpose);
-	$actEml->execute();
-	$actEml->store_result();
-	$actEml->bind_result($rec_subject,$recov_email);
-	$actEml->fetch();
-	$actEml->close();	
+	global $policyTitle;
+	global $policyContent;
+	global $policyID;
+	$slug ="pPolicy";
+	$privacyPol = $db->prepare("SELECT id,title,content FROM pages WHERE p_slug=?");
+	$privacyPol->bind_param("s",$slug);
+	$privacyPol->execute();
+	$privacyPol->store_result();
+	$privacyPol->bind_result($policyID,$policyTitle,$policyContent);
+	$privacyPol->fetch();
+	$privacyPol->close();	
 }
 function checkDateTime($value) {
 	list($m, $d, $y) = explode('/', $value);
@@ -1149,7 +1186,103 @@ function GenThumbs($width, $height, $filept, $filenName, $filenType, $newname){
 	imagedestroy($image);
 	imagedestroy($tmp);
 	return $path;
-	
 }
-
+function ParText($text){
+	$text = str_replace("\r\n","\n",$text);
+	$paragraphs = preg_split("/[\n]{2,}/",$text);
+	foreach ($paragraphs as $key => $p) {
+    $paragraphs[$key] = "<p>".str_replace("\n","<p>",$paragraphs[$key])."</p>";
+	}
+	$text = implode("", $paragraphs);
+	return $text;
+ }
+function findUsers($term){
+	global $db;
+	global $id;
+	global $d_name;
+	global $gender;
+	global $dob;
+	global $phone;
+	global $city;
+	global $country;
+	global $thumbnail;
+	global $search;
+	global $results;
+	$searchTerm = $term;
+	$searchTerm = trim($searchTerm);
+	$searchTerm = strip_tags($searchTerm);
+	$x=0;
+	$searchTerm = explode (" ", $searchTerm);
+	foreach($searchTerm as $search)
+			{
+			$x++;
+			if($x == 1)
+			{
+				@$sql .= "(username LIKE '%$search%')";
+				//@$sql2 .= "(d_name LIKE '%$search%')";
+			}
+			else
+			{
+				@$sql .= " OR (username LIKE '%$search%')";
+				//@$sql2 .= " OR (d_name LIKE '%$search%')";
+			}
+		}
+	$sql = "SELECT id FROM members WHERE $sql";
+	//$sql2 = "SELECT user_id,d_name,gender,dob,phone,city,country,thumbnail FROM member_sett WHERE $sql2";
+	//if ($type == "username"){
+	$search = $db->prepare($sql);
+	$search->execute();
+	$search->store_result();
+	$search->bind_result($id);
+	$results = $search->num_rows;
+	//} else if ($type == "display_name"){
+		//$search2 = $db->prepare($sql2);
+		//$search2->execute();
+		//$search2->store_result();
+		//$search2->bind_result($id,$d_name,$gender,$dob,$phone,$city,$country,$thumbnail);
+		//$results2 = $search2->num_rows;
+	//if ($results2=="0"){
+	//$no_user = TRUE;	
+	//} else{
+	//echo $results2 + $results;
+	//}
+  //}
+}
+function findUsersAdmin($type,$term){
+	global $db;
+	global $ID;
+	global $username;
+	global $email;
+	global $status;
+	global $ResulT;
+	if ($type == "username"){
+		$usrnSearch = $db->prepare("SELECT id,username,email,active FROM members WHERE username=?");
+		$usrnSearch->bind_param("s",$term);
+		$usrnSearch->execute();
+		$usrnSearch->store_result();
+		$usrnSearch->bind_result($ID,$username,$email,$status);
+		$usrnSearch->fetch();
+		$ResulT = $usrnSearch->num_rows();
+		$usrnSearch->close();
+	} else if ($type == "id"){
+		$idSearch = $db->prepare("SELECT id,username,email,active FROM members WHERE id=?");
+		$idSearch->bind_param("s",$term);
+		$idSearch->execute();
+		$idSearch->store_result();
+		$idSearch->bind_result($ID,$username,$email,$status);
+		$idSearch->fetch();
+		$ResulT = $idSearch->num_rows();
+		$idSearch->close();
+	} else if ($type == "email"){
+		$emailSearch = $db->prepare("SELECT id,username,email,active FROM members WHERE email=?");
+		$emailSearch->bind_param("s",$term);
+		$emailSearch->execute();
+		$emailSearch->store_result();
+		$emailSearch->bind_result($ID,$username,$email,$status);
+		$emailSearch->fetch();
+		$ResulT = $emailSearch->num_rows();
+		$emailSearch->close();	
+		
+	}
+}
 ?>

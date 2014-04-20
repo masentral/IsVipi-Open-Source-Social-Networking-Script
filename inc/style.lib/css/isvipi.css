@@ -194,7 +194,7 @@ width:530px;
 									   color-stop(0.86, rgb(28,58,148)));
 }
 /* Announcements */
-.dash_announce .panel {border:#CCC thin solid; float: right; min-height:300px; max-width:250px; overflow:hidden; margin-right:15px}
+.dash_announce .panel {border:#CCC thin solid; float: right; height:300px; width:250px; overflow:hidden; margin-right:15px}
 .dash_announce .panel .panel-body {min-height:200px}
 .dash_announce .panel .panel-body hr{padding:2px;margin:0}
 .dash_announce .panel .panel-body p {pading:0;margin:0}
@@ -404,12 +404,19 @@ width:530px;
     -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
     box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
 }
-
+.pages .panel{width:900px; height:500px; margin-left:auto; border:none; margin-right:auto; overflow-y: scroll;
+overflow-x: hidden;}
+.pages .panel h2{font-size:18px; font-family:Georgia, "Times New Roman", Times, serif; font-weight:700; padding:0px; margin:0px; text-transform:uppercase}
+.pages .panel p{font-size:14px; margin-top:5px; text-align:justify}
 
 /** Footer **/
 .index-footer {width:100%;border-top:solid thin #CCC; padding-top:20px;padding-bottom:10px;position:absolute; bottom:0; right:0;background:#343942;}
+.index-footer .footer_menu_index {float:left;padding-left:70px}
+.index-footer .footer_menu_index li {list-style:none; display:inline-block; padding-right:5px; margin-left:5px; border-right:solid thin #CCC; font-size:12px}
+.footer .footer_menu_index {float:left;padding-left:70px}
+.footer .footer_menu_index li {list-style:none; display:inline-block; padding-right:5px; margin-left:5px; border-right:solid thin #CCC; font-size:12px}
 .index-footer p{
-    text-align: right; margin-right:120px; color:#FFF
+    text-align: right; margin-right:120px; color:#FFF; font-size:12px;
 }
 .index-footer a{
     color:#CCC
@@ -419,5 +426,5 @@ width:530px;
 }
 .footer {width:100%;border-top:solid thin #CCC; margin-top:90px;padding-top:20px;clear:both;padding-bottom:10px}
 .footer p{
-    text-align: right; margin-right:120px;
+    text-align: right; margin-right:120px;font-size:12px;
 }

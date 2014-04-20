@@ -65,16 +65,7 @@ To manually install this script, do the following
 /////////COMMON ISSUES///////////////////////
 ////////////////////////////////////////////
 
-When trying to acces your site you may come across ERROR 500 - INTERNAL SERVER ERROR
-This error is related to our php error reporting found in the htacess file and therefore 
-to solve the problem, either find and delete the code below in the htaccess file or comment it out
-
-		# enable PHP error logging
-		php_flag  log_errors on
-		php_value error_log  c:xampp/htdocs/isvipi/error_log.log
-
-
-You comment it out by adding "#" before it =====>This is no longer necessary as we got rid of the htaccess command
+None Reported so far 
 
 //////////////////////////////////////////////
 //////////////SUPPORT////////////////////////

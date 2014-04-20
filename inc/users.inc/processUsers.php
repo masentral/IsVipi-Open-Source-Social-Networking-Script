@@ -31,13 +31,13 @@ if ($op !== 'new' && $op !== 'login' && $op !== 'change' && $op !== 'feed' && $o
     header ('location:'.$from_url.'');
 	exit();
 } 
+if (isset($_POST['user'])){
 $user = get_post_var('user');
 if (empty($user)) {
     $_SESSION['err'] ="Please fill in your username";
     header ('location:'.$from_url.'');
 	exit();
 }
-
 // Sanity-check the username, don't rely on our use of prepared statements
 // alone to prevent attacks on the SQL server via malicious usernames
 if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $user)){
@@ -45,7 +45,7 @@ if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $user)){
     header ('location:'.$from_url.'');
 	exit();
 }
-
+}
 //And now here comes the hasher
 $hasher = new PasswordHash($hash_cost_log2, $hash_portable);
 
@@ -251,6 +251,18 @@ $db->close();
 
 if ($op === 'login') {
 	ob_start();
+$email = get_post_var('email');
+if (empty($email)) {
+	$_SESSION['err'] ="Please fill in the email address that you signed up with";
+    header ('location:'.$from_url.'');
+	exit();
+}
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+    {
+	$_SESSION['err'] ="The email you provided is not valid";
+    header ('location:'.$from_url.'');
+	exit();
+}
 $pass = get_post_var('pass');	
 if (empty($pass)) {
     {
@@ -271,27 +283,20 @@ if (strlen($pass) > 72)
     header ('location:'.$from_url.'');
 	exit();
 }
-if (empty($user)) {
-    {
-	$_SESSION['err'] ="Please fill in your username";
-    header ('location:'.$from_url.'');
-	exit();
-}
-  }
 
-	// Check if the username is already in the database
-	$chkusrnme = $db->prepare("SELECT id,active FROM members WHERE username=?");
-	$chkusrnme->bind_param("s",$user);
+	// Check if the email is already in the database
+	$chkusrnme = $db->prepare("SELECT id,active,username FROM members WHERE email=?");
+	$chkusrnme->bind_param("s",$email);
 	$chkusrnme->execute();
 	$chkusrnme->store_result();
 		if ($chkusrnme->num_rows === 0){
-			$_SESSION['err'] ="Username not found";
+			$_SESSION['err'] ="Email not found";
 			header ('location:'.$from_url.'');
 			exit();
 		}
 	else
 		{
-			$chkusrnme->bind_result($id,$active);
+			$chkusrnme->bind_result($id,$active,$user);
 			$chkusrnme->fetch();
 			   if ($active === 0){
 				$_SESSION['err'] ="Your account has not been validated";
@@ -301,8 +306,8 @@ if (empty($user)) {
  	else
 		{  
 		// Retrieve password and try to authenticate
-		$chkusrlog = $db->prepare("SELECT password FROM members WHERE username=?");
-		$chkusrlog->bind_param("s",$user);
+		$chkusrlog = $db->prepare("SELECT password FROM members WHERE email=?");
+		$chkusrlog->bind_param("s",$email);
 		$chkusrlog->execute();
 		$chkusrlog->store_result();
 		$chkusrlog->bind_result($hash);
@@ -327,7 +332,7 @@ if (empty($user)) {
 			header ('location:'.ISVIPI_URL.'home/');
 			exit();
 		} else {
-			$_SESSION['err'] ="The username and/or password is incorrect";
+			$_SESSION['err'] ="The email and/or password is incorrect";
 			header ('location:'.$from_url.'');
 			exit();
 		$op = 'fail'; 

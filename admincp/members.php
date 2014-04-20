@@ -1,7 +1,6 @@
 <?php include_once'header.php';?>
 <?php include_once'sidebar.php';?>
     <!-- Start of the container-->
-    
     <div class="container-admin">
       <div class="page-header">
 		<ul class="breadcrumb breadcrumb-admin">
@@ -96,6 +95,22 @@
         <a href="<?php echo ISVIPI_URL.'conf/usersManage/del_sus_All/' ?>" onclick="return confirm('Are you sure you want to delete suspended users?')" class="btn btn-danger">Delete All Suspended</a>
           </div>
           </div>
+          <div class="panel-heading">
+          <div style="width:500px">
+          <form name="search" method="post" action="<?php echo ISVIPI_URL.'conf/search/' ?>">
+                      <input type="hidden" name="search" value="search">
+                        <div class="input-group">
+                          <input type="text" class="form-control" name="searchTerm" value="" placeholder="Search by username, id or email">
+                          <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                          </span>
+                        </div><!-- /input-group -->
+        				<input type="radio" name="type" value="username" checked="checked"> By Username &nbsp;&nbsp;
+                        <input type="radio" name="type" value="id"> By ID &nbsp;&nbsp;
+                        <input type="radio" name="type" value="email"> By Email
+                        </form>
+          </div>
+          </div>
           <div style="clear:both"></div>
   		</div>
      </div> 
@@ -106,67 +121,5 @@
      </div><!--end of dash_cont_stat-->
      </div><!-- End of main_content-->
     </div> <!-- End of the container-->
-    
-    <!--/////////////////////////////-->
-   <div class="modal fade" id="AddNew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-   <div class="modal-content">
-   <div class="modal-header">
-   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h4 class="modal-title" id="myModalLabel">Add New User</h4>
-    </div>
-     <form method="post" action="<?php echo ISVIPI_URL.'conf/usersManage/' ?>" class="login-form">
-     <div class="admin_new_user">
-        <input type="hidden" name="adm_users" value="new">
-      <div class="form-group">
-        <input class="form-control" type="text" name="user" placeholder="Username" required="required">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="text" name="d_name" placeholder="Display Name" required="required">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="email" name="email" placeholder="Email" required="required">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="password" name="pass" placeholder="Password" required="required">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="password" name="pass2" placeholder="Repeat Password" required="required">
-      </div>
-      <div class="form-group">
-        <select name="user_gender" class="form-control input-width-mini" required="required">
-           <option>Male</option>
-           <option selected>Female</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <input class="form-control input-width-mini" type="text" name="user_dob" placeholder=" Date of Birth (mm/dd/yyyy)" required="required"><span class="label label-danger" pull-right>Must start with month e.g. <strong>06/21/1975</strong>. Otherwise it will throw an error!</span>
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="text" name="user_city" placeholder="City" required="required">
-      </div>
-      <div class="form-group">
-        <?php cSelect();?>
-      </div>
-      <div class="form-group pull-left">
-        <select name="user_status" class="form-control input-width-mini" required="required">
-           <option selected value="1">Active</option>
-           <option value="0">Unvalidated</option>
-           <option value="3">Suspended</option>
-        </select>
-      </div>
-      <div class="checkbox">
-    <label>
-      <input type="checkbox" name="actEmailcheck"> Send Activation Email
-    </label>
-  </div>
-       <div class="modal-body">
-       <button class="btn btn-lg btn-primary" type="submit">Add User</button>
-       <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
-      </div>
-      </form>
-     </div><!-- /.modal-content -->
-     </div><!-- /.modal-dialog -->
-     </div><!-- /.modal -->  
      </div>
 <?php include_once'footer.php';?>

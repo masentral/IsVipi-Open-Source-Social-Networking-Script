@@ -1,0 +1,21 @@
+Version 1.0.1
++ Added rss feeds (http://yoursite.com/feed)
++ Profile images are being resized during upload to save on disk space and load time 
+  (100x100, 150x150 and 500x500)
++ One click update
++ One click database backup
++ Admin can now create, edit and delete dynamic pages that appear at the footer of user front-end
++ Introduced Terms & Conditions and Privacy Policy pages that can be edited by an admin
++ One click site map generator
++ Admin can change admin url
++ User search by username, id and email in admin back-end
++ User search by username in user front-end
++ Admin can now create, edit and delete announcements
++ Users can now read/access announcements and admin created pages in full
++ Admin can now toggle the site status to "Maintenance Mode"
++ Switched user login from the use of usernames to the use of email addresses
+
+
+*Fixed errors associated with date validation for format mm/dd/yyyy
+*Fixed errors associated with timezone and time difference evident in home feeds and messages
+*Fixed installation error associated with using a different server other than "localhost"

@@ -12,7 +12,7 @@
                                   <table class="table table-bordered">
                                     <tbody>
                                       <tr>
-                                        <td>Profile Name</td>
+                                        <td>Display Name</td>
                                         <td><?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?></td>
                                       </tr>
                                       <tr>

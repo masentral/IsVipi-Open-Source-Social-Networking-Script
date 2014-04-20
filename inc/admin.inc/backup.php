@@ -108,7 +108,7 @@ $fileSize = getFileSizeUnit(filesize(BACKUP_DIR . "/". $archiveName . '.zip')) ;
 $backUpComplete = TRUE;
 $message = <<<msg
 <div class='alert alert-success' style="margin-top:5px">
-           Database Backup complete! Your file is $archiveName in /tmp/ folder</a>
+           Database Backup complete! Your file is $archiveName in /inc/misc/ folder</a>
            </div>
 msg;
 echo $message ;

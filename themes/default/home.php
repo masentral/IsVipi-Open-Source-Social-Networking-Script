@@ -21,7 +21,6 @@
                                 <hr />
                                 <div class="refresh_timeline">
                                 <div class="scrollable">
-                                <?php $i = "1"; $i++ ?>
 								<?php while ($getusr->fetch()) {?>
                                 <?php 	
 								xtractUID($act_user)
@@ -36,10 +35,11 @@
                                     <li>
                  <a href='<?php echo ISVIPI_URL.'profile/' ?><?php echo $act_user;?>'><?php echo htmlspecialchars($act_user, ENT_QUOTES, 'utf-8');?></a><br/>
                                     <?php echo makeLinks($activity);?><br/>
+                                    <?php xtractUID($act_user) ?>
                                     <span class='time_stamp'><?php echo relativeTime($time)?></span> <br/>
                                     </li>
                                     </div>
-                                    <?php $i++; } ?>
+                                    <?php } ?>
 								</div>
                                 </div>
                                </div>

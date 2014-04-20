@@ -39,14 +39,15 @@ function AgentIPCheck(){
 			}
 }
 function isAdminLoggedIn (){
+	global $adminPath;
 	if(!isset($_SESSION['admin_logged_in'])) {
 		$_SESSION['err'] ="You MUST be logged in to view that page";
-		header('location: '.ISVIPI_URL.'admin/login/');
+		header('location: '.ISVIPI_URL.$adminPath.'/login/');
 		exit();
 		}
 		else if (!AgentIPCheck()){
 		$_SESSION['err'] ="Seems like either your IP or Browser has changed";
-		header('location: '.ISVIPI_URL.'admin/login/');
+		header('location: '.ISVIPI_URL.$adminPath.'/login/');
 		exit();	
 		}
 	}
@@ -254,7 +255,7 @@ function updateSystem() {
 }
 function checkVersion(){
 	global $db;
-define('REMOTE_VERSION', 'http://isvipi.com/version/version1.php');
+define('REMOTE_VERSION', 'http://isvipi.com/version/version.php');
 $script = file_get_contents(REMOTE_VERSION);
 $version = VERSION;
 if($version == $script) {
@@ -271,5 +272,64 @@ if($version == $script) {
 }
 function genBackUp(){
 	include_once ISVIPI_ADMIN_INC_BASE. 'backup.php';
+}
+function getAllPages(){
+	global $db;
+	global $getAllP;
+	global $p_title;
+	global $p_id;
+	$getAllP = $db->prepare('SELECT id,title,content FROM pages ORDER by id ASC LIMIT 2,9999 ');
+	$getAllP->execute();
+	$getAllP->store_result();
+	$getAllP->bind_result($p_id,$p_title,$p_content);
+}
+function getEditpage($pid){
+	global $db;
+	global $p_title;
+	global $p_content;
+	$getEditp = $db->prepare("SELECT title,content FROM pages WHERE id=?");
+	$getEditp->bind_param("s",$pid);
+	$getEditp->execute();
+	$getEditp->store_result();
+	$getEditp->bind_result($p_title,$p_content);
+	$getEditp->fetch();
+	$getEditp->close();		
+}
+function getAllAnnounc(){
+	global $db;
+	global $getAllAnn;
+	global $annID;
+	global $annDate;
+	global $annSubject;
+	global $annContent;
+	$getAllAnn = $db->prepare('SELECT id,date,subject,content FROM announcements ORDER by date DESC ');
+	$getAllAnn->execute();
+	$getAllAnn->store_result();
+	$getAllAnn->bind_result($annID,$annDate,$annSubject,$annContent);
+}
+function getEditAnn($annID){
+	global $db;
+	global $a_subject;
+	global $a_content;
+	$getEditp = $db->prepare("SELECT subject,content FROM announcements WHERE id=?");
+	$getEditp->bind_param("s",$annID);
+	$getEditp->execute();
+	$getEditp->store_result();
+	$getEditp->bind_result($a_subject,$a_content);
+	$getEditp->fetch();
+	$getEditp->close();		
+}
+function genSitemap(){
+include_once ISVIPI_ADMIN_INC_BASE. 'sitemap.php';
+}
+function siteMapPages(){
+	global $db;
+	global $siteMapP;
+	global $p_title;
+	global $p_id;
+	$siteMapP = $db->prepare('SELECT id,title,content FROM pages ORDER by id');
+	$siteMapP->execute();
+	$siteMapP->store_result();
+	$siteMapP->bind_result($p_id,$p_title,$p_content);
 }
 ?>
