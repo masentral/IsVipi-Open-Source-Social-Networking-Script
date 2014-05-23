@@ -8,7 +8,7 @@
 						?>
                         <div class="dash_announce">
                         <div class="panel panel-primary">
-                          <div class="panel-heading">Announcements</div>
+                          <div class="panel-heading"><?php echo ANNOUNCEMENTS ?></div>
                                <div class="panel-body">
                                  <div class="ann">
                                <?php while ($getAnn->fetch() )
@@ -27,7 +27,7 @@
                                 <hr />
                                 <?php }?>
                                 <?php if ($getAnn->num_rows <1){?>
-                                <p>There are no announcements</p>
+                                <p><?php echo NO_ANNOUNCEMENTS ?></p>
                                 <?php }?>
                                 </div>
                                </div>

@@ -24,7 +24,7 @@ $page = $ACTION[2];
 $page = $_POST['page'];
 }
 if ($page !== 'terms' && $page !=='pPolicy' && $page !=='new_page' && $page !=='del' && $page !=='Edit_Page'){
-	$_SESSION['err'] ="Unknown request";
+	$_SESSION['err'] =UNKNOWN_REQ;
     header ('location:'.$from_url.'');
 	exit();
 } 
@@ -37,13 +37,13 @@ if ($page == 'terms') {
 		$content = get_post_var('termsCont');	
 		if (empty($title)) {
 			echo
-			$_SESSION['err'] ="The title field cannot be empty";
+			$_SESSION['err'] =TITLE.E_IS_EMPTY;
 			header ('location:'.$from_url.'');
 			exit();
 		  }
 		if (empty($content)) {
 			echo
-			$_SESSION['err'] ="The content field cannot be empty";
+			$_SESSION['err'] =CONTENT.E_IS_EMPTY;
 			header ('location:'.$from_url.'');
 			exit();
 		  }
@@ -52,7 +52,7 @@ if ($page == 'terms') {
 	$termsUpd->bind_param("sss",$title,$content,$slug);
 	$termsUpd->execute();
 	$termsUpd->close();
-	$_SESSION['succ'] ="Terms &amp; Conditions Updated";
+	$_SESSION['succ'] =S_SUCCESS;
 			header ('location:'.$from_url.'');
 			exit();
 }
@@ -66,13 +66,13 @@ if ($page == 'pPolicy') {
 		$content = get_post_var('pContent');	
 		if (empty($title)) {
 			echo
-			$_SESSION['err'] ="The title field cannot be empty";
+			$_SESSION['err'] =TITLE.E_IS_EMPTY;
 			header ('location:'.$from_url.'');
 			exit();
 		  }
 		if (empty($content)) {
 			echo
-			$_SESSION['err'] ="The content field cannot be empty";
+			$_SESSION['err'] =CONTENT.E_IS_EMPTY;
 			header ('location:'.$from_url.'');
 			exit();
 		  }
@@ -81,7 +81,7 @@ if ($page == 'pPolicy') {
 	$termsUpd->bind_param("sss",$title,$content,$slug);
 	$termsUpd->execute();
 	$termsUpd->close();
-	$_SESSION['succ'] ="Terms &amp; Conditions Updated";
+	$_SESSION['succ'] =S_SUCCESS;
 			header ('location:'.$from_url.'');
 			exit();
 }
@@ -96,14 +96,12 @@ if ($page == 'new_page') {
 		$slug = substr($slug,0,10);
 		$content = get_post_var('p_content');	
 		if (empty($title)) {
-			echo
-			$_SESSION['err'] ="The title field cannot be empty";
+			$_SESSION['err'] =TITLE.E_IS_EMPTY;
 			header ('location:'.$from_url.'');
 			exit();
 		  }
 		if (empty($content)) {
-			echo
-			$_SESSION['err'] ="The content field cannot be empty";
+			$_SESSION['err'] =CONTENT.E_IS_EMPTY;
 			header ('location:'.$from_url.'');
 			exit();
 		  }
@@ -111,7 +109,7 @@ if ($page == 'new_page') {
 			$newpage->bind_param("sss",$slug,$title,$content);
 			$newpage->execute();
 			$newpage->close();
-				$_SESSION['succ'] ="'".$title."' created";
+				$_SESSION['succ'] =S_SUCCESS;
 				header ('location:'.$from_url.'');
 				exit();
  
@@ -127,7 +125,7 @@ if ($page == 'del') {
 		$stmt->bind_param('i', $del_page);
 		$stmt->execute();
 		$stmt->close();
-			$_SESSION['succ'] ="Page deleted!";
+			$_SESSION['succ'] =S_SUCCESS;
 			header ('location:'.$from_url.'');
 			exit();
 
@@ -145,13 +143,13 @@ if ($page == 'Edit_Page') {
 		$content = get_post_var('p_content');	
 		if (empty($title)) {
 			echo
-			$_SESSION['err'] ="The title field cannot be empty";
+			$_SESSION['err'] =TITLE.E_IS_EMPTY;
 			header ('location:'.$from_url.'');
 			exit();
 		  }
 		if (empty($content)) {
 			echo
-			$_SESSION['err'] ="The content field cannot be empty";
+			$_SESSION['err'] =CONTENT.E_IS_EMPTY;
 			header ('location:'.$from_url.'');
 			exit();
 		  }
@@ -160,7 +158,7 @@ if ($page == 'Edit_Page') {
 			$stmt->bind_param('sssi', $slug,$title,$content,$pid);
 			$stmt->execute();
 			$stmt->close();
-			$_SESSION['succ'] ="Page Updated!";
+			$_SESSION['succ'] =S_SUCCESS;
 			header ('location:'.$from_url.'');
 			exit();	
 }

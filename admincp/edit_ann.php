@@ -12,11 +12,11 @@ include_once'sidebar.php'?>
     <div class="container-admin">
       <div class="page-header">
 		<ul class="breadcrumb breadcrumb-admin">
-  			<li><i class="fa fa-home"></i> Home</li>
-  			<li class="active">Edit Page</li>
-            <span class="donate_support"><span class="label label-danger">Support IsVipi, Donate!</span></span>
+  			<li><i class="fa fa-home"></i> <?php echo HOME ?></li>
+  			<li class="active"><?php echo EDIT_ANNOUNCEMENT ?></li>
+            <span class="donate_support"><span class="label label-danger"><?php echo DONATE ?></span></span>
         <div class="donate">
-        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8EKWYJABNLDE2" data-toggle="tooltip" data-placement="bottom" target="_blank" title="Support us by making a donation"><img src="<?php echo ISVIPI_STYLE_URL.'images/donate.png';?>" width="100%" alt="" /></a>
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8EKWYJABNLDE2" data-toggle="tooltip" data-placement="bottom" target="_blank" title="<?php echo DONATE_TEXT ?>"><img src="<?php echo ISVIPI_STYLE_URL.'images/donate.png';?>" width="100%" alt="" /></a>
         </div>
         </ul>
      </div>
@@ -35,18 +35,18 @@ include_once'sidebar.php'?>
           <table width="600">
            <tbody>
            <tr>
-           <td style="padding:10px;">Title: <input type="text" class="form-control" name="a_subject" value="<?php echo $a_subject?>"></td>
+           <td style="padding:10px;"><?php echo TITLE ?>: <input type="text" class="form-control" name="a_subject" value="<?php echo $a_subject?>"></td>
            </tr>
            <tr>
-           <td width="450" style="padding:10px">Content: <textarea class="form-control" name="a_content" rows="8" required="required"><?php echo $a_content?></textarea></td>
+           <td width="450" style="padding:10px"><?php echo CONTENT ?>: <textarea class="form-control" name="a_content" rows="8" required="required"><?php echo $a_content?></textarea></td>
            </tr>
            <tr>
            <td>
            <?php 
 		   $sub = str_replace(" ", "_", $a_subject);
 		   ?>
-           <button type="submit" class="btn btn-primary" style="margin-left:10px">Update Page</button> <a href="<?php echo ISVIPI_URL.'p/'.$sub.'-p'.$annID.'#.'.rand(0, 9999) ?>" target="_blank"><span class="label label-info" style="padding:5px; margin-left:10px">View Announcement</span></a>
-           <a href="<?php echo ISVIPI_URL.'admin/dashboard/'?>"><button type="button" class="btn btn-default" style="margin-left:10px">Back to Announcements</button></a>
+           <button type="submit" class="btn btn-primary" style="margin-left:10px"><?php echo UPDATE_ANNOUNCEMENT ?></button> <a href="<?php echo ISVIPI_URL.'p/'.$sub.'-p'.$annID.'#.'.rand(0, 9999) ?>" target="_blank"><span class="label label-info" style="padding:5px; margin-left:10px"><?php echo VIEW_ANNOUNCE ?></span></a>
+           <a href="<?php echo ISVIPI_URL.'admin/dashboard/#Announcements'?>"><button type="button" class="btn btn-default" style="margin-left:10px"><?php echo BACK_TO_ANNOUNCEMENT ?></button></a>
            </td>
            
            </tr>

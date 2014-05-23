@@ -34,7 +34,7 @@ $from_url = ISVIPI_URL.'404';
  $PID = preg_replace('/[^0-9]/','',$PID);
  readPage($titleSplit,$PID);
  if ($sCount =="0"){
-	$_SESSION['err'] ="page not found";
+	$_SESSION['err'] =E404_NOT_FOUND;
     header ('location:'.$from_url.'');
 	exit();	 
  }

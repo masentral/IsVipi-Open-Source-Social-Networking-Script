@@ -57,7 +57,7 @@ body{
 .login-form input[type="checkbox"]{
     margin-right: 5px;
 }
-
+.padded {padding-left:10px}
 .login-form select{
 	cursor:pointer;
     margin-right: 5px;
@@ -73,8 +73,10 @@ body{
 .top-menu{background:#343942; height:55px}
 .Site_Title {color:#FFF; font-size:22px; font-weight:700; font-family:"Comic Sans MS", cursive}
 .social_network {color:#FF0; font-size:14px; font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif}
-.admin_logo{background:#15171A; height:100%;position:absolute;left:0;top;0;width:200px;padding-left:40px}
+.admin_logo{height:100%;position:absolute;left:0;top;0;width:200px;padding-left:40px; padding-top:5px}
 .admin_logo p{margin-top:10px; margin-left:10px}
+.nobg {background:#FFF; border-top:solid thin #CCC; border-bottom:solid thin #CCC}
+.header_search i:hover{ color:#06F}
 #not-bar{margin-left:150px; width:300px; padding-top:10px}
 .user_info{margin-right:10px; min-width:250px; height:50px; position:absolute; top:0; right:0; margin-top:1px; display:inline-block}
 .profile_pic {width:50px; height:50px; cursor:pointer; float:left;}
@@ -152,6 +154,7 @@ body{
 overflow-y: scroll;
 overflow-x: hidden;
 }
+.dash_content hr {margin:5px 2px 0px}
 .scrollable2 {max-height:500px; 
 overflow-y: scroll;
 overflow-x: hidden;
@@ -193,6 +196,82 @@ width:530px;
 									   color-stop(0.72, rgb(73,125,189)),
 									   color-stop(0.86, rgb(28,58,148)));
 }
+/* Timeline */
+.full-length {width:575px; overflow:hidden}
+.dash_content .panel-heading {height:50px; border-bottom:solid thin #CCC}
+.dash_content #nobgcolor .panel-heading {background:#FFF; }
+.dash_content .panel-heading .nav-tabs {font-size:12px; border:none; width:400px;}
+.dash_content .panel-heading ul li {width:100px}
+.dash_content .panel-heading ul li i {font-size:18px}
+.dash_content .panel-heading ul li a{padding:3px; width:150px; border:none; }
+.dash_content .panel-heading ul li a:hover {border:none; background:none}
+.feed_user_head {padding:10px; width:550px; margin-top:10px; margin-left:auto; margin-right:auto}
+.scrollable hr{margin:2px}
+.feed_options {height:20px; width:50%; padding-left:10px; margin-bottom:5px; float:left; padding-top:5px}
+.feed_options a {font-size:12px; margin-right:10px}
+.feed_options a:hover {text-decoration:none; color:#03F}
+.feed_options span {font-size:10px; color:#999; display:inline-block; margin-right:5px}
+.refresh_timeline {
+	min-height: 500px;
+	overflow-y: hidden;
+	overflow-x: hidden;
+	background-color: #F2F2F2;
+}
+#feed_block {background:#FFF; border:solid thin #CCC; margin-bottom:10px; margin-top:5px; width:550px; margin-left:auto; margin-right:auto; border-radius:3px; padding-bottom:5px;}
+.feed_option_notices {float:left; margin-left:10px; font-size:12px; color:#09F; padding-top:5px}
+.feed_option_notices span {color:#000}
+.feed_option_notices i {font-size:13px; margin-left:10px}
+.feed_option_notices a {font-size:12px}
+.manage_feed_display {float:right;margin-bottom:-10px;margin-right:20px;}
+.manage_feed_display a{font-size:14px}
+.manage_feed_display a:hover{text-decoration:none}
+.timeline_img {width:300px; min-height:150px; margin:-10px auto 10px auto; border:solid thin #CCC}
+.picUpstyled {width:400px}
+.shared_status {margin-top:-50px; margin-left:180px; margin-bottom:20px; font-size:12px; color:#CCC}
+..timeline_img img {}
+.comments_show {
+	width: 530px;
+	margin: 0px auto;
+	background-color: #EEEEEE;
+}
+.comments_show form {margin-top:5px;}
+.comments_show .btn {margin-top:5px; margin-bottom:5px}
+.comments_show textarea {min-height:20px; font-size:12px;}
+.comments_display_block .delete_comment_times {float:right;}
+.comments_display_block .delete_comment_times a{color:#F00}
+.reply_panel {display:none;}
+.reply_form_styled {width:500px; margin:5px auto}
+.like_comment {float:left; margin-left:40px; margin-top:10px}
+.like_comment a {font-size:12px; margin-right:10px}
+.like_comment .like_comment_count {font-size:12px; color:#666; display:inline-block; margin-right:10px}
+.noscroll {
+    overflow: hidden;
+}
+.txtstuff {
+    resize: none; /* remove this if you want the user to be able to resize it in modern browsers */
+    overflow: hidden;
+}
+.hiddendiv {
+    display: none;
+    white-space: pre-wrap;
+    width: 500px;
+    min-height: 50px;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    padding: 5px;
+    word-wrap: break-word;
+}
+.common {
+    min-height: 50px;
+    overflow: hidden;
+}
+.lbr {
+    line-height: 3px;
+}
+.comments_display_block {width:500px; margin-top:5px; border-bottom:dotted thin #CCC; margin-left:20px; border-left:solid thick #09F; padding-left:5px; background:#FFF}
+.comments_display_block .actual_comment {font-size:12px;padding-bottom:5px; width:440px;padding-top:5px; float:left; margin-left:10px; text-align:justify}
+.comment_tyme {font-size:11px; color:#999; margin-left:100px}
+
 /* Announcements */
 .dash_announce .panel {border:#CCC thin solid; float: right; height:300px; width:250px; overflow:hidden; margin-right:15px}
 .dash_announce .panel .panel-body {min-height:200px}
@@ -217,14 +296,30 @@ width:530px;
 .edit_profile_i .form-group .edit_prof_hints p{width:100px;color:#0F0}
 .edit_profile_i .form-group .radio{margin-left:-100px;}
 .edit_profile_i .form-group .radio label{margin-left:-100px;}
-.dash_content .panel .members_options{height:40px; width:200px;}
+.upload_timeline_image_holder {width:450px; margin:5px auto}
+.upload_timeline_image_holder a {font-weight:700}
+.upload_timeline_image_holder a:hover {text-decoration:none}
+.upload_timeline_image {width:400px; height:100px; border:solid thin #CCC; margin-top:10px; margin-left:auto; margin-right:auto; text-align:center}
+.upload_timeline_image:hover {
+	background-color: #E5E5E5;
+}
+.edit_profile_i .upload_timeline_image p {margin-top:30px}
+.dash_content .panel .members_options{height:30px; width:200px;}
 .dash_content .panel .panel-body .m_list{width:700px; margin-top:10px; margin-left:20px;}
 .dash_content .panel .panel-body .m_list .friend_req_button{float:right; margin-top:-80px;margin-right:20px}
 .dash_content .panel .panel-body .m_list .msg_friend_button{float:right; margin-top:-90px;margin-right:20px}
 .dash_content .panel .panel-body .m_list .msg_friend_button hr{margin-top:5px !important; margin-bottom:5px !important}
 .dash_content .panel .panel-body li{list-style:none;border-bottom:dotted thin #CCC; width:500px; padding:5px}
 .dash_content .panel .panel-body .member_pic {width:100px;height:100px;margin-bottom:5px;float:left; padding:5px}
+.member_pic_home {float:left}
 .dash_content .panel .panel-body .member_pic img{border:none;-moz-border-radius:8px; border-radius:8px;}
+.member_pic_home_comment {float:left;margin-top:5px; -moz-border-radius:8px; border-radius:8px;}
+.dash_content .panel .panel-body .member_pic_home_comment img{border:0px;-moz-border-radius:8px; border-radius:8px;}
+.homeUserhead {float:left; margin-left:10px; margin-top:10px}
+.homeUserhead .shared_txt{font-size:12px; display:inline-block}
+.hometime {float:right; margin-right:40px; margin-top:10px}
+.homeUserhead a {font-size:12px; font-weight:700}
+.hometime i {font-size:13px}
 .dash_content .panel .panel-body .member_pic_home img{border:0px;-moz-border-radius:8px; border-radius:8px;}
 .dash_content .panel .panel-body .member_info {width:300px;height:100px;margin-bottom:5px; margin-left:130px;padding:5px}
 .dash_content .panel .panel-body .member_info table{width:250px;}
@@ -412,9 +507,9 @@ overflow-x: hidden;}
 /** Footer **/
 .index-footer {width:100%;border-top:solid thin #CCC; padding-top:20px;padding-bottom:10px;position:absolute; bottom:0; right:0;background:#343942;}
 .index-footer .footer_menu_index {float:left;padding-left:70px}
-.index-footer .footer_menu_index li {list-style:none; display:inline-block; padding-right:5px; margin-left:5px; border-right:solid thin #CCC; font-size:12px}
+.index-footer .footer_menu_index li {list-style:none; display:inline-block; font-size:12px; margin-left:5px; text-decoration:underline}
 .footer .footer_menu_index {float:left;padding-left:70px}
-.footer .footer_menu_index li {list-style:none; display:inline-block; padding-right:5px; margin-left:5px; border-right:solid thin #CCC; font-size:12px}
+.footer .footer_menu_index li {list-style:none; display:inline-block; font-size:12px; margin-left:5px; text-decoration:underline}
 .index-footer p{
     text-align: right; margin-right:120px; color:#FFF; font-size:12px;
 }
@@ -427,4 +522,22 @@ overflow-x: hidden;}
 .footer {width:100%;border-top:solid thin #CCC; margin-top:90px;padding-top:20px;clear:both;padding-bottom:10px}
 .footer p{
     text-align: right; margin-right:120px;font-size:12px;
+}
+#myTab li {width:30%}
+#fileStatus {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+#statusPic {
+width:400px;
+background:#FFF;
+border:solid thin #CCC;
+margin:5px auto;
+padding-top:40px;
+padding-bottom:40px;
+font-weight:700;
+}
+#statusPic:hover {
+	background-color: #EEE;
 }

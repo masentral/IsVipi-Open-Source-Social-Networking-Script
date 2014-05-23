@@ -4,7 +4,7 @@
      <?php getAllPagesFront(); global $getAllP;global $p_title; global $p_id?>
      <?php while($getAllP->fetch()){
      $sub = str_replace(" ", "_", $p_title);?>
-    <li><a href="<?php echo ISVIPI_URL.'p/'.$sub.'-p'.$p_id.'#.'.rand(0, 9999) ?>"><?php echo $p_title ?></a></li>
+    <li><a href="<?php echo ISVIPI_URL.'p/'.$sub.'-p'.$p_id.'#.'.rand(0, 9999) ?>"><?php echo $p_title ?></a> </li>
 	<?php }?>
     </div>
      <p><?php footer_text()?></p>

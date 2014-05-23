@@ -24,7 +24,7 @@ $annC = $ACTION[2];
 $annC = $_POST['ann'];
 }
 if ($annC !== 'edit' && $annC !== 'del'){
-	$_SESSION['err'] ="Unknown request";
+	$_SESSION['err'] =UNKNOWN_REQ;
     header ('location:'.$from_url.'');
 	exit();
 } 
@@ -38,13 +38,13 @@ if ($annC !== 'edit' && $annC !== 'del'){
 		$content = get_post_var('a_content');	
 		if (empty($title)) {
 			echo
-			$_SESSION['err'] ="The subject field cannot be empty";
+			$_SESSION['err'] =SUBJECT.E_IS_EMPTY;
 			header ('location:'.$from_url.'');
 			exit();
 		  }
 		if (empty($content)) {
 			echo
-			$_SESSION['err'] ="The content field cannot be empty";
+			$_SESSION['err'] =CONTENT.E_IS_EMPTY;
 			header ('location:'.$from_url.'');
 			exit();
 		  }
@@ -53,7 +53,7 @@ if ($annC !== 'edit' && $annC !== 'del'){
 			$stmt->bind_param('ssi', $title,$content,$annID);
 			$stmt->execute();
 			$stmt->close();
-			$_SESSION['succ'] ="Announcements Updated!";
+			$_SESSION['succ'] =S_SUCCESS;
 			header ('location:'.$from_url.'');
 			exit();	
 
@@ -71,7 +71,7 @@ if ($annC == 'del') {
 		$stmt->bind_param('i', $delAnn);
 		$stmt->execute();
 		$stmt->close();
-			$_SESSION['succ'] ="Announcement deleted!";
+			$_SESSION['succ'] =S_SUCCESS;
 			header ('location:'.$from_url.'');
 			exit();
 

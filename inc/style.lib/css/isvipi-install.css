@@ -6,6 +6,7 @@
 
 body {
 	margin-top: 50px; /* 50px is the height of the navbar - change this if the navbarn height changes */
+	background:url(../images/bg.png);
 }
 .row {margin-left:auto; margin-right:auto; width:460px; margin-top:70px}
 .row .col-md-8 {border:#000 thin solid; min-height:300px; min-width:450px; position:relative; padding:10px}
@@ -20,6 +21,11 @@ body {
 }
 .system_requirements {min-width:400px; min-height:400px;float:left; margin-left:20px;padding:10px}
 /* adjust the color and text shadow to optimize legibility once you have an image set - you can also change the vertical positioning if desired  */
+.system_requirements p {font-size:14px}
+.system_requirements i {margin-left:10px; font-size:14px}
+.green {color:#0C0}
+.red {color:#F00}
+.whitebg {background:#FFF}
 .tagline {
 	color: #fff;
 	text-shadow: 0 0 10px #000;

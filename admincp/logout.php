@@ -19,14 +19,9 @@
 /////////////////////////////////////////////////////////////
 //////////////// LOG OUT USERS /////////////////////////////
 ////////////////////////////////////////////////////////////
-    //Update database with logged in details
-			$online = "0";
-	  		$updadmin = $db->prepare("UPDATE admin SET online=? WHERE id=?");
-			$updadmin->bind_param("ii",$online,$_SESSION['admin_id']);
-			$updadmin->execute();
     session_destroy();
 	session_start();
-	$_SESSION['succ'] ="You have logged out";
+	$_SESSION['succ'] =YOU_LOGGED_OUT;
 	header('location: '.ISVIPI_URL.$adminPath.'/login/');
 	exit();
  ?>

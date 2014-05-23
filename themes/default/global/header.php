@@ -1,5 +1,8 @@
-<?php global $adminPath ?>
-  <link rel="shortcut icon" type="image/x-icon" href="<?php echo ISVIPI_STYLE_URL; ?>images/favicon.png">
+<?php global $adminPath; $site_title; global $logoname;global $faviconname;
+if (!isset($logoname)){$logoname == "logo.png";}
+if (!isset($faviconname)){$faviconname == "favicon.png";}
+?>
+  <link rel="shortcut icon" type="image/x-icon" href="<?php echo ISVIPI_STYLE_URL.'images/site/'.$faviconname.'';?>">
   <!-- Bootstrap -->
   <link href="<?php echo ISVIPI_STYLE_URL; ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
   <!-- Main Style -->
@@ -18,23 +21,23 @@
           <nav class="navbar navbar-default top-menu" role="navigation">
             <div class="container">
                 <div class="row">
-                  <a href="<?php echo ISVIPI_URL.'home/' ?>" title="IsVipi Logo"><div class="admin_logo"><img src="<?php echo ISVIPI_STYLE_URL.'images/logo.png';?>" width="70%" alt="" /></div></a>
+                  <a href="<?php echo ISVIPI_URL.'home/' ?>" title="<?php echo LOGO ?>"><div class="admin_logo"><img src="<?php echo ISVIPI_STYLE_URL.'images/site/'.$logoname.'';?>" width="70%" /></div></a>
                       <div class="refresh">
                       <div id="not-bar">
-                        <a href="<?php echo ISVIPI_URL.'notifications/' ?>" data-toggle="tooltip" data-placement="bottom" title="Notifications"><div class="not-boxes"><i class="fa fa-bell-o"></i><?php global $user; global $noticesno; global $pendreq; global $username; global $ getUnseenNotices($user); if ($noticesno >0){ echo '<span class="badge badge-info"> '.$noticesno.' </span>';}else{};?></div></a>
-                        <a href="<?php echo ISVIPI_URL.'messages/' ?>" data-toggle="tooltip" data-placement="bottom" title="New Messages"><div class="not-boxes"><i class="fa fa-envelope-o"></i><sup><?php global $newmsg; newMsgs($user); if ($newmsg >0){ echo '<span class="badge badge-success"> '.$newmsg.' </span>';}else{};?></sup></div></a>
-                        <a href="<?php echo ISVIPI_URL.'friend_requests/' ?>" data-toggle="tooltip" data-placement="bottom"title="Friends Requests"><div class="not-boxes"><i class="fa fa-user"></i><sup>
+                        <a href="<?php echo ISVIPI_URL.'notifications/' ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo NOTIFICATIONS ?>"><div class="not-boxes"><i class="fa fa-bell-o"></i><?php global $user; global $noticesno; global $pendreq; global $username; global $ getUnseenNotices($user); if ($noticesno >0){ echo '<span class="badge badge-info"> '.$noticesno.' </span>';}else{};?></div></a>
+                        <a href="<?php echo ISVIPI_URL.'messages/' ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo NEW_MSGS ?>"><div class="not-boxes"><i class="fa fa-envelope-o"></i><sup><?php global $newmsg; newMsgs($user); if ($newmsg >0){ echo '<span class="badge badge-success"> '.$newmsg.' </span>';}else{};?></sup></div></a>
+                        <a href="<?php echo ISVIPI_URL.'friend_requests/' ?>" data-toggle="tooltip" data-placement="bottom"title="<?php echo F_REQUESTS ?>"><div class="not-boxes"><i class="fa fa-user"></i><sup>
                         <?php if(pendingFReq($user)){ echo '<span class="badge badge-warning"> '.$pendreq.' </span>';}else{};?></sup></div></a>
                       </div>
                       </div>
                       <div class="col-lg-6 header_search">
                       <?php global $site_url;?>
-                      <form name="search" method="post" action="<?php echo ISVIPI_URL.'/users/search' ?>">
+                      <form name="search" method="post" action="<?php echo $site_url.'/users/search' ?>">
                       <input type="hidden" name="search" value="search">
                         <div class="input-group">
-                          <input type="text" class="form-control" name="searchTerm" value="" placeholder="Search by username e.g. john">
+                          <input type="text" class="form-control" name="searchTerm" value="" placeholder="<?php echo HEADER_SEARCH ?>">
                           <span class="input-group-btn">
-                            <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                            <button class="btn nobg" type="submit"><i class="fa fa-search"></i></button>
                           </span>
                         </div><!-- /input-group -->
                         </form>
@@ -47,16 +50,16 @@
                       <div class="dropdown">
                         <a data-toggle="dropdown" href="#"><?php echo htmlspecialchars($username, ENT_QUOTES, 'utf-8');?><b class="caret"></b></a>
                          <ul class="dropdown-menu" role="menu">
-                           <li><a href="<?php echo ISVIPI_URL.'edit_profile/' ?>">Edit Profile</a></li>
-                           <li class="disabled"><a href="#">Settings</a></li>
+                           <li><a href="<?php echo ISVIPI_URL.'edit_profile/' ?>"><?php echo EDIT_PROFILE ?></a></li>
+                           <li class="disabled"><a href="#"><?php echo SETTINGS ?></a></li>
                            <li role="presentation" class="divider"></li>
                            <li><a href="<?php echo ISVIPI_URL.'logout/' ?>">Log Out</a></li>
                          </ul>
                       </div><!--end of dropdown-->
                       <?php } else {?>
                       <div class="admin_front_head">
-                      <span class="label label-info">You are logged in as an Admin.</span>
-                      <span class="label label-warning"><a href="<?php echo ISVIPI_URL.$adminPath.'/dashboard/' ?>">Go back to Admin Backend</a></span>
+                      <span class="label label-info"><?php echo LOGGED_IN_AS_ADMIN ?></span>
+                      <span class="label label-warning"><a href="<?php echo ISVIPI_URL.$adminPath.'/dashboard/' ?>"><?php echo TO_ADMIN_BACKEND ?></a></span>
                       </div>
                       <?php }?>
                      </div><!--end of user_info-->

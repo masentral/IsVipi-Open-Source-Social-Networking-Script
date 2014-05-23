@@ -235,8 +235,9 @@ $stmt = $db->prepare('insert into site_settings (site_url,site_title,site_email,
 	$sys_cron = "0";
 	$timezone = "0";
 	$admin_end = "admin";
-$stmt = $db->prepare('insert into general_settings (user_registration,user_validate,sys_cron,timezone,admin_end) values (?,?,?,?,?)');
-	$stmt->bind_param('iiiis', $user_registration,$user_validate,$sys_cron,$timezone,$admin_end);
+	$lang = "en";
+$stmt = $db->prepare('insert into general_settings (user_registration,user_validate,sys_cron,timezone,admin_end,lang) values (?,?,?,?,?,?)');
+	$stmt->bind_param('iiiiss', $user_registration,$user_validate,$sys_cron,$timezone,$admin_end,$lang);
 	$stmt->execute();
 	$stmt->close();
 $stmt = $db->prepare('insert into themes (theme_name,theme_url,description,version,author,author_url) values (?,?,?,?,?,?)');

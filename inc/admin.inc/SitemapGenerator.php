@@ -345,4 +345,5 @@ class SitemapGenerator {
         return gzclose($file);
     }
 }
+
 ?>

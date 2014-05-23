@@ -1,24 +1,5 @@
 <?php
 session_start();
-if (!file_exists('inc/db/db.php')){?>
-<div style="width:500px;margin-left:50px; margin-top:10px;background:#F0F0F0;padding:10px">
-Seems like your site is not yet set up. Click install to proceed... <br/>
-<a href="_install/"><input type="button" style="padding:5px 15px" value="Install"></button></a>
-</div>	
-<?php
-exit;
-}
-else 
-{
-require_once 'inc/db/db.php';
-require_once 'init.php';
-include_once ISVIPI_USER_INC_BASE. 'users.func.php';
-define('VERSION', '1.0.1');
-getAdminGenSett();
-if ($timeZ=="1"){
-$zone = ini_get('date.timezone');	
-} else { $zone = $time_zone;}
-date_default_timezone_set ($zone);
 /*******************************************************
  *   Copyright (C) 2014  http://isvipi.com
 
@@ -36,6 +17,28 @@ date_default_timezone_set ($zone);
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
+if (!file_exists('inc/db/db.php')){
+	include_once ('inc/install/prompt.php');
+	exit;
+	} 
+	else 
+	{
+require_once 'inc/db/db.php';
+require_once 'init.php';
+include_once ISVIPI_USER_INC_BASE. 'users.func.php';
+require_once 'inc/users.inc/mobile.php';
+getAdminGenSett();
+if ($mobileEnabled == "1"){
+isMobile();
+}
+define('ISVIPI_THEMES_BASE', ISVIPI_ROOT . 'themes/'.$theme.'' . DIRECTORY_SEPARATOR);
+define ('ISVIPI_THEME_URL', ISVIPI_URL. 'themes/'.$theme.''.DIRECTORY_SEPARATOR);
+define('VERSION', '1.0.2');
+include_once "lang/".$lang.".php";
+if ($timeZ=="1"){
+$zone = ini_get('date.timezone');	
+} else { $zone = $time_zone;}
+date_default_timezone_set ($zone);
 $URL = str_replace(
 	array( '\\', '../' ),
 	array( '/',  '' ),

@@ -24,7 +24,7 @@ $from_url = $_SERVER['HTTP_REFERER'];
 $op = $_POST['op'];
 if ($op !== 'newpic' && $op !== 'deletepic')
 	{
-    $_SESSION['err'] ="Unknown request";
+    $_SESSION['err'] =UNKNOWN_REQ;
 	$user_id = $_SESSION['user_id'];
     header ('location:'.$from_url.'');
 	exit();
@@ -40,9 +40,10 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = tr
     if(isset($_POST['name'])){ $name = $_POST['name']; } 
   //Config Section    
   //Set file upload path
-  $path = ISVIPI_USER_BASE.'pics/'; //with trailing slash
+  $path = ISVIPI_USER_BASE.'thumbs/'; //with trailing slash
   //Set max file size in bytes
   $max_size = 1000000;
+  $max_size2 = $max_size / 1000000;
   //Set default file extension whitelist
   $whitelist_ext = array('jpg','png','gif');
   //Set default file type whitelist
@@ -55,7 +56,7 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = tr
                
   if (!$file_field) {
     {
-    $_SESSION['err'] ="Please specify a valid form field";
+    $_SESSION['err'] =E_INV_FORM_FIELD;
 	$user_id = $_SESSION['user_id'];
     header ('location:'.$from_url.'');
 	exit();
@@ -64,7 +65,7 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = tr
 
   if (!$path) {
     {
-    $_SESSION['err'] ="Please specify a valid upload path";
+    $_SESSION['err'] =E_INV_UPL_PATH;
 	$user_id = $_SESSION['user_id'];
     header ('location:'.$from_url.'');
 	exit();
@@ -82,7 +83,7 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = tr
     //Check file has the right extension           
     if (!in_array($ext, $whitelist_ext)) 
 	{
-    $_SESSION['err'] ="Wrong file extension";
+    $_SESSION['err'] = E_WRONG_FILE_FORMAT;
 	$user_id = $_SESSION['user_id'];
     header ('location:'.$from_url.'');
 	exit();
@@ -90,7 +91,7 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = tr
                
     //Check that the file is of the right type
     if (!in_array($_FILES[$file_field]["type"], $whitelist_type)) {
-    $_SESSION['err'] ="Invalid file type";
+    $_SESSION['err'] =E_WRONG_FILE_TYPE;
 	$user_id = $_SESSION['user_id'];
     header ('location:'.$from_url.'');
 	exit();
@@ -99,7 +100,7 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = tr
     //Check that the file is not too big
     if ($_FILES[$file_field]["size"] > $max_size) 
 	{
-    $_SESSION['err'] ="The file is too big";
+    $_SESSION['err'] =E_FILE_TOO_LARGE.$max_size2."MB";
 	$user_id = $_SESSION['user_id'];
     header ('location:'.$from_url.'');
 	exit();
@@ -109,7 +110,7 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = tr
     if ($check_image) {
       if (!getimagesize($_FILES[$file_field]['tmp_name'])) 
 	  {
-    $_SESSION['err'] ="Uploaded image is not a valid image";
+    $_SESSION['err'] =E_INV_IMAGE;
 	$user_id = $_SESSION['user_id'];
     header ('location:'.$from_url.'');
 	exit();
@@ -125,7 +126,7 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = tr
                        
       if (!$tmp || $tmp == '') 
 	  {
-    $_SESSION['err'] ="The file must have a name";
+    $_SESSION['err'] =E_IMG_NAME;
 	$user_id = $_SESSION['user_id'];
     header ('location:'.$from_url.'');
 	exit();
@@ -138,7 +139,7 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = tr
     //Check if file already exists on server
     if (file_exists($path.$newname)) 
 	{
-    $_SESSION['err'] ="A file with this name already exists";
+    $_SESSION['err'] =E_IMG_EXISTS;
 	$user_id = $_SESSION['user_id'];
     header ('location:'.$from_url.'');
 	exit();
@@ -146,7 +147,7 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = tr
 
     if (isset($_SESSION['err'])){if (count($_SESSION['err'])>0) 
 	{
-	$_SESSION['err'] ="The file has not been correctly validated";
+	$_SESSION['err'] =E_ERR_OCCUR;
 	$user_id = $_SESSION['user_id'];
     header ('location:'.$from_url.'');
 	exit();
@@ -176,7 +177,7 @@ function uploadFile ($file_field = null, $check_image = false, $random_name = tr
     //header ('location:'.$from_url.'');
 	//exit();
          
-  } else $_SESSION['err'] ="No file has been uploaded";
+  } else $_SESSION['err'] =E_ERR_OCCUR;
 	$user_id = $_SESSION['user_id'];
     header ('location:'.$from_url.'');
 	exit();
@@ -188,9 +189,9 @@ if (isset($_POST['submit'])) {
   
      //Update timeline/activity feeds
 	 getUserDetails($_SESSION['user_id']);
-	 $activity = 'has uploaded a profile pic';
+	 $activity = S_FEED_UPL;
 	 updateTimeline($_SESSION['user_id'],$username,$activity);
-	$_SESSION['succ'] ="File uploaded successfully";
+	$_SESSION['succ'] =S_FILE_UPL;
 	$user_id = $_SESSION['user_id'];
     header ('location:'.$from_url.'');
 	exit();

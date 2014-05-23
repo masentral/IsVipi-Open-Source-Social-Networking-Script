@@ -21,7 +21,7 @@ $activation_code = $ACTION['2'];
 //Sanitize our activation code
 if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $activation_code))
 	{
-	$_SESSION['err'] ="Invalid characters in activation code";
+	$_SESSION['err'] =E_INVALID_CHARS_ACT_CODE;
     header ('location:'.ISVIPI_URL.'');
 	exit();	
 	}
@@ -31,7 +31,7 @@ $validateusr->bind_param("s",$activation_code);
 $validateusr->execute();
 $validateusr->store_result();
 if ($validateusr->num_rows === 0){
-	$_SESSION['err'] ="The activation code is not valid";
+	$_SESSION['err'] =E_INVALID_ACT_CODE;
     header ('location:'.ISVIPI_URL.'');
 	exit();	
 	}
@@ -46,7 +46,7 @@ else
 		$actvusr->bind_param('iss', $activated, $randomstring, $activation_code);
 		$actvusr->execute();
 
-	$_SESSION['succ'] ="Your account has been validated. Please log in.";
+	$_SESSION['succ'] =S_ACC_VALIDATED;
     header ('location:'.ISVIPI_URL.'');
 	exit();	
 	};

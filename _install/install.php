@@ -56,18 +56,15 @@ session_start();
     </nav>
     <div class="system_requirements">
     <h4>System Requirements Check</h4>
-    <div class="alert alert-warning">
+    <div class="alert whitebg">
    <?php 
    if (phpversion()<5.3){
 	$sys_req = 'err';
-   echo '<div class="alert alert-danger">';
-   echo 'Your php version is below 5.3';
-   echo '</div>';
+	$phpVer = "<i class='fa fa-times-circle red'></i>";
+	echo phpversion();
    }
    else{
-   echo '<div class="alert alert-success">';
-   echo 'Your php version is above 5.3';
-   echo '</div>';
+	   $phpVer = "<i class='fa fa-check-circle green'></i>";
    }
 ob_start(); 
 phpinfo(INFO_MODULES); 
@@ -78,16 +75,24 @@ preg_match('/[1-9].[0-9].[1-9][0-9]/', $info, $match);
 $gd = $match[0]; 
 if ($gd<4.1){
 	$sys_req = 'err';
-   echo '<div class="alert alert-danger">';
-   echo 'Your mysql version is below 4.1';
-   echo '</div>';
+	$MySQLVer = "<i class='fa fa-times-circle red'></i>";
    }
 else{
-   echo '<div class="alert alert-success">';
-   echo 'Your mysql version is above 4.1';
-   echo '</div>';
+   $MySQLVer = "<i class='fa fa-check-circle green'></i>";
    }
+ if (function_exists('curl_init'))
+ { 
+ $curLexs = "<i class='fa fa-check-circle green'></i>";
+ } 
+ else 
+ {
+	 $sys_req = 'err';
+	 $curLexs = "<i class='fa fa-times-circle red'></i>";
+}
 ?>
+	<p>PHP version is 5.3 and above <?php echo $phpVer ?></p>
+    <p>MySQL version is 4.1 and above <?php echo $MySQLVer ?></p>
+    <p>Curl installed <?php echo $curLexs ?></p>
     </div>
     </div>
   <div class="row">

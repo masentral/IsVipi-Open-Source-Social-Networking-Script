@@ -41,12 +41,12 @@ function AgentIPCheck(){
 function isAdminLoggedIn (){
 	global $adminPath;
 	if(!isset($_SESSION['admin_logged_in'])) {
-		$_SESSION['err'] ="You MUST be logged in to view that page";
+		$_SESSION['err'] =E_LOG_IN_PROMPT;
 		header('location: '.ISVIPI_URL.$adminPath.'/login/');
 		exit();
 		}
 		else if (!AgentIPCheck()){
-		$_SESSION['err'] ="Seems like either your IP or Browser has changed";
+		$_SESSION['err'] =E_IP_BROWSER_CHANGE;
 		header('location: '.ISVIPI_URL.$adminPath.'/login/');
 		exit();	
 		}
@@ -83,7 +83,7 @@ function getIsVipiFeeds(){
 		$description = $feed[$x]['desc'];
 		$descr = trunc_text($description, 20);
 		$date = date('l F d, Y', strtotime($feed[$x]['date']));
-		echo '<small><em>Posted on '.$date.'</em></small></p>';
+		echo '<small><em>'.POSTED_ON.' '.$date.'</em></small></p>';
 		echo '<p><strong><a href="'.$link.'" title="'.$title.'">'.$title.'</a></strong><br />';
 		echo '<p>'.$descr.'</p>';
 	}
@@ -257,13 +257,14 @@ function checkVersion(){
 	global $db;
 define('REMOTE_VERSION', 'http://isvipi.com/version/version.php');
 $script = file_get_contents(REMOTE_VERSION);
-$version = VERSION;
-if($version == $script) {
+$version = str_replace(".", "", VERSION);
+$script = str_replace(".", "", $script);
+if($version == $script || $version > $script) {
 	$uplastVcheck = $db->prepare('UPDATE site_settings set last_version_check=NOW() LIMIT 1');
 	$uplastVcheck->execute();
 	$uplastVcheck->close();
 	$_SESSION['up-to-date'] = TRUE;
-} else {
+} else  if ($version < $script) {
 	upSiteStatus("5"); //status 5 for update available
 	$uplastVcheck = $db->prepare('UPDATE site_settings set last_version_check=NOW() LIMIT 1');
 	$uplastVcheck->execute();
@@ -332,4 +333,20 @@ function siteMapPages(){
 	$siteMapP->store_result();
 	$siteMapP->bind_result($p_id,$p_title,$p_content);
 }
+function selectLang(){
+	getAdminGenSett();
+	global $lang;
+	global $db;
+	global $language;
+	$selectLan = $db->prepare("SELECT name,abbr FROM languages");
+	$selectLan->execute();
+	$selectLan->store_result();
+	$selectLan->bind_result($name,$abbr);
+	echo '<select name="language" class="form-control">';
+	while($selectLan->fetch()){?>
+	<option <?php if ($lang == $abbr ){echo "selected";}?> value="<?php echo $abbr ?>"><?php echo $name ?></option>
+    <?php }
+	echo '</select>';
+}
+
 ?>

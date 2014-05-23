@@ -3,19 +3,12 @@
                        <div class="dash_content">
                         <div class="panel panel-primary">
                           <div class="panel-heading"><div class="members_options">
-                          <div class="btn-group">
-                                  <button type="button" class="btn btn-info"><i class="fa fa-plus"></i> Options</button>
-                                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                    <span class="caret"></span>
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                  </button>
-                                  <ul class="dropdown-menu" role="menu">
-                                    <li><a href="<?php echo ISVIPI_URL.'online/' ?>"> Online Now</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="<?php echo ISVIPI_URL.'new_members/' ?>">New Members</a></li>
-                                  </ul>
-                                </div>
-                               <span class="label" style="font-size:15px; float:right; position:absolute; margin-left:50px;padding:10px">(<?php echo $results ?>) result(s) found for "<?php echo $term ?>"</span>
+                               <span class="label" style="font-size:15px; float:right; position:absolute; margin-left:50px;padding:10px">
+							   <?php 
+							   if ($results == 1){$ResNumber = RESULT;} else {$ResNumber = RESULTS;}
+							   
+							   ?>
+							   <?php echo $results."&nbsp;".$ResNumber."&nbsp;".FOUND_FOR ?> "<?php echo $term ?>"</span>
                             </div>
                             
                            </div>
@@ -56,7 +49,7 @@
                                             <?php if(checkExistingReq($id,$user)){
 												//Check if a friend request exists
 													echo '<span class="label label-primary">';
-													echo 'Request Pending';
+													echo REQ_PENDING;
 													echo '</span>';
 											}
 											//Check if the user is him/herself then hide add friend button
@@ -65,24 +58,24 @@
 											//Check if the request was rejected
 											else if(checkIfRejected($id,$user)){
 													echo '<span class="label label-danger">';
-													echo 'Request Rejected';
+													echo REQ_REJECTED;
 													echo '</span>';
 											}
 											//Check if they are already friends
 											else if(checkFriendship($id,$user)){
 													echo '<span class="label label-default">';
-													echo 'Already Friends';
+													echo ALREADY_FRIENDS;
 													echo '</span>';
 											}
 												else
 											{?>
-                                            <a href="<?php echo ISVIPI_URL. 'users/fRequests'?>?action=3&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>"><button type="submit" class="btn btn-success">Add Friend</button></a>
+                                            <a href="<?php echo ISVIPI_URL. 'users/fRequests'?>?action=3&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>"><button type="submit" class="btn btn-success"><?php echo ADD_FRIEND ?></button></a>
 											<?php }?>
 											</div>
                                         </li>
 										<?php }?>
                                         <?php if ($results < 1){?>
-                                        <p>Member with username "<?php echo $term ?>" not found</p>
+                                        <p><?php echo MEMBERS_WTH_USR ?> "<?php echo $term ?>" <?php echo NOT_FOUND ?></p>
                                         <?php }?>
                                      </div>
                                      </div>

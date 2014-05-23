@@ -25,7 +25,7 @@ include_once ISVIPI_USER_INC_BASE. 'PasswordHash.php';
 $from_url = $_SERVER['HTTP_REFERER'];
 $adm = $_POST['action'];
 if ($adm !== 'login' && $adm !== 'change_pass'){
-	$_SESSION['err'] ="Unknown request";
+	$_SESSION['err'] =UNKNOWN_REQ;
     header ('location:'.$from_url.'');
 	exit();
 } 
@@ -36,13 +36,13 @@ if ($adm == 'login') {
 		$adm_email = $_POST["admin_email"];	
 		if (empty($adm_email)) {
 			echo
-			$_SESSION['err'] ="Please fill in your email";
+			$_SESSION['err'] =EMAIL.E_IS_EMPTY;
 			header ('location:'.$from_url.'');
 			exit();
 		  }
 		 if (!filter_var($adm_email, FILTER_VALIDATE_EMAIL)) 
 			{
-			$_SESSION['err'] ="The email you provided is not valid";
+			$_SESSION['err'] =E_INVALID_EMAIL;
 			header ('location:'.$from_url.'');
 			exit();
 			}
@@ -50,21 +50,21 @@ if ($adm == 'login') {
 		 $adm_pass = $_POST["admin_pass"];
 		 
 		 if (empty($adm_pass)) {
-			$_SESSION['err'] ="Please fill in your password";
+			$_SESSION['err'] =PASSWORD.E_IS_EMPTY;
 			header ('location:'.$from_url.'');
 			exit();
 			}
 			
 		if (strlen($adm_pass) < 6)
 			{
-			$_SESSION['err'] ="Password MUST be more than 6 characters";
+			$_SESSION['err'] =E_SHORT_PASS;
 			header ('location:'.$from_url.'');
 			exit();
 			}
 			
 		if (strlen($adm_pass) > 72)
 			{
-			$_SESSION['err'] ="Password too long";
+			$_SESSION['err'] =E_LONG_PASS;
 			header ('location:'.$from_url.'');
 			exit();
 			}
@@ -77,12 +77,12 @@ if ($adm == 'login') {
 		$chkemail->fetch();
 		if ($chkemail->num_rows === 0)
 			{
-				$_SESSION['err'] ="Email not found";
+				$_SESSION['err'] =N_EMAIL_NOT_FOUND;
 				header ('location:'.$from_url.'');
 				exit();
 			}
 		else if ($active === 0){
-				$_SESSION['err'] ="Your account is pending approval";
+				$_SESSION['err'] =N_ACCOUNT_NOT_VALID;
 				header ('location:'.$from_url.'');
 				exit();
 			}
@@ -93,7 +93,7 @@ if ($adm == 'login') {
 			$ip = $_SERVER['REMOTE_ADDR'];
 			$_SESSION['admin_id'] = $id;
 			$_SESSION['admin_logged_in'] = TRUE;
-			$_SESSION['succ'] ="Login successful";
+			$_SESSION['succ'] =S_SUCCESS;
 			session_write_close();
 	
 			//Update database with logged in details
@@ -104,7 +104,7 @@ if ($adm == 'login') {
 			header ('location:'.ISVIPI_URL.$adminPath.'/dashboard/');
 			exit();
 		} else
-			$_SESSION['err'] ="The email and/or password is incorrect";
+			$_SESSION['err'] =N_EMAIL_PASS_INCORRECT;
 			header ('location:'.$from_url.'');
 			exit();
   $db->close();
@@ -117,46 +117,46 @@ if ($adm == 'change_pass') {
 	$admin_newpass = $_POST["new_pass"];
 	if (empty($admin_newpass)) 
 	{
-		$_SESSION['err'] ="Please fill in the new password field";
+		$_SESSION['err'] =NEW_PASS.E_IS_EMPTY;
 		header ('location:'.$from_url.'');
 		exit();
 	}
 	if (strlen($admin_newpass) < 6)
 	{
-	$_SESSION['err'] ="Password is shorter than 6 characters";
+	$_SESSION['err'] =E_SHORT_PASS;
     header ('location:'.$from_url.'');
 	exit();
 	}	
 		$admin_newpass2 = $_POST["new_pass2"];
 		if (empty($admin_newpass2)) {
-		$_SESSION['err'] ="Please fill in the repeat new password field";
+		$_SESSION['err'] =REP_NEW_PASS.E_IS_EMPTY;
 		header ('location:'.$from_url.'');
 		exit();
 		}
 		//Check if the new passwords match 
        if ($admin_newpass!= $admin_newpass2)
          {
-			$_SESSION['err'] ="Passwords do not match";
+			$_SESSION['err'] =E_PASS_NOT_MATCH;
 			header ('location:'.$from_url.'');
 			exit();
 		  }
 		if (strlen($admin_newpass) > 72)
 		  {
-			$_SESSION['err'] ="The password is too long";
+			$_SESSION['err'] =E_LONG_PASS;
 			header ('location:'.$from_url.'');
 			exit();
 		  }
 		$hash = $hasher->HashPassword($admin_newpass);
 		if (strlen($hash) < 20)
 			{
-				$_SESSION['err'] ="System error! Please try again";
+				$_SESSION['err'] =E_SYS_ERR;
 				header ('location:'.$from_url.'');
 				exit();
 			}
 		$updtpass = $db->prepare('UPDATE admin set password=? where email=?');
 		$updtpass->bind_param('ss', $hash, $admin_email);
 		$updtpass->execute();
-			$_SESSION['succ'] ="Password changed successfully";
+			$_SESSION['succ'] =S_SUCCESS;
 			header ('location:'.$from_url.'');
 			exit();
 			$db->close();

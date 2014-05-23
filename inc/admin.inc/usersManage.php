@@ -23,7 +23,7 @@ if (isset($ACTION[2])){
 	}
 if (isset($_POST['adm_users'])){$adm = $_POST['adm_users'];}
 if ($adm !== 'new' && $adm !== '1'/*Validate*/ && $adm !== '2'/*Suspend*/ && $adm !== '3'/*Unsuspend*/ && $adm !== '4'/*Delete*/ && $adm !== 's_All'/*Suspend All*/ && $adm !== 'uns_All'/*Unsuspend All*/ && $adm !== 'del_unv_All'/*Delete All Unvalidated*/ && $adm !== 'del_sus_All'/*Delete All Suspended*/ && $adm !== 'edit_user'/*Delete All Suspended*/ ){
-	$_SESSION['err'] ="Unknown request";
+	$_SESSION['err'] =UNKNOWN_REQ;
     header ('location:'.$from_url.'');
 	exit();
 } 
@@ -38,26 +38,26 @@ if ($adm == 'new') {
 	
 	$user = get_post_var('user');
 if (empty($user)) {
-    $_SESSION['err'] ="Please fill in a username";
+    $_SESSION['err'] =USERNAME.E_IS_EMPTY;
     header ('location:'.$from_url.'');
 	exit();
 }
 
 if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $user)){
-	$_SESSION['err'] ="Invalid characters in the username";
+	$_SESSION['err'] =E_INVALID_CHAR_USERNAME;
     header ('location:'.$from_url.'');
 	exit();
 }
 
 	$d_name = get_post_var('d_name');
 if (empty($d_name)) {
-	$_SESSION['err'] ="Please fill in a display name";
+	$_SESSION['err'] =DISPLAY_NAME.E_IS_EMPTY;
     header ('location:'.$from_url.'');
 	exit();
 }
 if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $d_name))
 	{
-	$_SESSION['err'] ="Invalid characters for display name";
+	$_SESSION['err'] =E_INVALID_CHARS_IN.DISPLAY_NAME;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -65,13 +65,13 @@ if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $d_name))
 $email = get_post_var('email');
 if (empty($email)) 
     {
-	$_SESSION['err'] ="Please fill in an email";
+	$_SESSION['err'] =EMAIL.E_IS_EMPTY;
     header ('location:'.$from_url.'');
 	exit();
 }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
     {
-	$_SESSION['err'] ="The email you provided is not valid";
+	$_SESSION['err'] =E_INVALID_CHARS_IN.EMAIL;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -79,20 +79,20 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL))
 $pass = get_post_var('pass');
 if (empty($pass)) {
     {
-	$_SESSION['err'] ="Please fill in a password";
+	$_SESSION['err'] =PASSWORD.E_IS_EMPTY;
     header ('location:'.$from_url.'');
 	exit();
    }
   }
 if (strlen($pass) < 6)
 	{
-	$_SESSION['err'] ="Password is shorter than 6 characters";
+	$_SESSION['err'] =E_SHORT_PASS;
     header ('location:'.$from_url.'');
 	exit();
 }	
 if (strlen($pass) > 72)
 	{
-	$_SESSION['err'] ="Password too long";
+	$_SESSION['err'] =E_LONG_PASS;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -101,21 +101,21 @@ if (strlen($pass) > 72)
 $pass2 = get_post_var('pass2');
 if (empty($pass2)) 
     {
-	$_SESSION['err'] ="Please fill in the repeat password field";
+	$_SESSION['err'] =REPEAT_PASSWORD.E_IS_EMPTY;
     header ('location:'.$from_url.'');
 	exit();
 }
 /* Check if passwords match */
 if ($pass!= $pass2)
     {
-	$_SESSION['err'] ="Passwords do not match";
+	$_SESSION['err'] =E_PASS_NOT_MATCH;
     header ('location:'.$from_url.'');
 	exit();
 }
 	$hash = $hasher->HashPassword($pass);
 if (strlen($hash) < 20)
 	{
-	$_SESSION['err'] ="System error. Please try again";
+	$_SESSION['err'] =E_SYS_ERR;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -125,7 +125,7 @@ if (strlen($hash) < 20)
 $user_gender = get_post_var('user_gender');
 if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $user_gender))
 	{
-	$_SESSION['err'] ="Invalid input for gender";
+	$_SESSION['err'] =E_INVALID_CHARS_IN.GENDER;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -134,13 +134,13 @@ if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $user_gender))
 $user_dob = get_post_var('user_dob');
 	if (!checkDateTime($user_dob))
 	{
-	$_SESSION['err'] ="Wrong date format. Correct format is mm/dd/yyyy (month/day/year)";
+	$_SESSION['err'] =E_WRONG_DATE_FORMAT;
 		header ('location:'.$from_url.'');
 		exit();	
 	}
 	if (!preg_match('/^[A-Za-z0-9:_.\/\\\\ ]+$/', $user_dob))
 	{
-	$_SESSION['err'] ="Invalid input for date of birth";
+	$_SESSION['err'] =E_INVALID_CHARS_IN.DOB;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -149,13 +149,13 @@ $user_dob = get_post_var('user_dob');
 $user_city = get_post_var('user_city');
 if (empty($user_city)) 
     {
-	$_SESSION['err'] ="Please fill in the city";
+	$_SESSION['err'] =CITY.E_IS_EMPTY;
     header ('location:'.$from_url.'');
 	exit();
 }
 if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $user_city))
 	{
-	$_SESSION['err'] ="Invalid characters for city";
+	$_SESSION['err'] =E_INVALID_CHARS_IN.CITY;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -164,13 +164,13 @@ if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $user_city))
 $user_country = get_post_var('user_country');
 if (empty($user_country)) 
     {
-	$_SESSION['err'] ="Please fill in your country";
+	$_SESSION['err'] =COUNTRY.E_IS_EMPTY;
     header ('location:'.$from_url.'');
 	exit();
 }
 if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $user_country))
 	{
-	$_SESSION['err'] ="Invalid characters for country";
+	$_SESSION['err'] =E_INVALID_CHARS_IN.COUNTRY;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -178,7 +178,7 @@ if (!preg_match('/^[a-zA-Z0-9_ ]{1,60}$/', $user_country))
 $user_status = get_post_var('user_status');
 if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $user_gender))
 	{
-	$_SESSION['err'] ="Invalid input for gender";
+	$_SESSION['err'] =E_INVALID_CHARS_IN.GENDER;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -188,7 +188,7 @@ $sendActEmail = get_post_var('actEmailcheck');
 // Check if the username is already in the database
 if(checkName($user))
 	{
-	$_SESSION['err'] ="Username is already taken";
+	$_SESSION['err'] =E_USERNAME_TAKEN;
     header ('location:'.$from_url.'');
 	exit();
 }else
@@ -196,7 +196,7 @@ if(checkName($user))
 // Check if the email is already in the database
 if(checkEmail($email))
 		{
-		$_SESSION['err'] ="The email you provided is already in use";
+		$_SESSION['err'] =E_EMAIL_IN_USE;
 		header ('location:'.$from_url.'');
 		exit();
 	}
@@ -221,16 +221,11 @@ if(checkEmail($email))
 	$stmt->execute();
 	$stmt->close();
 	 
-	 //Update timeline/activity feeds
-	 $activity = 'has joined our site';
-	 xtractUID($user);
-	 updateTimeline($uid,$user,$activity);
 	 if (isset($sendActEmail)){
 	 include_once ISVIPI_USER_INC_BASE. 'emailFunc.php';
-	 actEmail();
-	 sendActEmail($site_url,$site_email,$user,$site_title,$randomstring,$email,$act_subject,$activation_email);
+	 sendActEmail($site_url,$site_email,$user,$site_title,$randomstring,$email);
 	 }
-	 $_SESSION['succ'] ="New user added";
+	 $_SESSION['succ'] =S_SUCCESS;
     	header ('location:'.ISVIPI_URL.'admin/members');
 	exit();
 	}
@@ -247,7 +242,7 @@ if ($adm == '1') {
 	$activate->bind_param('ii', $act,$userid);
 	$activate->execute();
 	$activate->close();	
-		$_SESSION['succ'] ="User Validated";
+		$_SESSION['succ'] =S_SUCCESS;
 		header('location: '.$from_url.'');
 		exit();
 }
@@ -263,7 +258,7 @@ if ($adm == '2') {
 	$suspend->bind_param('ii', $sus,$userid);
 	$suspend->execute();
 	$suspend->close();	
-		$_SESSION['succ'] ="User Suspended";
+		$_SESSION['succ'] =S_SUCCESS;
 		header('location: '.$from_url.'');
 		exit();
 }
@@ -280,7 +275,7 @@ if ($adm == '3') {
 	$unsuspend->bind_param('ii', $unsus,$userid);
 	$unsuspend->execute();
 	$unsuspend->close();	
-		$_SESSION['succ'] ="User unsuspended";
+		$_SESSION['succ'] =S_SUCCESS;
 		header('location: '.$from_url.'');
 		exit();
 }
@@ -301,7 +296,7 @@ if ($adm == '4') {
 	$delete->bind_param('ii', $userid,$userid);
 	$delete->execute();
 	$delete->close();	
-		$_SESSION['succ'] ="User Deleted";
+		$_SESSION['succ'] =S_SUCCESS;
 		header('location: '.$from_url.'');
 		exit();
 }
@@ -315,7 +310,7 @@ if ($adm == 's_All') {
 	$suspendAll->bind_param('i', $sus);
 	$suspendAll->execute();
 	$suspendAll->close();	
-		$_SESSION['succ'] ="All users suspended";
+		$_SESSION['succ'] =S_SUCCESS;
 		header('location: '.$from_url.'');
 		exit();
 }
@@ -330,7 +325,7 @@ if ($adm == 'uns_All') {
 	$unsuspendAll->bind_param('ii', $sus,$active);
 	$unsuspendAll->execute();
 	$unsuspendAll->close();	
-		$_SESSION['succ'] ="All users unsuspended";
+		$_SESSION['succ'] =S_SUCCESS;
 		header('location: '.$from_url.'');
 		exit();
 }
@@ -357,7 +352,7 @@ if ($adm == 'del_unv_All') {
 	$deleteAll->execute();
 	$deleteAll->close();
 	}
-		$_SESSION['succ'] ="All unvalidated users deleted";
+		$_SESSION['succ'] =S_SUCCESS;
 		header('location: '.$from_url.'');
 		exit();
 }
@@ -384,7 +379,7 @@ if ($adm == 'del_sus_All') {
 	$deleteAll->execute();
 	$deleteAll->close();
 	}
-		$_SESSION['succ'] ="All suspended users deleted";
+		$_SESSION['succ'] =S_SUCCESS;
 		header('location: '.$from_url.'');
 		exit();
 }
@@ -396,7 +391,7 @@ if ($adm == 'edit_user') {
 /* User ID */
 $user_id_n = get_post_var('userid');
 if (!is_numeric($user_id_n)){
-	$_SESSION['err'] ="Invalid user id";
+	$_SESSION['err'] =INVALID_ID;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -407,20 +402,20 @@ $display_n = preg_replace('/[^a-zA-Z0-9 ]/','',$display_nn);
 $email = get_post_var('email');
 if (empty($email)) 
     {
-	$_SESSION['err'] ="Please fill in the email";
+	$_SESSION['err'] =EMAIL.E_IS_EMPTY;
     header ('location:'.$from_url.'');
 	exit();
 }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
     {
-	$_SESSION['err'] ="The email you provided is not valid";
+	$_SESSION['err'] =E_INVALID_CHARS_IN.EMAIL;
     header ('location:'.$from_url.'');
 	exit();
 }
 /* Gender */
 $gender_n = get_post_var('user_gender');
 if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $gender_n)){
-	$_SESSION['err'] ="Invalid characters for the gender";
+	$_SESSION['err'] =E_INVALID_CHARS_IN.GENDER;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -428,13 +423,13 @@ if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $gender_n)){
 $dob_n = get_post_var('dob');
 if (!preg_match('/^[A-Za-z0-9:_.\/\\\\ ]+$/', $dob_n))
 	{
-	$_SESSION['err'] ="Invalid input for date of birth";
+	$_SESSION['err'] =E_INVALID_CHARS_IN.DOB;
     header ('location:'.$from_url.'');
 	exit();
 }
 if (!checkDateTime($dob_n))
 {
-$_SESSION['err'] ="Wrong date format. Correct format is mm/dd/yyyy (month/day/year)";
+$_SESSION['err'] =E_WRONG_DATE_FORMAT;
     header ('location:'.$from_url.'');
 	exit();	
 }
@@ -450,11 +445,35 @@ $city_n = preg_replace('/[^a-zA-Z0-9 ]/','',$city_nn);
 /* Country */
 $coutry_nn = get_post_var('user_country');
 $coutry_n = preg_replace('/[^a-zA-Z0-9 ]/','',$coutry_nn);
+
 	 /* Update profile*/
 	 updateProfile($display_n,$user_id_n,$gender_n,$dob_n,$phone_n,$city_n,$coutry_n);
-	 $_SESSION['succ'] ="Profile update successful";
-	 header("location: ".$from_url."");
-	 exit ();
+	 	//check if the email is not yet registered and if it is, whether it belongs to the user
+		global $db;
+		$checkmail = $db->prepare('SELECT id FROM members where email=?');
+		$checkmail->bind_param('s', $email);
+		$checkmail->execute();
+		$checkmail->store_result();
+		$checkmail->bind_result($user_ID);
+		$checkmail->fetch();
+		$isRegistered = $checkmail->num_rows();
+//echo $user_ID;
+//echo $user_id_n;
+		if (($isRegistered > 0 && $user_ID == $user_id_n)||($isRegistered == 0)){
+			$addEmail = $db->prepare('UPDATE members set email=? where id=?');
+			$addEmail->bind_param('si', $email,$user_id_n);
+			$addEmail->execute();
+			$addEmail->close();	
+			
+			$_SESSION['succ'] =S_SUCCESS;
+			header ('location:'.$from_url.'');
+			exit();
+			
+		} else {
+			$_SESSION['err'] =E_EMAIL_IN_USE;
+			header ('location:'.$from_url.'');
+			exit();
+		}
 }
 
 $db->close();

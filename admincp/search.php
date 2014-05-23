@@ -18,33 +18,33 @@
  ******************************************************/ 
 $type = $ACTION[2];
 if (empty($type)) {
-		$_SESSION['err'] ="Please select a search type (by username, id, email)";
+		$_SESSION['err'] =E_WRONG_SEARCH_TYPE;
 		header ('location:'.ISVIPI_URL.'home');
 		exit();
 		}
 $term = $ACTION[3];
 	if (empty($term)) {
-		$_SESSION['err'] ="Please provide a search term";
+		$_SESSION['err'] = E_EMPTY_SEARCH_TERM;
 		header ('location:'.ISVIPI_URL.'home');
 		exit();
 		}
 		if ($type == 'username'){
 			$term = str_replace('%', '', $term);
 			if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $term)){
-			$_SESSION['err'] ="Invalid characters in the username";
+			$_SESSION['err'] =E_INVALID_CHAR_USERNAME;
 			header ('location:'.ISVIPI_URL.$adminPath.'/members/');
 			exit();
 			}
 			
 		} else if ($type == 'id'){
 			if (!is_numeric($term)){
-			$_SESSION['err'] ="Invalid characters in the id";
+			$_SESSION['err'] =E_INVALID_CHAR_ID;
 			header ('location:'.ISVIPI_URL.$adminPath.'/members/');
 			exit();
 			}
 		} else if ($type == 'email'){
 			if (!filter_var($term, FILTER_VALIDATE_EMAIL)){
-			$_SESSION['err'] ="The email you provided is not valid";
+			$_SESSION['err'] =E_INVALID_EMAIL;
 			header ('location:'.ISVIPI_URL.$adminPath.'/members/');
 			exit();
 			}
@@ -57,11 +57,11 @@ findUsersAdmin($type,$term);
     <div class="container-admin">
       <div class="page-header">
 		<ul class="breadcrumb breadcrumb-admin">
-  			<li><i class="fa fa-home"></i> Home</li>
-  			<li class="active">Member Management</li>
-            <span class="donate_support"><span class="label label-danger">Support IsVipi, Donate!</span></span>
+  			<li><i class="fa fa-home"></i> <?php echo HOME ?></li>
+  			<li class="active"><?php echo MEMBER_MGMT ?></li>
+            <span class="donate_support"><span class="label label-danger"><?php echo DONATE ?></span></span>
         <div class="donate">
-        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8EKWYJABNLDE2" data-toggle="tooltip" data-placement="bottom" target="_blank" title="Support us by making a donation"><img src="<?php echo ISVIPI_STYLE_URL.'images/donate.png';?>" width="100%" alt="" /></a>
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8EKWYJABNLDE2" data-toggle="tooltip" data-placement="bottom" target="_blank" title="<?php echo DONATE_TEXT ?>"><img src="<?php echo ISVIPI_STYLE_URL.'images/donate.png';?>" width="100%" alt="" /></a>
         </div>
         </ul>
      </div>
@@ -88,36 +88,36 @@ findUsersAdmin($type,$term);
 	   getMembersAll2($pager,$filter,$p_limit)?>
      	<div class="panel panel-default maxi-left">
     	<div class="panel-heading">
-        Search for <strong><?php echo $term?></strong>
+        <?php echo SEARCH_FOR ?> <strong><?php echo $term?></strong>
         </div>
           <table class="table table-bordered">
           <?php if($ResulT >0){?>
           <colgroup>
-          <?php if ($type == "id"){echo  "<col style='background-color:yellow'>";} else {echo  "<col style='background-color:white'>";}?>
-          <?php if ($type == "username"){echo  "<col style='background-color:yellow'>";} else {echo  "<col style='background-color:white'>";}?>
-          <?php if ($type == "email"){echo  "<col style='background-color:yellow'>";} else {echo  "<col style='background-color:white'>";}?>
+          <?php if ($type == "id"){echo  "<col style='background-color:#D6FFC1'>";} else {echo  "<col style='background-color:white'>";}?>
+          <?php if ($type == "username"){echo  "<col style='background-color:#D6FFC1'>";} else {echo  "<col style='background-color:white'>";}?>
+          <?php if ($type == "email"){echo  "<col style='background-color:#D6FFC1'>";} else {echo  "<col style='background-color:white'>";}?>
           </colgroup>
           <thead>
           <tr>
-           <th width="80">User ID</th>
-           <th width="180">Username</th>
-           <th width="200">User Email</th>
-           <th width="120">Status</th>
-           <th>Manage</th>
+           <th width="80"><?php echo USER_ID ?></th>
+           <th width="180"><?php echo USERNAME ?></th>
+           <th width="200"><?php echo EMAIL ?></th>
+           <th width="120"><?php echo STATUS ?></th>
+           <th><?php echo MANAGE ?></th>
            </tr>
            </thead>
            <tbody>
            <tr>
            <td><?php echo $ID ?></td>
-           <td><a href="<?php echo ISVIPI_URL.'profile/'; echo $username;?>" data-toggle="tooltip" data-placement="bottom" title="View <?php echo $username ?>'s Profile" target="_blank"><?php echo $username ?> </a><?php if (isOnlineNOW($ID)){?><span class="green" style="font-size:12px; margin-left:10px"><i class="fa fa-circle"></i></span><?php } else {?><span class="red" style="font-size:12px; margin-left:10px"><i class="fa fa-circle"></i></span><?php }?></td>
+           <td><a href="<?php echo ISVIPI_URL.'profile/'; echo $username;?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo VIEW ?> <?php echo $username ?>'s <?php echo PROFILE ?>" target="_blank"><?php echo $username ?> </a><?php if (isOnlineNOW($ID)){?><span class="green" style="font-size:12px; margin-left:10px"><i class="fa fa-circle"></i></span><?php } else {?><span class="red" style="font-size:12px; margin-left:10px"><i class="fa fa-circle"></i></span><?php }?></td>
            <td><?php echo $email ?></td>
-           <td><?php if ($status==0){echo "<i class='fa fa-times'></i> Unvalidated";}else if ($status==1){echo "<i class='fa fa-check'></i> Active";}else if ($status==3){echo "<i class='fa fa-lock'></i> Suspended";}?></td>
-           <td><div class="user_manage_options"><a href="<?php echo ISVIPI_URL.'admin/edit_member/'; echo $username;?>" title="Edit <?php echo $username ?>" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-pencil"></i> Edit</a> | <?php if($filter==3 || $status==3){?><a href="<?php echo ISVIPI_URL.'conf/usersManage/3/'.$ID.'' ?>" title="Unsuspend <?php echo $username ?>" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-unlock"></i> Unsuspend</a><?php } else if ($status==0){?> <a href='<?php echo ISVIPI_URL.'conf/usersManage/1/'.$ID.'' ?>' title='Validate <?php echo $username ?>' data-toggle='tooltip' data-placement='bottom'>Validate</a><?php } else {?><a href="<?php echo ISVIPI_URL.'conf/usersManage/2/'.$ID.'' ?>" title="Suspend <?php echo $username ?>" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-lock"></i> Suspend</a><?php }?> | <a href="<?php echo ISVIPI_URL.'conf/usersManage/4/'.$ID.'' ?>" id="focus" title="Delete <?php echo $username ?>" data-toggle="tooltip" data-placement="bottom" onclick="return confirm('Are you sure you want to delete this users?')"><i class="fa fa-trash-o"></i> Delete</a> </td>
+           <td><?php if ($status==0){echo "<i class='fa fa-times'></i> ".UNVALIDATED."";}else if ($status==1){echo "<i class='fa fa-check'></i> ".ACTIVE."";}else if ($status==3){echo "<i class='fa fa-lock'></i> ".SUSPENDED."";}?></td>
+           <td><div class="user_manage_options"><a href="<?php echo ISVIPI_URL.'admin/edit_member/'; echo $username;?>" title="<?php echo EDIT ?> <?php echo $username ?>" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-pencil"></i> <?php echo EDIT ?></a> | <?php if($filter==3 || $status==3){?><a href="<?php echo ISVIPI_URL.'conf/usersManage/3/'.$ID.'' ?>" title="<?php echo UNSUSPEND ?> <?php echo $username ?>" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-unlock"></i> <?php echo UNSUSPEND ?></a><?php } else if ($status==0){?> <a href='<?php echo ISVIPI_URL.'conf/usersManage/1/'.$ID.'' ?>' title='<?php echo VALIDATE ?> <?php echo $username ?>' data-toggle='tooltip' data-placement='bottom'><?php echo VALIDATE ?></a><?php } else {?><a href="<?php echo ISVIPI_URL.'conf/usersManage/2/'.$ID.'' ?>" title="<?php echo SUSPEND ?> <?php echo $username ?>" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-lock"></i> <?php echo SUSPEND ?></a><?php }?> | <a href="<?php echo ISVIPI_URL.'conf/usersManage/4/'.$ID.'' ?>" id="focus" title="<?php echo DELETE ?> <?php echo $username ?>" data-toggle="tooltip" data-placement="bottom" onclick="return confirm('<?php echo DELETE_PROMPT ?>')"><i class="fa fa-trash-o"></i> <?php echo DELETE ?></a> </td>
            </tr>
            </tbody>
            <?php } else {?>
            <tr>
-           <td height="60">No such user in the database</td>
+           <td height="60"><?php echo NO_SUCH_USER ?></td>
            </tr>
            <?php }?>
           </table>
@@ -126,14 +126,14 @@ findUsersAdmin($type,$term);
           <form name="search" method="post" action="<?php echo ISVIPI_URL.'conf/search/' ?>">
                       <input type="hidden" name="search" value="search">
                         <div class="input-group">
-                          <input type="text" class="form-control" name="searchTerm" value="" placeholder="Search by username, id or email">
+                          <input type="text" class="form-control" name="searchTerm" value="" placeholder="<?php echo SEARCH_ADMIN_PLACEHOLDER ?>">
                           <span class="input-group-btn">
                             <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                           </span>
                         </div><!-- /input-group -->
-        				<input type="radio" name="type" value="username" checked="checked"> By Username &nbsp;&nbsp;
-                        <input type="radio" name="type" value="id"> By ID &nbsp;&nbsp;
-                        <input type="radio" name="type" value="email"> By Email
+        				<input type="radio" name="type" value="username" checked="checked"> <?php echo BY_USERNAME ?> &nbsp;&nbsp;
+                        <input type="radio" name="type" value="id"> <?php echo BY_ID ?> &nbsp;&nbsp;
+                        <input type="radio" name="type" value="email"> <?php echo BY_EMAIL ?>
                         </form>
           </div>
           </div>

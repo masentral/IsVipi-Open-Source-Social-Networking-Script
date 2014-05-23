@@ -33,5 +33,5 @@
         // submit sitemaps to search engines
         $sitemap->submitSitemap();
 		$_SESSION['sitemap'] = TRUE;
-		echo "<meta http-equiv='refresh' content='3'>";
+		echo "<meta http-equiv='refresh' content='3'>"; 
         ?>

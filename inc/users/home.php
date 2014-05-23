@@ -23,7 +23,7 @@
  pollUser($user);
  }
  base_header($site_title,$ACTION[0]);
- include_once ISVIPI_THEMES_BASE.'home.php';
+ include_once ISVIPI_THEMES_BASE.'timeline.php';
  globalAlerts();?>
 </body>
 </html>

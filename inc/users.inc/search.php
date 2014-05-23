@@ -18,7 +18,7 @@
  ******************************************************/ 
 	$searchTerm = get_post_var('searchTerm');
 	if (empty($searchTerm)) {
-		$_SESSION['err'] ="Please provide a search term";
+		$_SESSION['err'] =PROVIDE_SEARCH_TERM;
 		header ('location:'.ISVIPI_URL.'home');
 		exit();
 		}

@@ -16,7 +16,12 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
-  //base_header($site_title,$ACTION[0]);
+  if (signedIn()){
+	  $_SESSION['succ']="You are already logged in";
+	  header('location:'.ISVIPI_URL.'home');
+	  exit;
+  }
+  base_header($site_title,$ACTION[0]);
   include_once ISVIPI_THEMES_BASE.'login.php'; 
   globalAlerts();
   ?>

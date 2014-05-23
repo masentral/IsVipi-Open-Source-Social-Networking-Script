@@ -7,7 +7,7 @@ global $isvipi_url;
 define('BACKUP_DIR', ISVIPI_ROOT.'inc/misc') ;
 define('HOST', $db_host) ;
 define('USER', $db_user) ;
-define('PASSWORD', $db_pass) ;
+define('PASS_WORD', $db_pass) ;
 define('DB_NAME', $db_name) ;
 $archiveName = 'mysqlbackup--' . date('d-m-Y') . '@'.date('h.i.s').'&'.microtime(true) . '.sql' ;
 // Set execution time limit
@@ -31,7 +31,7 @@ if($written <13) die("Could not create a \".htaccess\" file , Backup task cancel
 createNewArchive($archiveName) ;
  
 function createNewArchive($archiveName){
-$mysqli = new mysqli(HOST , USER , PASSWORD , DB_NAME) ;
+$mysqli = new mysqli(HOST , USER , PASS_WORD , DB_NAME) ;
 if (mysqli_connect_errno())
 {
    printf("Connect failed: %s", mysqli_connect_error());
@@ -108,7 +108,7 @@ $fileSize = getFileSizeUnit(filesize(BACKUP_DIR . "/". $archiveName . '.zip')) ;
 $backUpComplete = TRUE;
 $message = <<<msg
 <div class='alert alert-success' style="margin-top:5px">
-           Database Backup complete! Your file is $archiveName in /inc/misc/ folder</a>
+           /inc/misc/$archiveName
            </div>
 msg;
 echo $message ;

@@ -88,4 +88,5 @@ $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 $headers .= 'From: '.$site_email.'' . "\r\n";
 mail($to,$subject,$message,$headers);	
 }
+
 ?>

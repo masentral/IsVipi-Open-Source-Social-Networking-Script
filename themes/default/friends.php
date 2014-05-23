@@ -2,7 +2,7 @@
 <?php get_sidebar()?>
                        <div class="dash_content">
                         <div class="panel panel-primary">
-                          <div class="panel-heading">My Friends
+                          <div class="panel-heading"><?php echo MY_FRIENDS ?>
                            </div>
                                <div class="panel-body members_full">
                                      <div class="m_list">
@@ -24,7 +24,7 @@
                                             <table class="table table-striped" style="width:200px">
                                                 <tbody>
                                                   <tr>
-                                                    <td><a href="<?php echo ISVIPI_URL.'profile/' ?><?php echo $username;?>"><?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?></a></td>
+                                                    <td><a href="<?php echo ISVIPI_URL.'profile/' ?><?php echo $username;?>"><?php echo $username;?></a></td>
                                                   </tr>
                                                   <tr>
                                                     <td><?php echo htmlspecialchars($m_gender, ENT_QUOTES, 'utf-8');?> (<?php echo htmlspecialchars($m_age, ENT_QUOTES, 'utf-8');?>)</td>
@@ -38,14 +38,14 @@
                                             
                                             </div>
                                             <div class="msg_friend_button">
-                                            <a href="<?php echo ISVIPI_URL.'profile/'; getUserDetails($id); echo $username;?>"><button class="btn btn-info">View & Message</button></a>
+                                            <a href="<?php echo ISVIPI_URL.'profile/'; getUserDetails($id); echo $username;?>"><button class="btn btn-info"><?php echo VIEW_N_MSG ?></button></a>
                                             
                                             </div>
                                         </li>
 										<?php }?>
                                      </div>
                                      <?php if ($getfriends->num_rows()<1){?>
-                                            <p>You have no friends</p>
+                                            <p><?php echo NO_FRIENDS ?></p>
                                             <?php }?>
 							  </div>
                           </div><!--end of panel-->

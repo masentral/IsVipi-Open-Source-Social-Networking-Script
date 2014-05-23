@@ -38,7 +38,7 @@
 	$str = substr($str, 0, 110);
 	
     $parts = explode("/", $str);
-	if ((!$parts[0])||(!$parts[1])||(!$parts[2])||(!$parts[3])){$_SESSION['err'] ="No such conversation";die404();}
+	if ((!$parts[0])||(!$parts[1])||(!$parts[2])||(!$parts[3])){$_SESSION['err'] =NO_SUCH_CONV;die404();}
     $msg_from = $parts[0];
     $unique_id = $parts[1];
 	$msg_to = $parts[2];
@@ -48,7 +48,7 @@
 	}
 	else
 	{
-		$_SESSION['err'] ="No such conversation";
+		$_SESSION['err'] =NO_SUCH_CONV;
 		die404();
 	}
  base_header($site_title,$ACTION[0]);

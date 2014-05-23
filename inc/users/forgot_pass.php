@@ -5,12 +5,12 @@
       <form method="post" action="<?php echo ISVIPI_USER_PROCESS; ?>" class="login-form">
         <input type="hidden" name="op" value="forgot_pass">
         <input type="hidden" name="user" value="reset_user" required>
-      <h4>Please provide the email associated with your account</h4>
+      <h4><?php echo FORGOT_PASS_EMAIL_TXT ?></h4>
       <div class="form-group">
-        <input type="email" class="form-control" name="recov_email" placeholder="Email" required>
+        <input type="email" class="form-control" name="recov_email" placeholder="<?php echo FORGOT_PASS_EMAIL ?>" required>
       </div>
       <p>
-        <button class="btn btn-lg btn-primary" type="submit">Send Recovery Email</button>
+        <button class="btn btn-lg btn-primary" type="submit"><?php echo SEND_REC_EMAIL ?></button>
        </p>
      </form>
      

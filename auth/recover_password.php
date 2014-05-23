@@ -4,7 +4,7 @@ $recovery_code = $ACTION['2'];
 //Sanitize our recovery code
 if (!preg_match('/^[a-zA-Z0-9_]{1,60}$/', $recovery_code))
 	{
-	$_SESSION['err'] ="Invalid characters in password recovery code";
+	$_SESSION['err'] =E_INVALID_CHARS_IN.RECOVERY_CODE;
     header ('location:'.ISVIPI_URL.'');
 	exit();	
 	}
@@ -16,7 +16,7 @@ $validateusr->store_result();
 $validateusr->bind_result($usern_n);
 $validateusr->fetch();
 if ($validateusr->num_rows < 1){
-	$_SESSION['err'] ="The password recovery code is not valid";
+	$_SESSION['err'] =E_INVALID_PASS_REC_CODE;
     header ('location:'.ISVIPI_URL.'');
 	exit();	
 	}

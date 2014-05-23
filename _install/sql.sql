@@ -1,7 +1,7 @@
 --
 -- Table structure for table `country`
 --
-
+ 
 CREATE TABLE IF NOT EXISTS `country` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `iso` char(2) NOT NULL,
@@ -289,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `site_settings` (
 ) ENGINE=MyISAM;
 
 --
--- Table structure for table `Other Settings`
+-- Table structure for table `General Settings`
 --
 
 CREATE TABLE IF NOT EXISTS `general_settings` (
@@ -299,6 +299,10 @@ CREATE TABLE IF NOT EXISTS `general_settings` (
   `sys_cron` int(1) NOT NULL,
   `timezone` int(1) NOT NULL,
   `admin_end` varchar(50) NOT NULL,
+  `lang` varchar(5) NOT NULL,
+  `logo_name` varchar(100) NOT NULL DEFAULT  'logo.png',
+  `favicon_name` varchar(100) NOT NULL DEFAULT  'favicon.png',
+  `mobile_enabled` int(1) NOT NULL DEFAULT  '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
@@ -398,10 +402,12 @@ CREATE TABLE IF NOT EXISTS `timeline` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `uid` int(250) NOT NULL,
   `username` varchar(140) NOT NULL DEFAULT '',
-  `activity` varchar(500) NOT NULL DEFAULT '',
+  `activity` varchar(1000) DEFAULT NULL,
   `time` datetime NOT NULL,
+  `feed_img` varchar(250) NOT NULL,
+  `shared` int( 5 ) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Table structure for table `notifications`
@@ -491,4 +497,90 @@ CREATE TABLE IF NOT EXISTS `pm` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
+--
+-- Table structure for table `Languages`
+--
 
+CREATE TABLE IF NOT EXISTS `languages` (
+  `id` int(3) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `abbr` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+--
+-- Dumping data for table `languages`
+--
+
+INSERT INTO `languages` (`id`, `name`, `abbr`) VALUES
+(1, 'ENGLISH', 'en'),
+(2, 'NORWEGIAN', 'nor');
+
+
+--
+-- Table structure for table `SEO`
+--
+
+CREATE TABLE IF NOT EXISTS `seo` (
+  	`id` int(1) NOT NULL AUTO_INCREMENT,
+  	`meta_tags` varchar(250) NOT NULL,
+  	`meta_description` varchar(250) NOT NULL,
+  	PRIMARY KEY (`id`)
+	) ENGINE=MyISAM;
+
+--
+-- Dumping data for table `seo`
+--
+
+INSERT INTO `seo` (`id`, `meta_tags`, `meta_description`) VALUES
+(1, 'social network,community,friendship,meet new people,interact', 'This is a social nework where people meet, interact, create new friends and explore the social life');
+
+--
+-- Table structure for table `likes`
+--
+
+CREATE TABLE IF NOT EXISTS `likes` (
+  	`id` int(50) NOT NULL AUTO_INCREMENT,
+  	`feed_id` int(100) NOT NULL,
+  	`user_like` int(100) NOT NULL,
+	`timestamp` varchar(20) NOT NULL,
+  	PRIMARY KEY (`id`)
+	) ENGINE=MyISAM;
+	
+--
+-- Table structure for table `shares`
+--
+	
+	CREATE TABLE IF NOT EXISTS `shares` (
+  	`id` int(50) NOT NULL AUTO_INCREMENT,
+  	`feed_id` int(100) NOT NULL,
+  	`user_share` int(100) NOT NULL,
+	`timestamp` varchar(20) NOT NULL,
+  	PRIMARY KEY (`id`)
+	) ENGINE=MyISAM;
+	
+--
+-- Table structure for table `comments`
+--
+	
+	CREATE TABLE IF NOT EXISTS `comments` (
+  	`id` int(50) NOT NULL AUTO_INCREMENT,
+  	`feed_id` int(100) NOT NULL,
+  	`comment` varchar(1500) NOT NULL,
+	`comment_by` int(50) NOT NULL,
+	`timestamp` varchar(20) NOT NULL,
+  	PRIMARY KEY (`id`)
+	) ENGINE=MyISAM;
+	
+--
+-- Table structure for table `comment_likes`
+--
+	
+	CREATE TABLE IF NOT EXISTS `comment_likes` (
+  	`id` int(50) NOT NULL AUTO_INCREMENT,
+  	`feed_id` int(100) NOT NULL,
+  	`comment_id` int(50) NOT NULL,
+	`user_like` int(50) NOT NULL,
+	`timestamp` varchar(20) NOT NULL,
+  	PRIMARY KEY (`id`)
+	) ENGINE=MyISAM;

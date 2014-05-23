@@ -27,13 +27,13 @@ $from_url = $_SERVER['HTTP_REFERER'];
 $action = $_GET['action'];
 if (!is_numeric($action))
 	{
-	$_SESSION['err'] ="Invalid Action";
+	$_SESSION['err'] =INV_ACTION;
     header ('location:'.$from_url.'');
 	exit();
 }
 if ($action !== '0' && $action !== '1' && $action !== '3' && $action !== '4')
 	{
-	$_SESSION['err'] ="Unknown request";
+	$_SESSION['err'] =UNKNOWN_REQ;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -47,7 +47,7 @@ $to_id = $_GET['id'];
 //Check to see whether our ID is clean
 if (!is_numeric($to_id))
 	{
-	$_SESSION['err'] ="Invalid User ID";
+	$_SESSION['err'] =INVALID_ID;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -57,20 +57,20 @@ $from_id = $user;
 $id = $to_id;
 
 if ($from_id == $id){
-$_SESSION['err'] ="This action is not allowed";
+$_SESSION['err'] =N_ACTION_NOT_ALLOWED;
     header ('location:'.$from_url.'');
 	exit();	
 }
 if(checkExistingReq($id,$user)){
 	{
-	$_SESSION['err'] ="A friend request already exists";
+	$_SESSION['err'] =N_FREQUEST_EXISTS;
     header ('location:'.$from_url.'');
 	exit();
 }
 }
 //we then check if they are already friends
 if(checkFriendship($id,$user)){
-	$_SESSION['err'] ="Action rejected: You are already friends";
+	$_SESSION['err'] =ALREADY_FRIENDS;
     header ('location:'.$from_url.'');
 	exit();	
 }
@@ -78,7 +78,7 @@ $status= "0";
 $sendrq = $db->prepare('insert into friend_requests (from_id, to_id, status, timestamp) values (?,?,?,NOW())');
 	$sendrq->bind_param('iii', $from_id,$to_id,$status);
 	$sendrq->execute();
-	$_SESSION['succ'] ="Friend request sent";
+	$_SESSION['succ'] =S_SUCCESS;
 	header("location:".$from_url."");
 	exit();
 }
@@ -93,7 +93,7 @@ $to_id = $_GET['id'];
 //Check to see whether our ID is clean
 if (!is_numeric($to_id))
 	{
-		$_SESSION['err'] ="Invalid user ID";
+		$_SESSION['err'] =INVALID_ID;
 		header("location:".$from_url."");
 		exit();
 	}
@@ -103,7 +103,7 @@ $from_id = $user;
 $id = $to_id;
 if(!checkExistingReq($id,$user))
 	{
-		$_SESSION['err'] ="No such request exists";
+		$_SESSION['err'] =N_NO_SUCH_REQ;
 		header("location:".$from_url."");
 		exit();
 	}
@@ -117,19 +117,15 @@ if (addMyFriend($id,$user))
 deleteFReq($user,$id);
 //Then notify the user that his/her friend request has been accepted
 if (isset($id)){
-	//Retrieve the user's username
-	{getUserDetails($user); $userfrom = $username ;}
-	{getUserDetails($id); $userto = $username ;}
-	$activity = 'is now friends with <a href='.ISVIPI_URL.'profile/'.$username.'>'.$userto.'</a>';
-	updateTimeline($id,$userfrom,$activity);
-	$notice = "<a href=".ISVIPI_URL."profile/".$userfrom.">".$userfrom."</a> accepted your friend request";
+	getUserN($id);
+	$notice = "<a href=".ISVIPI_URL."profile/".$username.">".$username."</a>" .N_ACCEPTED_YOUR_FREQ;
 	$user = $id;
 	//Then we update
 	updNotices($user,$notice);
 	
 }
 //Redirect back to friend_requests page
-		$_SESSION['succ'] ="Friend Added";
+		$_SESSION['succ'] =S_SUCCESS;
 		header("location:".$from_url."");
 		exit();
 	}
@@ -144,7 +140,7 @@ $to_id = $_GET['id'];
 //Check to see whether our ID is clean
 if (!is_numeric($to_id))
 	{
-		$_SESSION['err'] ="Invalid User ID";
+		$_SESSION['err'] =INVALID_ID;
 		header("location:".$from_url."");
 		exit();
 	}
@@ -154,7 +150,7 @@ $from_id = $user;
 $id = $to_id;
 if(!checkExistingReq($id,$user))
 	{
-		$_SESSION['err'] ="No such request exists";
+		$_SESSION['err'] =N_NO_SUCH_REQ;
 		header("location:".$from_url."");
 		exit();
 	}
@@ -171,14 +167,14 @@ if(!checkExistingReq($id,$user))
 	//Retrieve the user's username
 	$user_id = $user;
 	getUserN($user_id);
-	$notice = "<a href=".ISVIPI_URL."profile/".$username.">".$username."</a> Rejected your friend request";
+	$notice = "<a href=".ISVIPI_URL."profile/".$username.">".$username."</a> ".N_REJECTED_YOUR_FREQ;
 	$user = $id;
 	//Then we update
 	updNotices($user,$notice);
 }
 
 		{
-		$_SESSION['succ'] ="Friend Request Rejected";
+		$_SESSION['succ'] =S_SUCCESS;
 		header("location:".$from_url."");
 		exit();
 	}
@@ -194,7 +190,7 @@ $to_id = $_GET['id'];
 //Check to see whether our ID is clean
 if (!is_numeric($to_id))
 	{
-	$_SESSION['err'] ="Invalid User ID";
+	$_SESSION['err'] =INVALID_ID;
     header ('location:'.$from_url.'');
 	exit();
 }
@@ -202,7 +198,7 @@ if (!is_numeric($to_id))
 //we then check if they are already friends
 $id = $to_id;
 if(!checkFriendship($id,$user)){
-	$_SESSION['err'] ="You cannot unfriend someone who is not your friend";
+	$_SESSION['err'] =E_UNFRIEND_ERR;
     header ('location:'.$from_url.'');
 	exit();	
 }
@@ -211,7 +207,7 @@ if(!checkFriendship($id,$user)){
 	$delfrnshp = $db->prepare('DELETE FROM my_friends WHERE (user1=? AND user2=?) OR (user2=? AND user1=?)');
 	$delfrnshp->bind_param('iiii', $user,$id,$user,$id);
 	$delfrnshp->execute();
-    $_SESSION['succ'] ="Unfriend successful";
+    $_SESSION['succ'] =S_SUCCESS;
     header ('location:'.$from_url.'');
 	exit();	
 }

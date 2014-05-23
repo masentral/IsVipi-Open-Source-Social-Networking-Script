@@ -25,7 +25,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Site Maintenance </title>
+<title><?php echo MAINTEN_TITLE ?></title>
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo ISVIPI_STYLE_URL; ?>images/favicon.png">
   <!-- Bootstrap -->
   <link href="<?php echo ISVIPI_STYLE_URL; ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -47,8 +47,8 @@
            </nav>
                         <div class="panel panel-primary" style="margin-right:auto; margin-left:auto; border:none; text-align:center;">
                                <div class="panel-body">
-                                <h1>Site Maintenance </h1>
-                                <h4>The site is undergoing maintenance and will be back in a short while.</h4>
+                                <h1><?php echo MAINTEN_TITLE ?></h1>
+                                <h4><?php echo MAINTEN_TITLE_TXT ?></h4>
 								</div>
                                </div>
                           </div><!--end of panel-->

@@ -5,19 +5,18 @@
                         <div class="panel panel-primary">
                           <div class="panel-heading"><div class="members_options">
                           <div class="btn-group">
-                                  <button type="button" class="btn btn-info"><i class="fa fa-plus"></i> Options</button>
+                                  <button type="button" class="btn btn-info"><i class="fa fa-plus"></i> <?php echo OPTIONS ?></button>
                                   <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                                     <span class="caret"></span>
-                                    <span class="sr-only">Toggle Dropdown</span>
                                   </button>
                                   <ul class="dropdown-menu" role="menu">
-                                  <li><a href="<?php echo ISVIPI_URL.'memberlist/' ?>"> All</a></li>
-                                    <li><a href="<?php echo ISVIPI_URL.'online/' ?>"> Online Now</a></li>
+                                  <li><a href="<?php echo ISVIPI_URL.'memberlist/' ?>"> <?php echo ALL_MEMBERS ?></a></li>
+                                    <li><a href="<?php echo ISVIPI_URL.'online/' ?>"> <?php echo ONLINE_NOW ?></a></li>
                                     <li class="divider"></li>
-                                    <li><a href="<?php echo ISVIPI_URL.'new_members/' ?>">New Members</a></li>
+                                    <li><a href="<?php echo ISVIPI_URL.'new_members/' ?>"> <?php echo NEW_MEMBERS ?></a></li>
                                   </ul>
                                 </div>
-                                <span class="label" style="font-size:15px; float:right; position:absolute; margin-left:50px;padding:10px">(<?php echo $o_count?>) Members Online</span>
+                                <span class="label" style="font-size:15px; float:right; position:absolute; margin-left:50px;padding:10px">(<?php echo $o_count?>) <?php echo MEMBERS_ONLINE ?></span>
                             </div>
                            </div>
                                <div class="panel-body members_full">
@@ -33,7 +32,7 @@
                                             <li>
                                             <div class="member_pic">
                               <?php if(htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8') == ""){$m_thumbnail=".gif";}?>
-                                 <a href="<?php echo ISVIPI_URL.'profile/' ?><?php echo htmlspecialchars($profile_name, ENT_QUOTES, 'utf-8');?>" title="<?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?>"><img src="<?php echo ISVIPI_PROFILE_PIC_URL.ISVIPI_THUMB_150.htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" /></a>
+                                 <a href="<?php echo ISVIPI_URL.'profile/' ?><?php echo htmlspecialchars($username, ENT_QUOTES, 'utf-8');?>" title="<?php echo htmlspecialchars($m_name, ENT_QUOTES, 'utf-8');?>"><img src="<?php echo ISVIPI_PROFILE_PIC_URL.ISVIPI_THUMB_150.htmlspecialchars($m_thumbnail, ENT_QUOTES, 'utf-8');?>" height="100%" width="100%" alt="" /></a>
                                             </div>
                                             <div class="member_info">
                                             <span class="members_list_info">                                  
@@ -57,7 +56,7 @@
                                             <?php if(checkExistingReq($id,$user)){
 												//Check if a friend request exists
 													echo '<span class="label label-primary">';
-													echo 'Request Pending';
+													echo REQ_PENDING;
 													echo '</span>';
 											}
 											//Check if the user is him/herself then hide add friend button
@@ -66,24 +65,24 @@
 											//Check if the request was rejected
 											else if(checkIfRejected($id,$user)){
 													echo '<span class="label label-danger">';
-													echo 'Request Rejected';
+													echo REQ_REJECTED;
 													echo '</span>';
 											}
 											//Check if they are already friends
 											else if(checkFriendship($id,$user)){
 													echo '<span class="label label-default">';
-													echo 'Already Friends';
+													echo ALREADY_FRIENDS;
 													echo '</span>';
 											}
 												else
 											{?>
-                                            <a href="<?php echo ISVIPI_URL. 'users/fRequests'?>?action=3&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>"><button type="submit" class="btn btn-success">Add Friend</button></a>
+                                            <a href="<?php echo ISVIPI_URL. 'users/fRequests'?>?action=3&id=<?php echo htmlspecialchars($id, ENT_QUOTES, 'utf-8');?>"><button type="submit" class="btn btn-success"><?php echo ADD_FRIEND ?></button></a>
 											<?php }?>
 											</div>
                                         </li>
 										<?php }?>
                                         <?php getOnlineMembers(); if ($getmembers->num_rows<1){?>
-                                        <p>You have no members online</p>
+                                        <p><?php echo NO_MEMBERS_ONLINE ?></p>
                                         <?php }?>
                                      </div>
                                    </div>

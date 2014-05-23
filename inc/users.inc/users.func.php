@@ -47,7 +47,7 @@ function footer_text(){
 	global $site_title;
 	global $site_url;
 	echo"
-Copyright &copy; ".date("Y").". <a href='".$site_url."'>".$site_title."</a>. Powered by <a href='http://isvipi.com' target='_blank'>IsVipi OSSN</a>
+".COPYRIGHT." &copy; ".date("Y").". <a href='".$site_url."'>".$site_title."</a>. ".POWERED." <a href='http://isvipi.com' target='_blank'>".ISVIPI_OSSN."</a>
 ";
 }
 //Function Get Sidebar Menu
@@ -95,6 +95,17 @@ function getAllPagesFront(){
 	global $p_title;
 	global $p_id;
 	$getAllP = $db->prepare('SELECT id,title,content FROM pages ORDER by id ASC');
+	$getAllP->execute();
+	$getAllP->store_result();
+	$getAllP->bind_result($p_id,$p_title,$p_content);
+}
+
+function getAllPagesFrontMobile(){
+	global $db;
+	global $getAllP;
+	global $p_title;
+	global $p_id;
+	$getAllP = $db->prepare('SELECT id,title,content FROM pages ORDER by id ASC LIMIT 2');
 	$getAllP->execute();
 	$getAllP->store_result();
 	$getAllP->bind_result($p_id,$p_title,$p_content);
@@ -187,7 +198,7 @@ function fail($pub, $pvt = '')
 	$msg = $pub;
 	if ($debug && $pvt !== '')
 		$msg .= ": $pvt";
-	exit("An error occurred => $msg.\n");
+	exit("".E_ERR_OCCURED." => $msg.\n");
 }
 function success($pub, $pvt = '')
 {
@@ -196,7 +207,7 @@ function success($pub, $pvt = '')
 	if ($debug && $pvt == '')
 		$msg .= ": $pvt";
 // The $pvt debugging messages may contain characters that would need to be
-	exit("Success => $msg.\n");
+	exit("".S_SUCCESS." => $msg.\n");
 }
 
 //Get post variables and sanitize them
@@ -322,11 +333,20 @@ function updateProfile($display_n,$user_id_n,$gender_n,$dob_n,$phone_n,$city_n,$
 	$upoprf->close();
 }
 //Update timeline/activity feeds
-function updateTimeline($value,$user,$activity){
+function updateTimeline($value,$user,$activity,$feedIMG){
 	global $db;
 	//Update user status to online
-	$updtml = $db->prepare('insert into timeline (uid, username, activity, time) values (?, ?, ?, NOW())');
-	$updtml->bind_param('iss', $value, $user, $activity);
+	$updtml = $db->prepare('insert into timeline (uid, username, activity, time, feed_img) values (?, ?, ?, NOW(),?)');
+	$updtml->bind_param('isss', $value, $user, $activity, $feedIMG);
+	$updtml->execute();
+	$updtml->close();
+}
+
+function shareTimeline($value,$user,$activity,$feedIMG,$uid){
+	global $db;
+	//Update user status to online
+	$updtml = $db->prepare('insert into timeline (uid, username, activity, time, feed_img, shared) values (?, ?, ?, NOW(),?,?)');
+	$updtml->bind_param('isssi', $value, $user, $activity, $feedIMG, $uid);
 	$updtml->execute();
 	$updtml->close();
 }
@@ -345,7 +365,7 @@ $_SESSION['timeout'] = time();
 //Check login function to authenticate users before accessing the member area
 function isLoggedIn(){
 	if(!isset($_SESSION['logged_in'])&&(!isAdmin())&&(!isset($_SESSION['user_id']))) {
-		$_SESSION['err'] ="You MUST be logged in to view that page";
+		$_SESSION['err'] =E_LOG_IN_PROMPT;
 		header('location: '.ISVIPI_URL.'login/');
 		exit();
 	}
@@ -456,33 +476,98 @@ function logout($value){
 		session_destroy();
 		session_start();
 		if ($value == 'logout'){
-		$_SESSION['succ'] ="You have logged out successfully";
+		$_SESSION['succ'] =N_LOGOUT_SUCCESS;
 		} else if ($value == 'session_expire'){
-			$_SESSION['err'] ="Your session expired. Please log in again";
+			$_SESSION['err'] =N_SESSION_EXPIRED;
 		}
 		header('location: '.ISVIPI_URL.'');	
 		exit();
 	}
 	else {
-		$_SESSION['err'] ="You are not logged in";
+		$_SESSION['err'] =E_LOG_IN_PROMPT;
 		header('location: '.ISVIPI_URL.'');
 		exit();
 	}
 }
 
 //Get activity feeds
-function getFeeds(){
+function getFeed($statusID){
 	global $activity;
 	global $db;
-	global $getusr;
+	global $getusrFeed;
 	global $time;
 	global $act_user;
-	global $feed_id;
-	$getusr = $db->prepare("SELECT id,username,activity,time FROM timeline ORDER BY id DESC LIMIT 55");
-	$getusr->execute();
-	$getusr->store_result();
-	$getusr->bind_result($feed_id,$act_user,$activity,$time);
+	global $FIDentinty;
+	global $feedUID;
+	global $feedImage;
+	$getusrFeed = $db->prepare("SELECT id,uid,username,activity,time,feed_img FROM timeline where id=? ORDER BY id DESC LIMIT 55");
+	$getusrFeed->bind_param('i', $statusID);
+	$getusrFeed->execute();
+	$getusrFeed->store_result();
+	$getusrFeed->bind_result($FIDentinty,$feedUID,$act_user,$activity,$time,$feedImage);
 }
+
+function getFeeds2($user){
+	global $activity;
+	global $db;
+	global $getusrFeed;
+	global $time;
+	global $act_user;
+	global $FIDentinty;
+	global $feedUID;
+	global $feedImage;
+	global $shared;
+	
+	$getusrFeed = $db->prepare('SELECT t.id,t.uid,t.username,t.activity,t.time,t.feed_img,t.shared FROM timeline t
+INNER JOIN my_friends mf
+ON t.uid=mf.user2 WHERE mf.user1=? OR t.uid=?
+GROUP BY t.id
+ORDER by t.time DESC
+            ');
+	$getusrFeed->bind_param('ii',$user,$user);
+	$getusrFeed->execute();
+	$getusrFeed->store_result();
+	$getusrFeed->bind_result($FIDentinty,$feedUID,$act_user,$activity,$time,$feedImage,$shared);
+	$rFound = $getusrFeed->num_rows();
+	if ($rFound == 0){
+	$getusrFeed = $db->prepare('SELECT id,uid,username,activity,time,feed_img FROM timeline WHERE uid=? 
+ORDER by time DESC
+            ');
+	$getusrFeed->bind_param('i',$user);
+	$getusrFeed->execute();
+	$getusrFeed->store_result();
+	$getusrFeed->bind_result($FIDentinty,$feedUID,$act_user,$activity,$time,$feedImage);	
+		
+	}
+	}
+function selectFeed($value){
+	global $db;
+	global $uid;
+	global $activity;
+	global $feedIMG;
+$stmt = $db->prepare('SELECT uid,activity,feed_img FROM timeline WHERE id=? ');
+		$stmt->bind_param('i', $value);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($uid,$activity,$feedIMG);
+		$stmt->fetch();
+		$stmt->close();	
+}
+function selectthisComment($value){
+	global $db;
+	global $CommId;
+	global $comm;
+	global $commBy;
+	global $commTime;
+$stmt = $db->prepare('SELECT id,comment,comment_by,timestamp FROM comments WHERE feed_id=? ');
+		$stmt->bind_param('i', $value);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($CommId,$comm,$commBy,$commTime);
+		$stmt->fetch();
+		$stmt->close();	
+}
+
 
 //Get relative time
 function relativeTime($time,$precision=3)
@@ -497,7 +582,7 @@ function relativeTime($time,$precision=3)
 					$passed=time()-$time;
 	            if($passed<5)
 	             {
-		           $output='less than 5 seconds ago';
+		           $output=LESS_5_SEC_AGO;
 	             }
 	             else
 	             {
@@ -516,7 +601,7 @@ function relativeTime($time,$precision=3)
 			else if($exit>0) $exit++;
 		}
 				
-		$output=implode(', ',$output).' ago';
+		$output=implode(', ',$output).' '.AGO.'';
 	}
 	return $output;
 }
@@ -525,7 +610,7 @@ function relativeTime($time,$precision=3)
 //Retrieve Thumbnail
 function t_thumb($value){
 	global $t_thumb;
-	$GLOBALS['foobar'] = $t_thumb;
+	//$GLOBALS['foobar'] = $t_thumb;
 	global $db;
 	$getusr = $db->prepare("SELECT thumbnail FROM member_sett WHERE id=?");
 	$getusr->bind_param('i', $value);
@@ -680,7 +765,7 @@ function getMemberDet($value){
 		$now      = new DateTime();
 		$birthday = new DateTime($m_dob);
 		$interval = $now->diff($birthday);
-		$m_age = $interval->format('%y years old'); 
+		$m_age = $interval->format('%y '.YEARS_OLD.''); 
 }
 
 //Check for existing friend request
@@ -1004,7 +1089,7 @@ function encrypt_str($value){
 		return $s.$r;
 	};
 
-	function decrypt_str($value){
+function decrypt_str($value){
 		$abc='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 		$a=str_split('+/='.$abc);
 		$b=strrev('-_='.$abc);
@@ -1044,7 +1129,7 @@ function trunc_text($text, $limit) {
 function makeLinks($value) {
     return preg_replace(
         '@(https?://([-\w\.]+[-\w])+(:\d+)?(/([\w/_\.#-~]*(\?\S+)?)?)?)@',
-        '<a href="$1">$1</a>', $value);
+        '<a href="$1" target="_blank">$1</a>', $value);
 }
 
 function chooseTimeZone(){
@@ -1097,17 +1182,18 @@ function getAdminGenSett(){
 	global $sysCron;
 	global $timeZ;
 	global $adminPath;
-	$getAdminGen = $db->prepare("SELECT user_registration,user_validate,sys_cron,timezone,admin_end FROM general_settings LIMIT 1");
+	global $lang;
+	global $logoname;
+	global $faviconname;
+	global $mobileEnabled;
+	$getAdminGen = $db->prepare("SELECT user_registration,user_validate,sys_cron,timezone,admin_end,lang,logo_name,favicon_name,mobile_enabled FROM general_settings LIMIT 1");
 	$getAdminGen->execute();
 	$getAdminGen->store_result();
-	$getAdminGen->bind_result($usrReg,$usrValid,$sysCron,$timeZ,$adminPath);
+	$getAdminGen->bind_result($usrReg,$usrValid,$sysCron,$timeZ,$adminPath,$lang,$logoname,$faviconname,$mobileEnabled);
 	$getAdminGen->fetch();
 	$getAdminGen->close();	
 }
 
-/////////////////////////////////
-////// MESSAGES ////////////////
-////////////////////////////////
 function termsConditions(){
 	global $db;
 	global $Termscontent;
@@ -1285,4 +1371,184 @@ function findUsersAdmin($type,$term){
 		
 	}
 }
+
+function getSEO(){
+	global $db;
+	global $meta_tags;
+	global $meta_description;
+	$seo = $db->prepare('SELECT meta_tags,meta_description FROM seo LIMIT 1');
+	$seo->execute();
+	$seo->store_result();
+	$seo->bind_result($meta_tags,$meta_description);
+	$seo->fetch();
+	$seo ->close();
+}
+
+function encryptHardened($string) {
+     $MASTERKEY = "KEY PHRASE!";
+     $td = mcrypt_module_open('tripledes', '', 'ecb', '');
+     $iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
+     mcrypt_generic_init($td, $MASTERKEY, $iv);
+     $crypted_value = mcrypt_generic($td, $string);
+     mcrypt_generic_deinit($td);
+     mcrypt_module_close($td);
+     return base64_encode($crypted_value);
+} 
+
+function decryptHardened($string) {
+     $MASTERKEY = "KEY PHRASE!";
+     $td = mcrypt_module_open('tripledes', '', 'ecb', '');
+     $iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
+     mcrypt_generic_init($td, $MASTERKEY, $iv);
+     $decrypted_value = mdecrypt_generic($td, base64_decode($string));
+     mcrypt_generic_deinit($td);
+     mcrypt_module_close($td);
+     return $decrypted_value;
+}
+ 
+function hasLiked($value,$user){
+	global $db;
+	global $F_ID;
+	global $hasliked;
+	$stmt = $db->prepare("SELECT id FROM likes WHERE feed_id=? AND user_like=?");
+	$stmt->bind_param("ii",$value,$user);
+	$stmt->execute();
+	$stmt->store_result();
+	$stmt->bind_result($F_ID);	
+	$hasliked = $stmt->num_rows();
+	if ($hasliked > 0){
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+	$stmt->close();
+}
+
+function AllLikes($value){
+	global $db;
+	global $F_ID;
+	global $allLikes;
+	global $FeeDID;
+	global $userLike;
+	$stmt = $db->prepare("SELECT id,feed_id,user_like FROM likes WHERE feed_id=? ORDER by ID DESC");
+	$stmt->bind_param('i', $value);
+	$stmt->execute();
+	$stmt->store_result();
+	$stmt->bind_result($F_ID, $FeeDID,$userLike);	
+	$allLikes = $stmt->num_rows();
+	if ($allLikes > 0){
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+	$stmt->close();
+}
+
+function AllShares($value){
+	global $db;
+	global $F_ID;
+	global $allShares;
+	global $FeeDID;
+	global $userLike;
+	$stmt = $db->prepare("SELECT id,feed_id,user_share FROM shares WHERE feed_id=? ORDER by ID DESC");
+	$stmt->bind_param('i', $value);
+	$stmt->execute();
+	$stmt->store_result();
+	$stmt->bind_result($F_ID, $FeeDID,$userShare);	
+	$allShares = $stmt->num_rows();
+	if ($allShares > 0){
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+	$stmt->close();
+}
+
+function getComments ($value){
+	global $db;	
+	global $getComm;
+	global $FeedCommentID;
+	global $feedComment;
+	global $commentTime;
+	global $feedCommentBy;
+	$read = "no";
+	$getComm = $db->prepare("SELECT id,comment,comment_by,timestamp FROM comments WHERE feed_id=?  ORDER BY ID DESC");
+	$getComm->bind_param("i",$value);
+	$getComm->execute();
+	$getComm->store_result();
+	$getComm->bind_result($FeedCommentID, $feedComment,$feedCommentBy, $commentTime);
+	$newmsg = $getComm->num_rows;
+}
+
+function AllComments($value){
+	global $db;
+	global $C_ID;
+	global $allComms;
+	global $commentTxt;
+	global $commentBy;
+	global $commTyme;
+	$stmt = $db->prepare("SELECT id,comment,comment_by, timestamp FROM comments WHERE feed_id=? ORDER by ID DESC");
+	$stmt->bind_param('i', $value);
+	$stmt->execute();
+	$stmt->store_result();
+	$stmt->bind_result($C_ID, $commentTxt,$commentBy,$commTyme);	
+	$allComms = $stmt->num_rows();
+	if ($allComms > 0){
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+	$stmt->close();
+}
+
+function AllCommentsLikes($value){
+	global $db;
+	global $F_C_LikID;
+	global $allCommsLike;
+	global $F_C_ID;
+	global $user_like;
+	global $commLikeTyme;
+	$stmt = $db->prepare("SELECT id,feed_id,user_like, timestamp FROM comment_likes WHERE comment_id=? ORDER by ID DESC");
+	$stmt->bind_param('i', $value);
+	$stmt->execute();
+	$stmt->store_result();
+	$stmt->bind_result($F_C_LikID, $F_C_ID,$user_like,$commLikeTyme);	
+	$allCommsLike = $stmt->num_rows();
+	if ($allCommsLike > 0){
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+	$stmt->close();
+}
+
+function hasLikedComment($value,$user){
+	global $db;
+	global $F_COMM_LIKE_ID;
+	global $haslikedComm;
+	$stmt = $db->prepare("SELECT id FROM comment_likes WHERE comment_id=? AND user_like=?");
+	$stmt->bind_param("ii",$value,$user);
+	$stmt->execute();
+	$stmt->store_result();
+	$stmt->bind_result($F_COMM_LIKE_ID);	
+	$haslikedComm = $stmt->num_rows();
+	if ($haslikedComm > 0){
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+	$stmt->close();
+}
+function isMobile(){
+	global $theme;
+$ismobi = new IsMobile();
+if($ismobi->CheckMobile()) {
+    $theme="mobile";
+}
+else {
+   
+}	
+}
+
+
 ?>

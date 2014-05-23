@@ -1,5 +1,7 @@
 body {background:#CCC}
-.admin_logo_text {font-size:20px;position:relative; z-index:999; color:#FFF; margin-left:-10px;}
+.admin_logo_text {font-size:20px;position:relative; z-index:999; color:#FFF; margin-left:5px;}
+.admin_logo{height:100%;width:200px;padding-left:10px; padding-top:10px}
+.favicon_admin {height:100%;width:64px;padding-left:10px; padding-top:10px}
 .admin_logo_text:hover {text-decoration:none}
 .top_admin_mid a{color:#333}
 .top_admin_mid a:hover{color:#00F}
@@ -232,4 +234,7 @@ margin-top:-4px; margin-left:50px;
 .footer {padding:10px}
 .footer a:hover{color:#00F}
 .footer p{font-size:14px;padding:10px}
+.seo_form input {width:420px; margin:10px}
+.seo_form textarea {width:420px;margin:10px}
+.seo_form button {margin-left:10px;margin-bottom:10px}
 

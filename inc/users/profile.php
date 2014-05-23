@@ -28,7 +28,7 @@ $xid = $ACTION[1];
 xtractUID($xid);
 $id = $uid;
 if (!is_numeric($id)){
-	$_SESSION['err'] ="Invalid ID";
+	$_SESSION['err'] =INVALID_ID;
 }
 	getMemberDet($id);
 }

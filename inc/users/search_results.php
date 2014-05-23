@@ -24,7 +24,7 @@
  }
 $term = $ACTION[1];
 	if (empty($term)) {
-		$_SESSION['err'] ="Please provide a search term";
+		$_SESSION['err'] =PROVIDE_SEARCH_TERM;
 		header ('location:'.ISVIPI_URL.'home');
 		exit();
 		}

@@ -16,7 +16,7 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  ******************************************************/ 
-isLoggedIn();   //We will integrate better security in next releases
+isLoggedIn();   //We will try to integrate better security in next releases
 $user = $_SESSION['user_id'];
 getUserDetails($user);
 $from_url = $_SERVER['HTTP_REFERER'];
@@ -26,13 +26,13 @@ $from_url = $_SERVER['HTTP_REFERER'];
 $msg = $_POST['msg'];
 if (!is_numeric($msg))
 	{
-		$_SESSION['err'] ="Invalid action defined";
+		$_SESSION['err'] =INV_ACTION;
 		header("location:".$from_url."");
 		exit();
 	}
 if ($msg !== '0'/**Add Message**/ && $msg !== '1' /**Retrieve Message**/ && $msg !== '3' /**Delete Message**/)
 	{
-		$_SESSION['err'] ="Unknown request";
+		$_SESSION['err'] =UNKNOWN_REQ;
 		header("location:".$from_url."");
 		exit();
 	}
@@ -47,7 +47,7 @@ $recip = $_POST['recip'];
 //Check to see whether our ID is clean
 if (!is_numeric($recip))
 	{
-		$_SESSION['err'] ="Invalid Recipient ID";
+		$_SESSION['err'] =E_INV_REC_ID;
 		header("location:".$from_url."");
 		exit();
 	}
@@ -56,13 +56,13 @@ if (isset($_POST['message']))
 $msg = get_post_var('message');
 if (empty($msg)) 
     {
-		$_SESSION['err'] ="Message is empty";
+		$_SESSION['err'] =E_MSG_EMPTY;
 		header("location:".$from_url."");
 		exit();
 	}
 	$message = htmlspecialchars("".$msg."", ENT_QUOTES);
 //Check if an existing conversation between the two users is available
-checkConv($user,$recip);
+//checkConv($user,$recip);
 if (checkConv($user,$recip)){
 	//When all is okay, we insert values into the database
 	addPM($user,$recip,$message,$unique_id);
@@ -70,10 +70,9 @@ if (checkConv($user,$recip)){
 $unique_id = mt_rand(0,1000).rand(0,1000);
 addPM($user,$recip,$message,$unique_id);
 }
-
 updMsgUnRead($user,$recip);
 
-		$_SESSION['succ'] ="Your message has been sent";
+		$_SESSION['succ'] =S_MSG_SENT;
 		header("location:".$from_url."");
 		exit();
 		{
